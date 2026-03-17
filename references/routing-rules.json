@@ -1,0 +1,58 @@
+{
+  "rules": [
+    {
+      "department": "bingbu",
+      "match_any_tags": [
+        "code",
+        "bugfix",
+        "feature",
+        "algorithm",
+        "performance"
+      ]
+    },
+    {
+      "department": "libu",
+      "match_any_tags": [
+        "docs",
+        "api",
+        "report",
+        "spec"
+      ]
+    },
+    {
+      "department": "hubu",
+      "match_any_tags": [
+        "data",
+        "cost",
+        "reporting",
+        "resource"
+      ]
+    },
+    {
+      "department": "xingbu",
+      "match_any_tags": [
+        "security",
+        "compliance",
+        "audit"
+      ]
+    },
+    {
+      "department": "gongbu",
+      "match_any_tags": [
+        "deploy",
+        "cicd",
+        "tooling",
+        "automation"
+      ]
+    },
+    {
+      "department": "libu_hr",
+      "match_any_tags": [
+        "agent",
+        "permission",
+        "training",
+        "registry"
+      ]
+    }
+  ]
+}

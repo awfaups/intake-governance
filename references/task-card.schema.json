@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TaskCard",
+  "type": "object",
+  "required": [
+    "task_id",
+    "title",
+    "from",
+    "to",
+    "goal",
+    "brief",
+    "tags",
+    "constraints",
+    "deliverables",
+    "review_required",
+    "status"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brief": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deliverables": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "review_required": {
+      "type": "boolean"
+    },
+    "execution_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "step",
+          "owner"
+        ],
+        "properties": {
+          "step": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "default": []
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "producer",
+          "kind",
+          "summary"
+        ],
+        "properties": {
+          "producer": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "default": []
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "triaged",
+        "planned",
+        "under_review",
+        "approved",
+        "dispatched",
+        "executing",
+        "aggregated",
+        "completed",
+        "rejected"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

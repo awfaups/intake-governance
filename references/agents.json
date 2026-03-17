@@ -1,0 +1,245 @@
+{
+  "version": "1.0.0",
+  "entry_agent": "taizi",
+  "planner_agent": "zhongshu",
+  "review_agent": "menxia",
+  "dispatch_agent": "shangshu",
+  "agents": {
+    "taizi": {
+      "label": "太子",
+      "role": "intake",
+      "responsibilities": [
+        "消息分拣",
+        "需求整理",
+        "标题概括"
+      ],
+      "specialties": [
+        "闲聊识别",
+        "旨意提炼",
+        "任务标题化"
+      ],
+      "can_receive_from": [
+        "external",
+        "zhongshu"
+      ],
+      "can_send_to": [
+        "zhongshu"
+      ]
+    },
+    "zhongshu": {
+      "label": "中书省",
+      "role": "planner",
+      "responsibilities": [
+        "接旨",
+        "规划",
+        "拆解"
+      ],
+      "specialties": [
+        "需求理解",
+        "任务分解",
+        "方案设计"
+      ],
+      "can_receive_from": [
+        "taizi",
+        "menxia",
+        "shangshu"
+      ],
+      "can_send_to": [
+        "taizi",
+        "menxia",
+        "shangshu"
+      ]
+    },
+    "menxia": {
+      "label": "门下省",
+      "role": "reviewer",
+      "responsibilities": [
+        "审议",
+        "把关",
+        "封驳"
+      ],
+      "specialties": [
+        "质量评审",
+        "风险识别",
+        "标准把控"
+      ],
+      "can_receive_from": [
+        "zhongshu",
+        "shangshu"
+      ],
+      "can_send_to": [
+        "zhongshu",
+        "shangshu"
+      ]
+    },
+    "shangshu": {
+      "label": "尚书省",
+      "role": "dispatcher",
+      "responsibilities": [
+        "派发",
+        "协调",
+        "汇总"
+      ],
+      "specialties": [
+        "任务调度",
+        "进度跟踪",
+        "结果整合"
+      ],
+      "can_receive_from": [
+        "zhongshu",
+        "menxia",
+        "hubu",
+        "libu",
+        "bingbu",
+        "xingbu",
+        "gongbu",
+        "libu_hr"
+      ],
+      "can_send_to": [
+        "zhongshu",
+        "menxia",
+        "hubu",
+        "libu",
+        "bingbu",
+        "xingbu",
+        "gongbu",
+        "libu_hr"
+      ]
+    },
+    "hubu": {
+      "label": "户部",
+      "role": "data_worker",
+      "responsibilities": [
+        "数据",
+        "资源",
+        "核算"
+      ],
+      "specialties": [
+        "数据处理",
+        "报表生成",
+        "成本分析"
+      ],
+      "can_receive_from": [
+        "shangshu"
+      ],
+      "can_send_to": [
+        "shangshu"
+      ]
+    },
+    "libu": {
+      "label": "礼部",
+      "role": "docs_worker",
+      "responsibilities": [
+        "文档",
+        "规范",
+        "报告"
+      ],
+      "specialties": [
+        "技术文档",
+        "API 文档",
+        "规范制定"
+      ],
+      "can_receive_from": [
+        "shangshu"
+      ],
+      "can_send_to": [
+        "shangshu"
+      ]
+    },
+    "bingbu": {
+      "label": "兵部",
+      "role": "engineering_worker",
+      "responsibilities": [
+        "代码",
+        "算法",
+        "巡检"
+      ],
+      "specialties": [
+        "功能开发",
+        "Bug 修复",
+        "代码审查"
+      ],
+      "can_receive_from": [
+        "shangshu"
+      ],
+      "can_send_to": [
+        "shangshu"
+      ]
+    },
+    "xingbu": {
+      "label": "刑部",
+      "role": "security_worker",
+      "responsibilities": [
+        "安全",
+        "合规",
+        "审计"
+      ],
+      "specialties": [
+        "安全扫描",
+        "合规检查",
+        "红线管控"
+      ],
+      "can_receive_from": [
+        "shangshu"
+      ],
+      "can_send_to": [
+        "shangshu"
+      ]
+    },
+    "gongbu": {
+      "label": "工部",
+      "role": "platform_worker",
+      "responsibilities": [
+        "CI/CD",
+        "部署",
+        "工具"
+      ],
+      "specialties": [
+        "Docker 配置",
+        "流水线",
+        "自动化"
+      ],
+      "can_receive_from": [
+        "shangshu"
+      ],
+      "can_send_to": [
+        "shangshu"
+      ]
+    },
+    "libu_hr": {
+      "label": "史部",
+      "role": "agent_admin_worker",
+      "responsibilities": [
+        "人事",
+        "Agent 管理"
+      ],
+      "specialties": [
+        "Agent 注册",
+        "权限维护",
+        "培训"
+      ],
+      "can_receive_from": [
+        "shangshu"
+      ],
+      "can_send_to": [
+        "shangshu"
+      ]
+    },
+    "zaochao": {
+      "label": "早朝官",
+      "role": "scheduler",
+      "responsibilities": [
+        "每日早朝",
+        "新闻聚合"
+      ],
+      "specialties": [
+        "定时播报",
+        "数据汇总"
+      ],
+      "can_receive_from": [
+        "scheduler"
+      ],
+      "can_send_to": []
+    }
+  }
+}
