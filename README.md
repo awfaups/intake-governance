@@ -6,6 +6,8 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 这个仓库不是应用程序，也不是 SDK，而是一套可复用的治理规则、工作流参考和任务卡约束，适合在 Agent Skills 场景中直接挂载使用。
 
+本 skill 的治理思路与朝廷式角色分工借鉴于 [Edict](https://github.com/cft0808/edict) 项目。当前仓库保留的是更轻量、可移植的 skill 包形态，聚焦治理规则、workflow 约束与任务卡 schema，不包含 Edict 的运行时、Dashboard 或 OpenClaw 集成。
+
 第一次接触这个 skill，建议先看 [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)。
 
 ## 适用场景
