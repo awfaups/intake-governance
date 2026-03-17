@@ -1,5 +1,7 @@
 # Imperial Agent Governance
 
+Portable multi-agent governance skill for role-based planning, review, dispatch, and execution.
+
 一个可移植的多 Agent 治理 skill 包，用于基于 `taizi`、`zhongshu`、`menxia`、`shangshu` 与执行部门的角色化协作流程。
 
 这个仓库不是应用程序，也不是 SDK，而是一套可复用的治理规则、工作流参考和任务卡约束，适合在 Agent Skills 场景中直接挂载使用。
@@ -138,3 +140,17 @@
 - 可治理：通过显式 handoff 图防止越权和角色混乱
 - 可扩展：通过引用文件维护工作流、路由规则和任务卡 schema
 - 可复用：适合作为独立 skill 包对外发布或集成到其他 Agent 体系
+
+## 发布到 SkillsMP
+
+如果你希望把这个 skill 公开分发给其他人，可以参考 [PUBLISHING.md](PUBLISHING.md)。
+
+最低要求如下：
+
+- 将仓库发布到公开 GitHub 仓库
+- 保留根目录下的 `SKILL.md`
+- 为 GitHub 仓库添加 topic：`claude-skills`
+- 可选再添加 topic：`claude-code-skill`
+- 等待 SkillsMP 周期性同步收录
+
+当前仓库已附带 `MIT` 许可证，便于别人明确复用范围。
