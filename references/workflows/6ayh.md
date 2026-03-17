@@ -29,14 +29,14 @@ When the user input contains `@6AYH`, output exactly:
 ## Required documents
 必需文档
 
-- `docs/[中文任务名]/01_ALIGNMENT_[中文任务名].md`
-- `docs/[中文任务名]/02_DESIGN_[中文任务名].md`
-- `docs/[中文任务名]/03_TASK_[中文任务名].md`
-- `docs/[中文任务名]/04_APPROVE_[中文任务名].md`
-- `docs/[中文任务名]/05_ACCEPTANCE_[中文任务名].md`
-- `docs/[中文任务名]/06_FINAL_[中文任务名].md`
-- `docs/[中文任务名]/07_TODO_[中文任务名].md`
-- `docs/[中文任务名]/99_REFERENCES_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/01_ALIGNMENT_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/02_DESIGN_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/03_TASK_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/04_APPROVE_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/05_ACCEPTANCE_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/06_FINAL_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/07_TODO_[中文任务名].md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/99_REFERENCES_[中文任务名].md`
 
 ## Document bootstrap
 文档初始化规则
@@ -46,6 +46,8 @@ When 6AYH is selected, these files must be created or updated before optimizatio
 
 - `taizi` must put the required-document list into the first task card
 - `taizi` 必须把必需文档清单写入首张任务卡
+- use the current date as a directory prefix in `YYYY_MM_DD` format, for example `docs/2026_03_17_首页优化/`
+- 目录名前缀必须使用当前日期，格式为 `YYYY_MM_DD`，例如 `docs/2026_03_17_首页优化/`
 - `zhongshu` must convert the document list into a staged plan
 - `zhongshu` 必须把文档清单转成分阶段计划
 - `shangshu` must dispatch `libu` to initialize missing files

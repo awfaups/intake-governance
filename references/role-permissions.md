@@ -70,11 +70,23 @@
 
 - 所有状态变更必须符合 `references/status-transitions.json`
 - 所有 handoff 必须生成一条记录，字段应符合 `references/handoff-record.schema.json`
+- 所有 handoff 记录都必须包含 `responsibility_notice`
 - `menxia` 驳回时必须写明 `rejection_reason`
 - `menxia` 要求返工时必须写明 `required_fixes`
 - 执行部门不能把任务直接改成 `completed`
 - `shangshu` 只能在收齐执行回传后把任务推进到 `aggregated`
 - 只有 `shangshu` 可以输出对外最终结论并推进到 `completed`
+
+### 1.6 职责转移提示规则
+
+每次职责从一个角色转移到另一个角色时，必须明确提示：
+
+- 当前角色到此为止负责什么
+- 下一角色从现在开始负责什么
+- 哪些问题仍然不允许越界处理
+- 如果是驳回、返工或阻塞，谁负责下一步消除阻塞
+
+如果缺少这段提示，就视为 handoff 信息不完整。
 
 ---
 

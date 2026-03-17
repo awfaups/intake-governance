@@ -172,7 +172,8 @@
           "to",
           "status_before",
           "status_after",
-          "reason"
+          "reason",
+          "responsibility_notice"
         ],
         "properties": {
           "handoff_id": {
@@ -191,6 +192,9 @@
             "type": "string"
           },
           "reason": {
+            "type": "string"
+          },
+          "responsibility_notice": {
             "type": "string"
           },
           "decision_summary": {

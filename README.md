@@ -113,6 +113,8 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 - [references/status-transitions.json](references/status-transitions.json)
 - [references/handoff-record.schema.json](references/handoff-record.schema.json)
 
+每条 handoff 记录都应该显式带上 `responsibility_notice`，用于提示职责如何从上一个角色转移到下一个角色。
+
 ## 目录结构
 
 ```text
@@ -163,6 +165,16 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 3. `menxia` 在跨部门或高风险场景下进行审议
 4. `shangshu` 根据标签派发到相应执行部门
 5. 执行部门仅在各自职责范围内产出，并统一回传给 `shangshu`
+
+## 工作流文档目录命名
+
+`6A`、`6AYH`、`PPW` 生成的文档目录，统一使用：
+
+`docs/YYYY_MM_DD_中文任务名/`
+
+例如：
+
+`docs/2026_03_17_首页优化/`
 
 ## 设计目标
 

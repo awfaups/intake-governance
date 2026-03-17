@@ -31,14 +31,14 @@ When the user input contains `@PPW` or clearly requests project-process inventor
 ## Required documents
 必需文档
 
-- `docs/project/01_INVENTORY.md`
-- `docs/project/02_GOALS.md`
-- `docs/project/03_FLOWS.md`
-- `docs/project/04_CONTRACTS.md`
-- `docs/project/05_RISK_REGISTER.md`
-- `docs/project/06_ROADMAP.md`
-- `docs/project/07_CONSENSUS.md`
-- `docs/project/08_DECISIONS.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/01_INVENTORY.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/02_GOALS.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/03_FLOWS.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/04_CONTRACTS.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/05_RISK_REGISTER.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/06_ROADMAP.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/07_CONSENSUS.md`
+- `docs/[YYYY_MM_DD]_[中文任务名]/08_DECISIONS.md`
 
 ## Document bootstrap
 文档初始化规则
@@ -48,6 +48,8 @@ When PPW is selected, these files must be created or updated as the project's fa
 
 - `taizi` must put the required-document list into the first task card
 - `taizi` 必须把必需文档清单写入首张任务卡
+- use the current date as a directory prefix in `YYYY_MM_DD` format, for example `docs/2026_03_17_项目流程梳理/`
+- 目录名前缀必须使用当前日期，格式为 `YYYY_MM_DD`，例如 `docs/2026_03_17_项目流程梳理/`
 - `zhongshu` must convert the document list into a phased project-document plan
 - `zhongshu` 必须把文档清单转成阶段化的项目文档计划
 - `shangshu` must dispatch `libu` to initialize missing files

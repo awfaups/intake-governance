@@ -88,6 +88,8 @@ For `6A`, `6AYH`, and `PPW`, the workflow's required documents are mandatory del
 对于 `6A`、`6AYH` 和 `PPW`，工作流中的必需文档是强制交付物，不是参考示例。
 When one of these modes is selected, the workflow must initialize or update the required files under `docs/` before implementation proceeds.
 当选中这些模式之一时，工作流必须先初始化或更新 `docs/` 下的必需文件，然后才能进入实施阶段。
+Use a dated task directory in the form `docs/YYYY_MM_DD_中文任务名/`.
+文档目录必须使用带日期前缀的命名方式：`docs/YYYY_MM_DD_中文任务名/`。
 
 ### Stage guidance
 阶段指引
@@ -210,6 +212,8 @@ Use a structured task card rather than a loose message. Required fields:
 - 记录每次 handoff 发生的原因
 - ensure each handoff can be represented by `references/handoff-record.schema.json`
 - 确保每次 handoff 都能落到 `references/handoff-record.schema.json` 定义的结构里
+- every handoff must include a responsibility-transfer notice stating what the current role stops owning, what the next role starts owning, and what remains out of scope
+- 每次 handoff 都必须带上职责转移提示，明确当前角色停止负责什么、下一角色开始负责什么、哪些内容仍然不在职责范围内
 - for `6A`, `6AYH`, and `PPW`, record the required-document list in the first task card and keep the docs status visible in subsequent handoffs
 - 对于 `6A`、`6AYH` 和 `PPW`，要在首张任务卡中记录必需文档清单，并在后续 handoff 中持续暴露文档状态
 - only move task status according to `references/status-transitions.json`
