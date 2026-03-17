@@ -1,13 +1,31 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "entry_agent": "taizi",
   "planner_agent": "zhongshu",
   "review_agent": "menxia",
   "dispatch_agent": "shangshu",
+  "documentation_agent": "libu",
+  "governance_agent": "libu_hr",
+  "internal_only_agents": [
+    "zaochao"
+  ],
   "agents": {
     "taizi": {
       "label": "太子",
+      "official_title": "东宫太子",
+      "english_title": "Crown Prince / Intake Office",
+      "position_group": "core",
+      "court_rank": "entry",
       "role": "intake",
+      "domain": [
+        "intake",
+        "triage",
+        "workflow-routing"
+      ],
+      "public_entry": true,
+      "status_authority": [
+        "submitted->triaged"
+      ],
       "responsibilities": [
         "消息分拣",
         "需求整理",
@@ -28,7 +46,22 @@
     },
     "zhongshu": {
       "label": "中书省",
+      "official_title": "中书令",
+      "english_title": "Secretariat / Planning Office",
+      "position_group": "core",
+      "court_rank": "plan",
       "role": "planner",
+      "domain": [
+        "planning",
+        "decomposition",
+        "architecture"
+      ],
+      "public_entry": false,
+      "status_authority": [
+        "triaged->planned",
+        "needs_revision->planned",
+        "blocked->planned"
+      ],
       "responsibilities": [
         "接旨",
         "规划",
@@ -52,7 +85,24 @@
     },
     "menxia": {
       "label": "门下省",
+      "official_title": "门下侍中",
+      "english_title": "Chancellery / Review Gate",
+      "position_group": "core",
+      "court_rank": "review",
       "role": "reviewer",
+      "domain": [
+        "review",
+        "risk",
+        "approval"
+      ],
+      "public_entry": false,
+      "status_authority": [
+        "planned->under_review",
+        "under_review->approved",
+        "under_review->needs_revision",
+        "under_review->rejected",
+        "executing->blocked"
+      ],
       "responsibilities": [
         "审议",
         "把关",
@@ -74,7 +124,27 @@
     },
     "shangshu": {
       "label": "尚书省",
+      "official_title": "尚书令",
+      "english_title": "Department of State Affairs / Dispatch Office",
+      "position_group": "core",
+      "court_rank": "dispatch",
       "role": "dispatcher",
+      "domain": [
+        "dispatch",
+        "execution-coordination",
+        "aggregation"
+      ],
+      "public_entry": false,
+      "status_authority": [
+        "planned->approved",
+        "approved->dispatched",
+        "dispatched->executing",
+        "executing->aggregated",
+        "aggregated->completed",
+        "executing->blocked",
+        "blocked->dispatched",
+        "approved->cancelled"
+      ],
       "responsibilities": [
         "派发",
         "协调",
@@ -108,7 +178,18 @@
     },
     "hubu": {
       "label": "户部",
+      "official_title": "户部尚书",
+      "english_title": "Ministry of Revenue / Resource Office",
+      "position_group": "department",
+      "court_rank": "worker",
       "role": "data_worker",
+      "domain": [
+        "data",
+        "cost",
+        "resource"
+      ],
+      "public_entry": false,
+      "status_authority": [],
       "responsibilities": [
         "数据",
         "资源",
@@ -128,7 +209,18 @@
     },
     "libu": {
       "label": "礼部",
+      "official_title": "礼部尚书",
+      "english_title": "Ministry of Rites / Documentation Office",
+      "position_group": "department",
+      "court_rank": "worker",
       "role": "docs_worker",
+      "domain": [
+        "documentation",
+        "spec",
+        "report"
+      ],
+      "public_entry": false,
+      "status_authority": [],
       "responsibilities": [
         "文档",
         "规范",
@@ -148,7 +240,18 @@
     },
     "bingbu": {
       "label": "兵部",
+      "official_title": "兵部尚书",
+      "english_title": "Ministry of War / Engineering Office",
+      "position_group": "department",
+      "court_rank": "worker",
       "role": "engineering_worker",
+      "domain": [
+        "code",
+        "feature",
+        "bugfix"
+      ],
+      "public_entry": false,
+      "status_authority": [],
       "responsibilities": [
         "代码",
         "算法",
@@ -168,7 +271,18 @@
     },
     "xingbu": {
       "label": "刑部",
+      "official_title": "刑部尚书",
+      "english_title": "Ministry of Justice / Security Office",
+      "position_group": "department",
+      "court_rank": "worker",
       "role": "security_worker",
+      "domain": [
+        "security",
+        "compliance",
+        "audit"
+      ],
+      "public_entry": false,
+      "status_authority": [],
       "responsibilities": [
         "安全",
         "合规",
@@ -188,7 +302,18 @@
     },
     "gongbu": {
       "label": "工部",
+      "official_title": "工部尚书",
+      "english_title": "Ministry of Works / Platform Office",
+      "position_group": "department",
+      "court_rank": "worker",
       "role": "platform_worker",
+      "domain": [
+        "deploy",
+        "cicd",
+        "automation"
+      ],
+      "public_entry": false,
+      "status_authority": [],
       "responsibilities": [
         "CI/CD",
         "部署",
@@ -207,8 +332,19 @@
       ]
     },
     "libu_hr": {
-      "label": "史部",
+      "label": "吏部",
+      "official_title": "吏部尚书",
+      "english_title": "Ministry of Personnel / Governance Office",
+      "position_group": "department",
+      "court_rank": "worker",
       "role": "agent_admin_worker",
+      "domain": [
+        "agent-registry",
+        "permission",
+        "governance"
+      ],
+      "public_entry": false,
+      "status_authority": [],
       "responsibilities": [
         "人事",
         "Agent 管理"
@@ -227,7 +363,19 @@
     },
     "zaochao": {
       "label": "早朝官",
+      "official_title": "朝会值日官",
+      "english_title": "Court Herald / Scheduler Hook",
+      "position_group": "automation",
+      "court_rank": "internal",
       "role": "scheduler",
+      "domain": [
+        "scheduled-intake",
+        "briefing",
+        "automation-trigger"
+      ],
+      "public_entry": false,
+      "internal_only": true,
+      "status_authority": [],
       "responsibilities": [
         "每日早朝",
         "新闻聚合"
@@ -239,7 +387,9 @@
       "can_receive_from": [
         "scheduler"
       ],
-      "can_send_to": []
+      "can_send_to": [
+        "taizi"
+      ]
     }
   }
 }

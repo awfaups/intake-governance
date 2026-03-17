@@ -13,6 +13,11 @@
     "constraints",
     "deliverables",
     "review_required",
+    "workflow_mode",
+    "current_stage",
+    "required_documents",
+    "document_status",
+    "handoff_history",
     "status"
   ],
   "properties": {
@@ -61,6 +66,79 @@
     "review_required": {
       "type": "boolean"
     },
+    "workflow_mode": {
+      "type": "string",
+      "enum": [
+        "generic_governance",
+        "6a",
+        "6ayh",
+        "ppw",
+        "project_init",
+        "planning",
+        "progressive_refactor",
+        "risk_review",
+        "technical_decision",
+        "architecture_audit",
+        "quick_decompose",
+        "custom"
+      ]
+    },
+    "current_stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "purpose",
+          "status"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "missing",
+              "planned",
+              "bootstrapped",
+              "in_progress",
+              "updated",
+              "completed",
+              "waived"
+            ]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "default": []
+    },
+    "document_status": {
+      "type": "string",
+      "enum": [
+        "not_required",
+        "pending",
+        "bootstrapped",
+        "in_progress",
+        "ready",
+        "completed"
+      ]
+    },
     "execution_plan": {
       "type": "array",
       "items": {
@@ -81,6 +159,45 @@
           }
         },
         "additionalProperties": false
+      },
+      "default": []
+    },
+    "handoff_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "handoff_id",
+          "from",
+          "to",
+          "status_before",
+          "status_after",
+          "reason"
+        ],
+        "properties": {
+          "handoff_id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "status_before": {
+            "type": "string"
+          },
+          "status_after": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "decision_summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
       },
       "default": []
     },
@@ -108,6 +225,25 @@
       },
       "default": []
     },
+    "status_reason": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "rejected_by": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "required_fixes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
     "status": {
       "type": "string",
       "enum": [
@@ -120,7 +256,10 @@
         "executing",
         "aggregated",
         "completed",
-        "rejected"
+        "needs_revision",
+        "blocked",
+        "rejected",
+        "cancelled"
       ]
     }
   },

@@ -38,6 +38,23 @@ When the user input contains `@6AYH`, output exactly:
 - `docs/[中文任务名]/07_TODO_[中文任务名].md`
 - `docs/[中文任务名]/99_REFERENCES_[中文任务名].md`
 
+## Document bootstrap
+文档初始化规则
+
+When 6AYH is selected, these files must be created or updated before optimization work starts.
+当选中 6AYH 时，必须先创建或更新这些文件，然后才能开始优化工作。
+
+- `taizi` must put the required-document list into the first task card
+- `taizi` 必须把必需文档清单写入首张任务卡
+- `zhongshu` must convert the document list into a staged plan
+- `zhongshu` 必须把文档清单转成分阶段计划
+- `shangshu` must dispatch `libu` to initialize missing files
+- `shangshu` 必须调度 `libu` 初始化缺失文件
+- every optimization step must have a corresponding doc update, rollback note, or validation note
+- 每一步优化都必须有对应的文档更新、回滚说明或验证记录
+- optimization execution is blocked until the document skeleton set exists
+- 在文档骨架集合存在之前，优化执行被阻断
+
 ## Control rules
 控制规则
 

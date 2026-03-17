@@ -6,6 +6,8 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 这个仓库不是应用程序，也不是 SDK，而是一套可复用的治理规则、工作流参考和任务卡约束，适合在 Agent Skills 场景中直接挂载使用。
 
+第一次接触这个 skill，建议先看 [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)。
+
 ## 适用场景
 
 在以下场景启用这套模型：
@@ -28,18 +30,19 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 ## 角色分工
 
-| 角色 | 职责 |
-| --- | --- |
-| `taizi` | 入口接收、需求归一、标题标准化、工作流识别 |
-| `zhongshu` | 规划、拆解、方案设计、验收标准定义 |
-| `menxia` | 风险审议、质量把关、批准或驳回 |
-| `shangshu` | 派发、协调、汇总、状态跟踪 |
-| `hubu` | 数据、资源、核算、报表 |
-| `libu` | 文档、规范、报告 |
-| `bingbu` | 代码、功能开发、Bug 修复、巡检 |
-| `xingbu` | 安全、合规、审计 |
-| `gongbu` | 部署、CI/CD、工具、自动化 |
-| `libu_hr` | Agent 注册、权限、培训、治理维护 |
+| 角色 | 正式职位 | 职责 |
+| --- | --- | --- |
+| `taizi` | 东宫太子 | 入口接收、需求归一、标题标准化、工作流识别 |
+| `zhongshu` | 中书令 | 规划、拆解、方案设计、验收标准定义 |
+| `menxia` | 门下侍中 | 风险审议、质量把关、批准或驳回 |
+| `shangshu` | 尚书令 | 派发、协调、汇总、状态跟踪 |
+| `hubu` | 户部尚书 | 数据、资源、核算、报表 |
+| `libu` | 礼部尚书 | 文档、规范、报告 |
+| `bingbu` | 兵部尚书 | 代码、功能开发、Bug 修复、巡检 |
+| `xingbu` | 刑部尚书 | 安全、合规、审计 |
+| `gongbu` | 工部尚书 | 部署、CI/CD、工具、自动化 |
+| `libu_hr` | 吏部尚书 | Agent 注册、权限、培训、治理维护 |
+| `zaochao` | 朝会值日官 | 内部定时触发、晨报聚合，不作为外部入口 |
 
 ## 支持的工作流别名
 
@@ -83,9 +86,32 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 - `constraints`
 - `deliverables`
 - `review_required`
+- `workflow_mode`
+- `current_stage`
+- `required_documents`
+- `document_status`
+- `handoff_history`
 - `status`
 
 完整 schema 见 [references/task-card.schema.json](references/task-card.schema.json)。
+
+## 状态治理
+
+推荐的硬状态流转为：
+
+`submitted -> triaged -> planned -> under_review -> approved -> dispatched -> executing -> aggregated -> completed`
+
+返工与异常状态包括：
+
+- `needs_revision`
+- `blocked`
+- `rejected`
+- `cancelled`
+
+每次状态变化都应附带 handoff 记录，详见：
+
+- [references/status-transitions.json](references/status-transitions.json)
+- [references/handoff-record.schema.json](references/handoff-record.schema.json)
 
 ## 目录结构
 
@@ -95,9 +121,11 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 └── references
     ├── agents.json
     ├── engineering-governance.md
+    ├── handoff-record.schema.json
     ├── role-permissions.md
     ├── role-prompts.json
     ├── routing-rules.json
+    ├── status-transitions.json
     ├── taizi-classification.md
     ├── task-card.schema.json
     ├── workflow-routing.json
@@ -111,6 +139,8 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 - [SKILL.md](SKILL.md)：主 skill 定义、启用条件、总流程、读取策略
 - [references/agents.json](references/agents.json)：角色定义与可收发关系
+- [references/status-transitions.json](references/status-transitions.json)：合法状态迁移与角色权限
+- [references/handoff-record.schema.json](references/handoff-record.schema.json)：标准流转记录结构
 - [references/role-permissions.md](references/role-permissions.md)：越权边界与强制职责链
 - [references/workflow-routing.json](references/workflow-routing.json)：别名、自动分类信号、激活响应
 - [references/task-card.schema.json](references/task-card.schema.json)：任务卡 JSON Schema

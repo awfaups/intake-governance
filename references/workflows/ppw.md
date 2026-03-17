@@ -40,6 +40,21 @@ When the user input contains `@PPW` or clearly requests project-process inventor
 - `docs/project/07_CONSENSUS.md`
 - `docs/project/08_DECISIONS.md`
 
+## Document bootstrap
+文档初始化规则
+
+When PPW is selected, these files must be created or updated as the project's fact base.
+当选中 PPW 时，必须创建或更新这些文件，作为项目事实源。
+
+- `taizi` must put the required-document list into the first task card
+- `taizi` 必须把必需文档清单写入首张任务卡
+- `zhongshu` must convert the document list into a phased project-document plan
+- `zhongshu` 必须把文档清单转成阶段化的项目文档计划
+- `shangshu` must dispatch `libu` to initialize missing files
+- `shangshu` 必须调度 `libu` 初始化缺失文件
+- progress beyond A1 should not happen while the project-document set is still missing
+- 当项目文档集仍然缺失时，不应推进到 A1 之后的阶段
+
 ## Control rules
 控制规则
 

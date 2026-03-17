@@ -1,0 +1,150 @@
+{
+  "version": "1.0.0",
+  "default_status_flow": [
+    "submitted",
+    "triaged",
+    "planned",
+    "under_review",
+    "approved",
+    "dispatched",
+    "executing",
+    "aggregated",
+    "completed"
+  ],
+  "rework_statuses": [
+    "needs_revision",
+    "blocked",
+    "rejected",
+    "cancelled"
+  ],
+  "transition_rules": [
+    {
+      "from": "submitted",
+      "to": "triaged",
+      "allowed_roles": ["taizi"],
+      "requires_reason": true,
+      "notes": "入口归一、补全标题和工作流模式。"
+    },
+    {
+      "from": "triaged",
+      "to": "planned",
+      "allowed_roles": ["zhongshu"],
+      "requires_reason": true,
+      "notes": "方案和执行拆解已形成。"
+    },
+    {
+      "from": "planned",
+      "to": "under_review",
+      "allowed_roles": ["zhongshu"],
+      "requires_reason": true,
+      "conditions": ["review_required=true"],
+      "notes": "需要门下省质量或风险审议。"
+    },
+    {
+      "from": "planned",
+      "to": "approved",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "conditions": ["review_required=false"],
+      "notes": "低风险任务可直接进入调度前批准。"
+    },
+    {
+      "from": "under_review",
+      "to": "approved",
+      "allowed_roles": ["menxia"],
+      "requires_reason": true,
+      "required_fields": ["approved_by"],
+      "notes": "通过审议并允许派发。"
+    },
+    {
+      "from": "under_review",
+      "to": "needs_revision",
+      "allowed_roles": ["menxia"],
+      "requires_reason": true,
+      "required_fields": ["rejection_reason", "required_fixes", "rejected_by"],
+      "notes": "方案可修正后重回中书省。"
+    },
+    {
+      "from": "under_review",
+      "to": "rejected",
+      "allowed_roles": ["menxia"],
+      "requires_reason": true,
+      "required_fields": ["rejection_reason", "rejected_by"],
+      "notes": "核心前提失效或风险不可控。"
+    },
+    {
+      "from": "needs_revision",
+      "to": "planned",
+      "allowed_roles": ["zhongshu"],
+      "requires_reason": true,
+      "required_fields": ["required_fixes"],
+      "notes": "中书省完成修订并重新提交。"
+    },
+    {
+      "from": "approved",
+      "to": "dispatched",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "notes": "派单给执行部门。"
+    },
+    {
+      "from": "dispatched",
+      "to": "executing",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "conditions": ["worker_assignment_ready=true"],
+      "notes": "执行部门已接单。"
+    },
+    {
+      "from": "executing",
+      "to": "blocked",
+      "allowed_roles": ["shangshu", "menxia"],
+      "requires_reason": true,
+      "notes": "遇到依赖、风险或文档未完成阻塞。"
+    },
+    {
+      "from": "blocked",
+      "to": "planned",
+      "allowed_roles": ["zhongshu"],
+      "requires_reason": true,
+      "notes": "阻塞需要重规划。"
+    },
+    {
+      "from": "blocked",
+      "to": "dispatched",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "conditions": ["blocking_issues_resolved=true"],
+      "notes": "阻塞已解除，可重新派单。"
+    },
+    {
+      "from": "executing",
+      "to": "aggregated",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "conditions": ["all_worker_returns_received=true"],
+      "notes": "执行结果已收齐并汇总。"
+    },
+    {
+      "from": "aggregated",
+      "to": "completed",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "conditions": ["deliverables_complete=true"],
+      "notes": "交付物、文档和风险摘要均已闭环。"
+    },
+    {
+      "from": "approved",
+      "to": "cancelled",
+      "allowed_roles": ["shangshu"],
+      "requires_reason": true,
+      "conditions": ["explicit_user_or_policy_cancel=true"],
+      "notes": "任务在执行前取消。"
+    }
+  ],
+  "global_requirements": {
+    "require_handoff_record_for_every_transition": true,
+    "require_document_status_visibility_for_workflow_modes": ["6a", "6ayh", "ppw"],
+    "forbid_worker_direct_status_completion": true
+  }
+}

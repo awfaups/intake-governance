@@ -50,6 +50,32 @@
 2. 说明为什么越权
 3. 回到正确角色链路
 
+### 1.4 职位对照
+
+为避免“角色 token”和“朝廷职位”混用，统一按下表理解：
+
+- `taizi`：东宫太子，唯一公开入口
+- `zhongshu`：中书令，负责规划与制命
+- `menxia`：门下侍中，负责审议与封驳
+- `shangshu`：尚书令，负责调度与汇总
+- `hubu`：户部尚书，负责资源、核算、报表
+- `libu`：礼部尚书，负责文档、规范、报告
+- `bingbu`：兵部尚书，负责代码、实现、测试支持
+- `xingbu`：刑部尚书，负责安全、合规、审计
+- `gongbu`：工部尚书，负责构建、部署、工具链
+- `libu_hr`：吏部尚书，负责 Agent 人事、权限、治理维护
+- `zaochao`：朝会值日官，仅作为内部定时触发职位，不是外部入口
+
+### 1.5 状态流转与留痕
+
+- 所有状态变更必须符合 `references/status-transitions.json`
+- 所有 handoff 必须生成一条记录，字段应符合 `references/handoff-record.schema.json`
+- `menxia` 驳回时必须写明 `rejection_reason`
+- `menxia` 要求返工时必须写明 `required_fixes`
+- 执行部门不能把任务直接改成 `completed`
+- `shangshu` 只能在收齐执行回传后把任务推进到 `aggregated`
+- 只有 `shangshu` 可以输出对外最终结论并推进到 `completed`
+
 ---
 
 ## 2. `taizi` 权限
@@ -184,6 +210,15 @@
 - 破坏性操作未确认
 - 工作流阶段缺失
 
+### 4.6 `menxia` 的驳回输出要求
+
+`menxia` 一旦做出 `needs_revision` 或 `rejected` 结论，必须同步提供：
+
+- `rejection_reason`
+- `required_fixes`（如果是可修正驳回）
+- 回退目标角色，通常为 `zhongshu`
+- 当前状态为何不允许继续推进
+
 ---
 
 ## 5. `shangshu` 权限
@@ -227,6 +262,9 @@
 - 所有执行结果必须先回到 `shangshu`
 - `shangshu` 才能对外做统一汇总
 - 派单必须符合权限矩阵
+- 每次派单、收件、汇总都必须附带 handoff 原因
+- 状态推进必须符合 `references/status-transitions.json`
+- 对于 `6A`、`6AYH`、`PPW`，未完成文档初始化前不得推进到 `executing`
 
 ---
 
@@ -361,7 +399,7 @@
 
 ---
 
-## 11. `libu_hr` 权限
+## 11. `libu_hr`（吏部）权限
 
 ### 11.1 `libu_hr` 的职责
 
@@ -374,6 +412,7 @@
 - 管理角色和权限说明
 - 建议更新治理规则
 - 维护 agent 注册信息
+- 维护职位注册表和正式职位命名
 
 ### 11.3 `libu_hr` 不能做什么
 

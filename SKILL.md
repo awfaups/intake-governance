@@ -84,17 +84,28 @@ Use this default path for substantial tasks:
 If `taizi` auto-classifies the request as `6A`, `6AYH`, or `PPW`, output that workflow's activation response exactly as defined in the workflow references before continuing.
 如果 `taizi` 自动将请求归类为 `6A`、`6AYH` 或 `PPW`，那么在继续之前，必须先按工作流参考文件中的定义原样输出对应激活响应语句。
 
+For `6A`, `6AYH`, and `PPW`, the workflow's required documents are mandatory deliverables, not advisory examples.
+对于 `6A`、`6AYH` 和 `PPW`，工作流中的必需文档是强制交付物，不是参考示例。
+When one of these modes is selected, the workflow must initialize or update the required files under `docs/` before implementation proceeds.
+当选中这些模式之一时，工作流必须先初始化或更新 `docs/` 下的必需文件，然后才能进入实施阶段。
+
 ### Stage guidance
 阶段指引
 
 - `taizi`: normalize the request, extract intent, assign title and tags
 - `taizi`：规范化请求、提取意图、生成标题和标签
+- `taizi`: include the selected workflow mode and required-document manifest in the first task card when mode is `6A`, `6AYH`, or `PPW`
+- `taizi`：当模式为 `6A`、`6AYH` 或 `PPW` 时，在首张任务卡中包含工作流模式和必需文档清单
 - `zhongshu`: decompose the task, define execution steps, choose likely worker departments
 - `zhongshu`：拆解任务、定义执行步骤、选择可能参与的执行部门
+- `zhongshu`: convert required documents into a document-bootstrap plan and stage ownership
+- `zhongshu`：把必需文档转成可执行的文档初始化计划和阶段归属
 - `menxia`: review for quality, risk, ambiguity, and policy fit; either reject to `zhongshu` or approve to `shangshu`
 - `menxia`：从质量、风险、歧义和规则适配角度做审议；要么驳回给 `zhongshu`，要么批准给 `shangshu`
 - `shangshu`: dispatch to workers, track returns, aggregate outputs
 - `shangshu`：把任务派给执行部门、跟踪返回结果并做汇总
+- `shangshu`: dispatch `libu` to create or update required workflow documents before code execution or final reporting
+- `shangshu`：在进入代码执行或最终汇报前，先调度 `libu` 创建或更新工作流必需文档
 - workers: execute within their domain and return only to `shangshu`
 - 执行部门：只在自己的职责范围内执行，并且只能把结果回给 `shangshu`
 
@@ -105,6 +116,8 @@ Read these reference files when you need precise behavior:
 需要精确定义时，请读取以下参考文件：
 
 - `references/agents.json`
+- `references/status-transitions.json`
+- `references/handoff-record.schema.json`
 - `references/role-permissions.md`
 - `references/routing-rules.json`
 - `references/task-card.schema.json`
@@ -119,6 +132,13 @@ Read these workflow files when the selected internal mode needs them:
 - `references/workflows/6a.md`
 - `references/workflows/6ayh.md`
 - `references/workflows/ppw.md`
+
+Treat each workflow file's `Required documents` section as an execution contract.
+把每个工作流文件中的 `Required documents` 部分视为执行契约。
+If those files do not exist yet, create skeleton documents first.
+如果这些文件还不存在，先创建骨架文档。
+If they already exist, update them stage by stage instead of silently skipping them.
+如果这些文件已经存在，就按阶段更新它们，而不是静默跳过。
 
 ## Routing policy
 路由规则
@@ -157,6 +177,9 @@ Send the task through `menxia` when any of the following is true:
 - the task touches security, compliance, deployment, or permissions
 - 任务涉及安全、合规、部署或权限
 
+When `menxia` rejects or sends back a task, it must emit `rejection_reason` and, when applicable, `required_fixes`.
+当 `menxia` 驳回或打回任务时，必须输出 `rejection_reason`，并在适用时给出 `required_fixes`。
+
 ## Task-card requirements
 任务卡要求
 
@@ -173,6 +196,11 @@ Use a structured task card rather than a loose message. Required fields:
 - `constraints`
 - `deliverables`
 - `review_required`
+- `workflow_mode`
+- `current_stage`
+- `required_documents`
+- `document_status`
+- `handoff_history`
 - `status`
 
 ## Output discipline
@@ -180,12 +208,24 @@ Use a structured task card rather than a loose message. Required fields:
 
 - record why each handoff happened
 - 记录每次 handoff 发生的原因
+- ensure each handoff can be represented by `references/handoff-record.schema.json`
+- 确保每次 handoff 都能落到 `references/handoff-record.schema.json` 定义的结构里
+- for `6A`, `6AYH`, and `PPW`, record the required-document list in the first task card and keep the docs status visible in subsequent handoffs
+- 对于 `6A`、`6AYH` 和 `PPW`，要在首张任务卡中记录必需文档清单，并在后续 handoff 中持续暴露文档状态
+- only move task status according to `references/status-transitions.json`
+- 只能按照 `references/status-transitions.json` 推进任务状态
 - keep worker outputs scoped to their own domain
 - 执行部门的输出必须严格限制在自身职责范围内
 - aggregate final results in `shangshu`
 - 最终结果必须由 `shangshu` 汇总
+- do not start implementation for `6A` or `6AYH` until the workflow document skeletons are created
+- 对于 `6A` 和 `6AYH`，在工作流文档骨架创建完成之前，不得开始实施
+- do not advance `PPW` beyond inventory without its required project documents being initialized
+- 对于 `PPW`，在项目必需文档初始化完成之前，不得推进到资产盘点之后的阶段
 - do not let workers bypass the handoff graph
 - 不允许执行部门绕过 handoff 图
+- do not let workers close a task directly; workers return evidence, `shangshu` closes
+- 不允许执行部门直接关单；执行部门只回传证据，由 `shangshu` 统一结案
 - when a workflow needs a fixed activation response, output that response verbatim before continuing
 - 当某个工作流要求固定激活响应时，必须先原样输出该响应再继续
 - when in doubt about role boundaries, follow `references/role-permissions.md` before acting
