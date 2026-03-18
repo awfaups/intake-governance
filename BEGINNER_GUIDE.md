@@ -140,6 +140,21 @@ ls ~/.codex/skills/imperial-agent-governance
 1. 识别你的任务属于什么类型
 2. 判断要走哪条内部流程
 3. 生成结构化任务卡
+4. 把 workflow 文档写到你当前打开项目根目录下的 `docs/` 目录
+
+文档目录格式统一为：
+
+```text
+docs/YYYY_MM_DD_中文任务名/
+```
+
+例如：
+
+```text
+docs/2026_03_17_首页优化/
+```
+
+这里的 `docs/` 指的是你当前 IDE 里正在处理的那个项目根目录，不是这个 skill 包安装目录。
 4. 交给 `zhongshu` 做方案和拆解
 5. 如果任务风险高，再交给 `menxia`
 6. 最后由 `shangshu` 协调执行角色

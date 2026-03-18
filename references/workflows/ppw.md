@@ -43,13 +43,15 @@ When the user input contains `@PPW` or clearly requests project-process inventor
 ## Document bootstrap
 文档初始化规则
 
-When PPW is selected, these files must be created or updated as the project's fact base.
-当选中 PPW 时，必须创建或更新这些文件，作为项目事实源。
+When PPW is selected, these files must be created or updated under the current active project's root `docs/` directory as the project's fact base.
+当选中 PPW 时，必须在当前打开项目根目录下的 `docs/` 目录中创建或更新这些文件，作为项目事实源。
 
 - `taizi` must put the required-document list into the first task card
 - `taizi` 必须把必需文档清单写入首张任务卡
 - use the current date as a directory prefix in `YYYY_MM_DD` format, for example `docs/2026_03_17_项目流程梳理/`
 - 目录名前缀必须使用当前日期，格式为 `YYYY_MM_DD`，例如 `docs/2026_03_17_项目流程梳理/`
+- the `docs/` directory is always relative to the active project root in the IDE
+- `docs/` 目录始终相对于当前 IDE 中打开项目的根目录
 - `zhongshu` must convert the document list into a phased project-document plan
 - `zhongshu` 必须把文档清单转成阶段化的项目文档计划
 - `shangshu` must dispatch `libu` to initialize missing files

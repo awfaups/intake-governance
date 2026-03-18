@@ -23,8 +23,8 @@ When the user input contains `@taizi`, `taizi` must do these steps in order:
 3. 构建结构化任务卡，并补齐 `workflow_mode`、`current_stage`、`status=triaged` 以及第一条 `handoff_history` 记录。
 4. If the classification result is `6A`, `6AYH`, or `PPW`, output the workflow activation response exactly.
 4. 如果分类结果是 `6A`、`6AYH` 或 `PPW`，先原样输出该工作流的激活响应语句。
-5. If the classification result is `6A`, `6AYH`, or `PPW`, extract that workflow's required-document list and attach it to the task card.
-5. 如果分类结果是 `6A`、`6AYH` 或 `PPW`，提取该工作流的必需文档清单并附加到任务卡中。
+5. If the classification result is `6A`, `6AYH`, or `PPW`, extract that workflow's required-document list, resolve it against the current project's root `docs/` directory, and attach it to the task card.
+5. 如果分类结果是 `6A`、`6AYH` 或 `PPW`，提取该工作流的必需文档清单，并将路径解析到当前打开项目根目录下的 `docs/` 目录，再附加到任务卡中。
 6. Mark the task card as requiring document bootstrap before execution when those required files are missing, and set `document_status=pending`.
 6. 如果这些必需文件缺失，就把任务卡标记为“执行前必须完成文档初始化”，并设置 `document_status=pending`。
 7. Hand off only to `zhongshu`.

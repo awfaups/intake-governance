@@ -86,10 +86,12 @@ If `taizi` auto-classifies the request as `6A`, `6AYH`, or `PPW`, output that wo
 
 For `6A`, `6AYH`, and `PPW`, the workflow's required documents are mandatory deliverables, not advisory examples.
 对于 `6A`、`6AYH` 和 `PPW`，工作流中的必需文档是强制交付物，不是参考示例。
-When one of these modes is selected, the workflow must initialize or update the required files under `docs/` before implementation proceeds.
-当选中这些模式之一时，工作流必须先初始化或更新 `docs/` 下的必需文件，然后才能进入实施阶段。
+When one of these modes is selected, the workflow must initialize or update the required files under the current IDE project's root `docs/` directory before implementation proceeds.
+当选中这些模式之一时，工作流必须先在当前 IDE / 当前打开项目根目录下的 `docs/` 目录中初始化或更新必需文件，然后才能进入实施阶段。
 Use a dated task directory in the form `docs/YYYY_MM_DD_中文任务名/`.
 文档目录必须使用带日期前缀的命名方式：`docs/YYYY_MM_DD_中文任务名/`。
+Never place generated workflow docs inside the skill package repository itself unless that repository is the active project being worked on.
+除非当前正在处理的项目本身就是这个 skill 仓库，否则禁止把工作流文档写到 skill 包仓库自身目录里。
 
 ### Stage guidance
 阶段指引

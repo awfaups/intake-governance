@@ -174,6 +174,8 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 `docs/YYYY_MM_DD_中文任务名/`
 
+这个 `docs/` 必须位于**当前 IDE / 当前打开项目的根目录**下，而不是 skill 包自己的目录里。
+
 例如：
 
 `docs/2026_03_17_首页优化/`
