@@ -6,11 +6,11 @@ When the user input contains `@intake`, do these steps in order:
 
 1. Normalize the request and extract the main goal.
 2. Classify the task as one of:
-   - `6A`
-   - `6AYH`
-   - `PPW`
-   - `SDD`
-   - `generic governance`
+- `6A`
+- `6AYH`
+- `PPW`
+- `SDD`
+- `generic_governance`
 3. Build the first structured task card with:
    - `workflow_mode`
    - `current_stage`
@@ -30,7 +30,7 @@ Classification heuristics:
 - Choose `6AYH` for refactor, optimization, performance cleanup, or maintenance-cost reduction.
 - Choose `PPW` for inventory, current-state clarification, asset mapping, or process discovery.
 - Choose `SDD` for spec-driven development, spec-first delivery, or spec-plan-implement loops.
-- Choose `generic governance` when none of the above clearly match but the task still needs planning, review, and dispatch.
+- Choose `generic_governance` when none of the above clearly match but the task still needs planning, review, and dispatch.
 
 Activation-output rule:
 

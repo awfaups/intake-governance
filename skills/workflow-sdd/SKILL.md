@@ -19,7 +19,11 @@ This skill enforces:
 - spec-first workflow only
 - required docs as mandatory deliverables
 - docs under `docs/YYYY_MM_DD_中文任务名_vN/`
+- Spec, Plan, Design, Atomize, Approve, Execute, and Verify gates
 - implementation derived from approved specs
+- requirement, task, implementation, test, and acceptance traceability
+- user clarification when the spec cannot safely determine behavior, scope, or acceptance
+- test-first implementation when the project test setup supports it
 - no execution before the required spec bundle exists
 
 Read next: `references/sdd.md`

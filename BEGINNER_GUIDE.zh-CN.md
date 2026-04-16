@@ -229,10 +229,10 @@ docs/2026_03_23_首页优化_v1/
 
 建议按这个顺序看：
 
-1. [OVERVIEW.zh-CN.md](/Users/caiyanning/AI_skills/role-based-agent-governance/OVERVIEW.zh-CN.md)
-2. [OVERVIEW.md](/Users/caiyanning/AI_skills/role-based-agent-governance/OVERVIEW.md)
-3. [role-permissions.md](/Users/caiyanning/AI_skills/role-based-agent-governance/references/role-permissions.md)
-4. [workflow-routing.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/workflow-routing.json)
+1. [OVERVIEW.zh-CN.md](OVERVIEW.zh-CN.md)
+2. [OVERVIEW.md](OVERVIEW.md)
+3. [role-permissions.md](references/role-permissions.md)
+4. [workflow-routing.json](references/workflow-routing.json)
 
 ## 12. 一句话总结
 

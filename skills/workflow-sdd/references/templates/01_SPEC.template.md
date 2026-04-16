@@ -2,7 +2,7 @@
 
 > File name example:
 >
-> `docs/YYYY_MM_DD_中文任务名_vN/01_SPEC_中文任务名.md`
+> `docs/YYYY_MM_DD_中文任务名_vN/01_SPEC_规格定义.md`
 
 ## 1. Background
 
@@ -50,4 +50,3 @@
 | File Path | Start Line | End Line | Change Summary | Before Context | After Context |
 | --- | --- | --- | --- | --- | --- |
 | `src/example.ts` | `120` | `168` | Describe the intended change | Existing code snippet or summary | Target code snippet or summary |
-

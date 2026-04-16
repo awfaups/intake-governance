@@ -19,6 +19,11 @@ This skill enforces:
 - inventory and process-clarification workflow only
 - required docs as mandatory deliverables
 - docs under `docs/YYYY_MM_DD_中文任务名_vN/`
+- A1 Inventory, A2 Goals, A3 Flows, A4 Contracts, A5 Risks, A6 Roadmap, and A7 Sign-off gates
 - fact-based output instead of speculative conclusions
+- explicit separation of verified facts, inferred facts, and unknowns
+- traceable evidence for important claims
+- no implementation inside PPW
+- stop before deeper planning when critical repositories, configs, credentials, or provenance are missing
 
 Read next: `references/ppw.md`

@@ -19,6 +19,11 @@ This skill enforces:
 - progressive optimization only
 - required docs as mandatory deliverables
 - docs under `docs/YYYY_MM_DD_中文任务名_vN/`
+- Align, Architect, Atomize, Approve, Automate, and Assess gates
+- current-state and risk analysis before design
+- explicit behavior-preservation and rollback expectations
+- user clarification for contract changes, risky changes, or preference-heavy decisions
+- characterization tests before refactoring when existing behavior is underspecified
 - code-change records with file path, line range, before context, and after context
 - no execution before workflow docs exist
 

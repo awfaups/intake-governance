@@ -39,7 +39,7 @@ Do not spend model context reading separate Chinese explanation files unless the
 - `6AYH`
 - `PPW`
 - `SDD`
-- `generic governance`
+- `generic_governance`
 
 If `intake` auto-classifies the request as `6A`, `6AYH`, `PPW`, or `SDD`, output that workflow's activation response exactly before any additional planning text.
 

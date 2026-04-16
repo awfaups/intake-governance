@@ -190,7 +190,7 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 ## 工作流文档目录命名
 
-`6A`、`6AYH`、`PPW` 生成的文档目录，统一使用：
+`6A`、`6AYH`、`PPW`、`SDD` 生成的文档目录，统一使用：
 
 `docs/YYYY_MM_DD_中文任务名_vN/`
 

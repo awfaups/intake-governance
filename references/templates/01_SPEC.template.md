@@ -2,7 +2,7 @@
 
 > File name example:
 >
-> `docs/YYYY_MM_DD_中文任务名_vN/01_SPEC_中文任务名.md`
+> `docs/YYYY_MM_DD_中文任务名_vN/01_SPEC_规格定义.md`
 
 ### 1. Background
 

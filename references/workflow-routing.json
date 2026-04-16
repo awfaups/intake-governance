@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "entry_agent": "intake",
-  "external_entry_rule": "all_external_multi_agent_requests_must_enter_via_taizi",
+  "external_entry_rule": "all_external_multi_agent_requests_must_enter_via_intake",
   "aliases": {
     "@init": {
       "owner": "intake",
@@ -56,12 +56,12 @@
       "workflow": "6a",
       "then": ["planner", "review-gate", "orchestrator", "engineering", "docs-spec"],
       "description": "新增功能开发工作流",
-      "activation_response": "✅ 6A 前端开发流程已激活\n当前任务类型：【新增功能开发】\n当前阶段：Align（目标对齐）"
+      "activation_response": "6A工作流已激活\n当前阶段：Align（需求对齐）"
     },
     "@6AYH": {
       "owner": "intake",
       "workflow": "6ayh",
-      "then": ["planner", "review-gate", "orchestrator", "engineering", "security"],
+      "then": ["planner", "review-gate", "orchestrator", "engineering", "docs-spec", "security"],
       "description": "渐进式优化工作流",
       "activation_response": "✅ 6A 优化工作流（6AYH · 前端渐进式优化模式）已激活\n当前阶段：Align（目标与风险对齐）"
     },

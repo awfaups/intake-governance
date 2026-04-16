@@ -102,7 +102,7 @@
 - `handoff_history`
 - `status`
 
-完整 schema 见 [task-card.schema.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/task-card.schema.json)。
+完整 schema 见 [task-card.schema.json](references/task-card.schema.json)。
 
 ## 状态治理
 
@@ -119,20 +119,20 @@
 
 每次状态变化都应附带 handoff 记录，详见：
 
-- [status-transitions.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/status-transitions.json)
-- [handoff-record.schema.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/handoff-record.schema.json)
+- [status-transitions.json](references/status-transitions.json)
+- [handoff-record.schema.json](references/handoff-record.schema.json)
 
 每条 handoff 记录都应该显式带上 `responsibility_notice`，用于提示职责如何从上一个角色转移到下一个角色。
 
 ## 关键文件
 
-- [SKILL.md](/Users/caiyanning/AI_skills/role-based-agent-governance/SKILL.md)：主 skill 定义，给模型读
-- [OVERVIEW.md](/Users/caiyanning/AI_skills/role-based-agent-governance/OVERVIEW.md)：仓库说明
-- [BEGINNER_GUIDE.md](/Users/caiyanning/AI_skills/role-based-agent-governance/BEGINNER_GUIDE.md)：新手说明
-- [BEGINNER_GUIDE.zh-CN.md](/Users/caiyanning/AI_skills/role-based-agent-governance/BEGINNER_GUIDE.zh-CN.md)：独立中文新手说明
-- [agents.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/agents.json)：角色定义与可收发关系
-- [workflow-routing.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/workflow-routing.json)：别名、自动分类信号、激活响应
-- [role-permissions.md](/Users/caiyanning/AI_skills/role-based-agent-governance/references/role-permissions.md)：越权边界与强制职责链
+- [SKILL.md](SKILL.md)：主 skill 定义，给模型读
+- [OVERVIEW.md](OVERVIEW.md)：仓库说明
+- [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)：新手说明
+- [BEGINNER_GUIDE.zh-CN.md](BEGINNER_GUIDE.zh-CN.md)：独立中文新手说明
+- [agents.json](references/agents.json)：角色定义与可收发关系
+- [workflow-routing.json](references/workflow-routing.json)：别名、自动分类信号、激活响应
+- [role-permissions.md](references/role-permissions.md)：越权边界与强制职责链
 
 ## 工作流文档目录命名
 
@@ -165,7 +165,7 @@
 
 建议按这个顺序看：
 
-1. [BEGINNER_GUIDE.zh-CN.md](/Users/caiyanning/AI_skills/role-based-agent-governance/BEGINNER_GUIDE.zh-CN.md)
-2. [OVERVIEW.md](/Users/caiyanning/AI_skills/role-based-agent-governance/OVERVIEW.md)
-3. [role-permissions.md](/Users/caiyanning/AI_skills/role-based-agent-governance/references/role-permissions.md)
-4. [workflow-routing.json](/Users/caiyanning/AI_skills/role-based-agent-governance/references/workflow-routing.json)
+1. [BEGINNER_GUIDE.zh-CN.md](BEGINNER_GUIDE.zh-CN.md)
+2. [OVERVIEW.md](OVERVIEW.md)
+3. [role-permissions.md](references/role-permissions.md)
+4. [workflow-routing.json](references/workflow-routing.json)

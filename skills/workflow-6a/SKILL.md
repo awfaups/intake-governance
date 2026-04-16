@@ -11,15 +11,18 @@ If the request still needs global intake, routing, or cross-role governance, ent
 
 Activation response:
 
-> ✅ 6A 前端开发流程已激活
-> 当前任务类型：【新增功能开发】
-> 当前阶段：Align（目标对齐）
+> 6A工作流已激活
+> 当前阶段：Align（需求对齐）
 
 This skill enforces:
 
 - new-feature workflow only
 - required docs as mandatory deliverables
 - docs under `docs/YYYY_MM_DD_中文任务名_vN/`
+- Align, Architect, Atomize, Approve, Automate, and Assess gates
+- project-context analysis before design
+- user clarification for risky or preference-heavy decisions
+- test-first implementation when the project test setup supports it
 - code-change records with file path, line range, before context, and after context
 - no implementation before workflow docs exist
 
