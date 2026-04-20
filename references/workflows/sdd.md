@@ -131,6 +131,8 @@ Required actions:
 - Create `05_APPROVE_审批确认.md`.
 - Review spec completeness, plan/spec consistency, design feasibility, task coverage, risk, security, testability, and acceptance traceability.
 - Block execution when `01_SPEC_规格定义.md`, `02_PLAN_实施计划.md`, or `05_APPROVE_审批确认.md` is missing.
+- Present the spec bundle summary to the user and wait for explicit confirmation before any code generation or implementation.
+- Set `user_confirmation.status=confirmed` only after the user explicitly confirms the spec bundle.
 - If review fails, return to Spec, Plan, Design, or Atomize.
 
 Quality gate:
@@ -139,6 +141,7 @@ Quality gate:
 - Acceptance criteria are traceable to tests or validation.
 - Risks are mitigated or accepted.
 - Execution can proceed without inventing requirements.
+- User confirmation for the spec bundle has been received before execution.
 
 ### Stage 6: Execute
 
@@ -147,6 +150,7 @@ Goal: approved spec bundle -> implementation and evidence.
 Required actions:
 
 - Create or update `06_IMPLEMENTATION_LOG_实施记录.md` while executing.
+- Verify `user_confirmation.status=confirmed` before generating code, editing files, or dispatching implementation.
 - Execute tasks in dependency order.
 - For each task, record spec trace, input contract, target files, implementation notes, tests, validation result, and blockers.
 - Follow existing project style, libraries, tooling, error handling, and component patterns.
@@ -219,6 +223,7 @@ Quality gate:
 
 - Do not skip stages.
 - Do not start implementation before Spec, Plan, Design, Atomize, and Approve are complete.
+- Do not generate or modify code until the spec bundle has been output and explicitly confirmed by the user.
 - Do not introduce requirements outside the approved spec.
 - Keep documents synchronized with code changes.
 - Record code-changing targets with file path, line range, before context, after context, and spec trace whenever feasible.

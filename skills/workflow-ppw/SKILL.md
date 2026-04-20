@@ -24,6 +24,7 @@ This skill enforces:
 - explicit separation of verified facts, inferred facts, and unknowns
 - traceable evidence for important claims
 - no implementation inside PPW
+- later code-changing workflows must wait for explicit user confirmation of their documents before code generation
 - stop before deeper planning when critical repositories, configs, credentials, or provenance are missing
 
 Read next: `references/ppw.md`

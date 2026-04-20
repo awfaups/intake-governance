@@ -121,7 +121,8 @@ ls ~/.codex/skills/role-based-agent-governance
 4. 把 workflow 文档写到你当前打开项目根目录下的 `docs/` 目录
 5. 交给 `planner` 做方案和拆解
 6. 如果任务风险高，再交给 `review-gate`
-7. 最后由 `orchestrator` 协调执行角色
+7. 先把文档包输出给你确认
+8. 你明确确认后，才由 `orchestrator` 协调代码生成或代码修改
 
 文档目录格式统一为：
 

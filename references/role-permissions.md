@@ -74,6 +74,8 @@
 - `review-gate` 驳回时必须写明 `rejection_reason`
 - `review-gate` 要求返工时必须写明 `required_fixes`
 - 涉及代码修改时，任务卡和工作流文档都必须包含 `code_change_targets`
+- 涉及代码生成或代码修改时，必须先输出或更新工作流文档，并取得用户对文档的显式确认
+- 用户确认前，`user_confirmation.status` 必须保持为 `pending`，不得进入代码生成或执行阶段
 - 执行部门不能把任务直接改成 `completed`
 - `orchestrator` 只能在收齐执行回传后把任务推进到 `aggregated`
 - 只有 `orchestrator` 可以输出对外最终结论并推进到 `completed`
@@ -278,6 +280,7 @@
 - 每次派单、收件、汇总都必须附带 handoff 原因
 - 状态推进必须符合 `references/status-transitions.json`
 - 对于 `6A`、`6AYH`、`PPW`、`SDD`，未完成文档初始化前不得推进到 `executing`
+- 对于任何会生成或修改代码的任务，未取得 `user_confirmation.status=confirmed` 前，不得派发给 `engineering`，不得推进到 `executing`
 
 ---
 

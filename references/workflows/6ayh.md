@@ -107,6 +107,8 @@ Required actions:
 - Create `04_APPROVE_审批确认.md`.
 - Review completeness, behavior preservation, contract compatibility, rollback practicality, testability, and operational risk.
 - Require explicit approval for public API changes, data model migrations, performance tradeoffs, or broad rewrites.
+- Present the document bundle summary to the user and wait for explicit confirmation before any code generation or optimization implementation.
+- Set `user_confirmation.status=confirmed` only after the user explicitly confirms the documents.
 - If review fails, return to Architect or Atomize.
 
 Quality gate:
@@ -115,6 +117,7 @@ Quality gate:
 - Risk mitigation and rollback are sufficient.
 - Required tests or checks are identified.
 - Execution can proceed without reinterpreting the optimization target.
+- User confirmation for the document bundle has been received before execution.
 
 ### Stage 5: Automate
 
@@ -123,6 +126,7 @@ Goal: execute optimization nodes -> tests -> validation -> synchronized docs.
 Required actions:
 
 - Create or update `05_ACCEPTANCE_验收记录.md` while executing.
+- Verify `user_confirmation.status=confirmed` before generating code, editing files, or dispatching implementation.
 - Execute tasks in dependency order.
 - For each task, verify inputs, capture before state when useful, implement the smallest safe change, update or add tests, run validation, and record result.
 - Follow existing project style, libraries, tooling, error handling, and component patterns.
@@ -194,6 +198,7 @@ Quality gate:
 
 - Do not skip stages.
 - Do not start optimization before Align, Architect, Atomize, and Approve are complete.
+- Do not generate or modify code until the document bundle has been output and explicitly confirmed by the user.
 - Keep documents synchronized with code changes.
 - Record code-changing targets with file path, line range, before context, and after context whenever feasible.
 - Stop and ask when a change may alter external behavior, public contracts, data semantics, deployment behavior, or product preference.

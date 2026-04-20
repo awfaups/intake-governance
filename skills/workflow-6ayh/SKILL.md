@@ -23,8 +23,9 @@ This skill enforces:
 - current-state and risk analysis before design
 - explicit behavior-preservation and rollback expectations
 - user clarification for contract changes, risky changes, or preference-heavy decisions
+- explicit user confirmation of the document bundle before code generation
 - characterization tests before refactoring when existing behavior is underspecified
 - code-change records with file path, line range, before context, and after context
-- no execution before workflow docs exist
+- no execution before workflow docs exist and the user has confirmed them
 
 Read next: `references/6ayh.md`

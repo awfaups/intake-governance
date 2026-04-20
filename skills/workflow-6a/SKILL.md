@@ -22,8 +22,9 @@ This skill enforces:
 - Align, Architect, Atomize, Approve, Automate, and Assess gates
 - project-context analysis before design
 - user clarification for risky or preference-heavy decisions
+- explicit user confirmation of the document bundle before code generation
 - test-first implementation when the project test setup supports it
 - code-change records with file path, line range, before context, and after context
-- no implementation before workflow docs exist
+- no implementation before workflow docs exist and the user has confirmed them
 
 Read next: `references/6a.md`

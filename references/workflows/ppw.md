@@ -202,5 +202,6 @@ Quality gate:
 - Do not skip stages.
 - Do not invent facts, owners, contracts, or roadmap items.
 - Do not start code implementation inside PPW.
+- If PPW recommends a later code-changing workflow, that workflow must output its documents and wait for explicit user confirmation before code generation.
 - Keep facts traceable to files, commands, docs, or user-provided context.
 - Stop before deeper planning if critical repositories, configs, credentials, or provenance are missing.

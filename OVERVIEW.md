@@ -212,6 +212,8 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 - 修改前代码片段
 - 修改后代码片段
 
+代码生成或代码修改必须在文档包输出后等待用户显式确认。用户确认前，任务卡中的 `user_confirmation.status` 应保持为 `pending`，不得派发 `engineering`，也不得生成或修改代码。
+
 ## 设计目标
 
 - 可移植：不依赖特定平台的全局配置文件

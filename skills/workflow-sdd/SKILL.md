@@ -23,7 +23,8 @@ This skill enforces:
 - implementation derived from approved specs
 - requirement, task, implementation, test, and acceptance traceability
 - user clarification when the spec cannot safely determine behavior, scope, or acceptance
+- explicit user confirmation of the spec bundle before code generation
 - test-first implementation when the project test setup supports it
-- no execution before the required spec bundle exists
+- no execution before the required spec bundle exists and the user has confirmed it
 
 Read next: `references/sdd.md`

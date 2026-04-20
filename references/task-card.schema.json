@@ -18,6 +18,7 @@
     "document_bundle_version",
     "required_documents",
     "document_status",
+    "user_confirmation",
     "code_change_targets",
     "handoff_history",
     "status"
@@ -145,6 +146,36 @@
         "ready",
         "completed"
       ]
+    },
+    "user_confirmation": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_required",
+            "pending",
+            "confirmed",
+            "rejected"
+          ]
+        },
+        "confirmed_by": {
+          "type": "string"
+        },
+        "confirmed_at": {
+          "type": "string"
+        },
+        "document_bundle_summary": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "execution_plan": {
       "type": "array",

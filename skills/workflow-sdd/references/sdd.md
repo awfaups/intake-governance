@@ -44,6 +44,7 @@ Create or update these files under `docs/YYYY_MM_DD_中文任务名_vN/` in the 
 - if the same topic is rerun, increment to `v2`, `v3`, and so on
 - initialize `01_SPEC_规格定义.md` using the bundled template when useful
 - block implementation until `01_SPEC_规格定义.md`, `02_PLAN_实施计划.md`, and `05_APPROVE_审批确认.md` exist
+- output the spec bundle and wait for explicit user confirmation before generating or modifying code
 - every plan item, design decision, task, implementation note, test, and acceptance result should trace to the spec
 - do not introduce requirements outside the approved spec
 - if code changes are planned or completed, record target file paths, line ranges, before context, after context, and spec trace

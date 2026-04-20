@@ -42,5 +42,6 @@ Create or update these files under `docs/YYYY_MM_DD_中文任务名_vN/` in the 
 - separate verified facts, inferred facts, and unknowns
 - do not invent facts, owners, contracts, or roadmap items
 - do not start code implementation inside PPW
+- if PPW recommends a later code-changing workflow, that workflow must output its documents and wait for explicit user confirmation before code generation
 - recommend `6A`, `6AYH`, `SDD`, or `generic_governance` only when evidence supports it
 - stop before deeper planning if critical repositories, configs, credentials, or provenance are missing

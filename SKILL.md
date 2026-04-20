@@ -55,6 +55,15 @@ For `6A`, `6AYH`, `PPW`, and `SDD`:
 
 Implementation must not start until the required workflow document bundle has been initialized or updated to the stage being executed.
 
+For any workflow that may generate or modify code:
+
+- output or update the required workflow documents first
+- present the document bundle summary to the user for confirmation
+- set `user_confirmation.status` to `pending` while waiting for the user
+- do not generate code, edit code, run code-changing commands, or dispatch `engineering` until the user explicitly confirms the documents
+- set `user_confirmation.status` to `confirmed` only after an explicit positive user response
+- `review-gate` approval is not a substitute for user confirmation
+
 ### Role guidance
 
 - `intake`: normalize the request, extract intent, assign title and tags
@@ -63,6 +72,7 @@ Implementation must not start until the required workflow document bundle has be
 - `planner`: turn required documents into a document-bootstrap plan
 - `review-gate`: approve, reject, or return for revision based on quality, risk, and policy fit
 - `orchestrator`: dispatch to workers, track returns, and aggregate outputs
+- `orchestrator`: block code generation and `engineering` dispatch until document review has explicit user confirmation
 - `orchestrator`: dispatch `docs-spec` before code execution or final reporting when docs must be created or updated
 - workers: execute only within their domain and return only to `orchestrator`
 
@@ -133,6 +143,7 @@ Use a structured task card rather than a loose message. Required fields:
 - `required_documents`
 - `document_status`
 - `document_bundle_version`
+- `user_confirmation`
 - `code_change_targets`
 - `handoff_history`
 - `status`

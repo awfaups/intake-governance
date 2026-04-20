@@ -38,6 +38,7 @@ Create or update these files under `docs/YYYY_MM_DD_中文任务名_vN/` in the 
 - use the current date and append a bundle version, for example `docs/2026_04_16_首页优化_v1/`
 - if the same feature is optimized again, increment to `v2`, `v3`, and so on
 - initialize the doc skeleton before optimization work
+- output the document bundle and wait for explicit user confirmation before generating or modifying code
 - prefer progressive and reversible changes over rewrites
 - preserve existing behavior and external contracts unless explicitly approved
 - ask the user when a change may alter user-visible behavior, public API contracts, data semantics, deployment behavior, or product preference

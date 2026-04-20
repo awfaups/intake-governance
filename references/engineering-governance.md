@@ -104,6 +104,10 @@ If the plan fails review:
 
 When code changes are involved:
 
+- output or update the required workflow documents before code generation
+- present the document bundle summary to the user and wait for explicit confirmation
+- keep `user_confirmation.status=pending` until the user confirms the documents
+- do not dispatch `engineering`, generate code, or edit code until `user_confirmation.status=confirmed`
 - record target file paths
 - record line ranges
 - record before context
