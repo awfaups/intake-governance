@@ -52,6 +52,7 @@
 
 ```text
 ~/.codex/skills/intake-governance/
+├── README.md
 ├── SKILL.md
 ├── OVERVIEW.md
 ├── OVERVIEW.zh-CN.md
@@ -59,7 +60,10 @@
 ├── BEGINNER_GUIDE.zh-CN.md
 ├── LICENSE
 ├── PUBLISHING.md
-└── references/
+├── agents/
+├── references/
+├── scripts/
+└── skills/
 ```
 
 ## 4. 安装方法
@@ -95,6 +99,7 @@ ls ~/.codex/skills/intake-governance
 
 - `SKILL.md`
 - `references/`
+- `skills/`
 
 说明文件已经放对位置了。
 
