@@ -1,89 +1,75 @@
 # Beginner Guide
 
-`role-based-agent-governance` 是一个面向多 Agent 协作场景的 skill 包。
+`role-based-agent-governance` is a skill package for multi-agent collaboration.
 
-它的作用不是“替你写业务代码”，而是给 Agent 提供一套明确的治理流程，让复杂任务按角色分工推进：
+Its job is not to write business code for you. It gives agents a clear governance flow so that complex work can move forward by role:
 
-- `intake`：接收请求、识别意图、决定进入哪条流程
-- `planner`：做规划、拆解任务、设计方案
-- `review-gate`：做风险审查、质量把关
-- `orchestrator`：负责派发、协调和汇总
-- 六部执行角色：按职责完成具体工作
+- `intake`: receive the request, identify intent, and decide which flow to enter
+- `planner`: plan, decompose, and design the approach
+- `review-gate`: review risk and quality
+- `orchestrator`: dispatch, coordinate, and aggregate
+- worker departments: carry out the actual work
 
-这套治理思路借鉴于 [Edict](https://github.com/cft0808/edict) 项目，但这里发布的是更轻量的 skill 版本，主要保留可移植的规则、角色分工和 workflow 约束。
-
-现在这个仓库里除了主 skill，还额外拆出了 4 个独立 workflow skill：
+This repository now includes the root skill plus four standalone workflow skills:
 
 - `workflow-6a`
 - `workflow-6ayh`
 - `workflow-ppw`
 - `workflow-sdd`
 
-如果你是第一次接触这个 skill，可以把它理解成：
+If you are new to it, think of it as:
 
-> 给 AI 一套“先理解、再规划、必要时审核、最后执行”的协作规则。
+> a rule set that says "understand first, plan next, review when needed, then execute."
 
----
+## 1. Who it is for
 
-## 1. 适合谁用
+Good fits:
 
-适合以下场景：
+- you want agents to split work by role
+- you need a layered flow for planning, review, and execution
+- you are building multi-agent orchestration, task delegation, or workflow governance
+- you want `@intake` as a single entry point for complex work
 
-- 你想让 Agent 按角色分工来处理复杂任务
-- 你需要规划、审议、执行分层的流程
-- 你在做多 Agent 编排、任务委派、工作流治理
-- 你想用 `@intake` 作为统一入口来驱动复杂任务
+Not a good fit:
 
-不适合以下场景：
+- you only need a simple question answered
+- you only need a one-step task
+- you do not want extra process or role separation
 
-- 只是问一个简单问题
-- 只需要单步执行的小任务
-- 不希望引入额外流程和角色分工
+## 2. Installation path
 
----
-
-## 2. 安装前准备
-
-在 Codex 环境里，skill 一般安装到：
+In Codex, skills are usually installed under:
 
 ```text
 ~/.codex/skills/
 ```
 
-安装完成后，目录结构应类似：
+After installation, the structure should look like:
 
 ```text
 ~/.codex/skills/role-based-agent-governance/
 ├── SKILL.md
 ├── OVERVIEW.md
+├── OVERVIEW.zh-CN.md
 ├── BEGINNER_GUIDE.md
+├── BEGINNER_GUIDE.zh-CN.md
 ├── LICENSE
 ├── PUBLISHING.md
 └── references/
 ```
 
----
+## 3. How to install
 
-## 3. 安装方法
-
-### 方法一：本地复制安装
-
-如果你已经拿到了这个仓库的本地目录，直接复制到 skills 目录：
+### Option 1: copy from a local checkout
 
 ```bash
 mkdir -p ~/.codex/skills
 cp -R /path/to/role-based-agent-governance ~/.codex/skills/role-based-agent-governance
 ```
 
-把 `/path/to/role-based-agent-governance` 换成你本地实际路径。
+Replace `/path/to/role-based-agent-governance` with your actual local path.
 
-### 方法二：从 GitHub 下载后安装
-
-1. 打开仓库下载 zip，或克隆仓库
-2. 解压后确认根目录里有 `SKILL.md`
-3. 把整个目录放到 `~/.codex/skills/role-based-agent-governance`
-
-例如：
+### Option 2: clone from GitHub
 
 ```bash
 git clone https://github.com/awfaups/role-based-agent-governance.git
@@ -91,223 +77,154 @@ mkdir -p ~/.codex/skills
 cp -R role-based-agent-governance ~/.codex/skills/role-based-agent-governance
 ```
 
-### 安装后必须做的事
+You must restart Codex after installation, otherwise the new skill may not be picked up immediately.
 
-重启 Codex。
+## 4. How to verify installation
 
-如果不重启，新安装的 skill 往往不会立刻生效。
-
----
-
-## 4. 安装成功怎么确认
-
-确认目录存在：
+Run:
 
 ```bash
 ls ~/.codex/skills/role-based-agent-governance
 ```
 
-如果能看到：
+If you can see:
 
 - `SKILL.md`
 - `references/`
 
-说明文件已经放对位置了。
+the files are in the right place.
 
----
+## 5. First use
 
-## 5. 第一次怎么用
-
-这个 skill 最重要的入口是：
+The most important entry point is:
 
 ```text
 @intake
 ```
 
-你可以把它理解成“总入口指令”。
-
-### 最简单的使用方式
-
-直接在对话里写：
+Example:
 
 ```text
-@intake 帮我规划一个多 Agent 协作方案
+@intake help me plan a multi-agent collaboration setup
 ```
 
-或者：
+Or:
 
 ```text
-@intake 帮我把这个复杂需求拆成规划、审核、执行三层
+@intake break this complex request into planning, review, and execution layers
 ```
 
-### skill 会做什么
+## 6. What happens next
 
-收到 `@intake` 后，系统通常会按这个顺序处理：
+After `@intake`, the system usually follows this order:
 
-1. 识别你的任务属于什么类型
-2. 判断要走哪条内部流程
-3. 生成结构化任务卡
-4. 把 workflow 文档写到你当前打开项目根目录下的 `docs/` 目录
-5. 先把文档包输出给你确认
-6. 你明确确认后，才进入代码生成或代码修改
+1. identify the task type
+2. decide which internal flow to use
+3. build a structured task card
+4. write the workflow docs under the active project's root `docs/` directory
+5. present the document bundle to the user for confirmation
+6. only after confirmation, let `orchestrator` coordinate code generation or code changes
 
-文档目录格式统一为：
+The latest gating rules are:
 
-```text
-docs/YYYY_MM_DD_中文任务名_vN/
-```
+- `6A`, `6AYH`, `PPW`, and `SDD` all require a workflow document bundle first
+- the document directory format is `docs/YYYY_MM_DD_中文任务名_vN/`
+- if code changes are involved, the docs must record file paths, line ranges, before context, and after context
+- before confirmation, `user_confirmation.status` must stay `pending`
+- without confirmation, `engineering` may not be dispatched and code may not be generated or edited
 
-例如：
+`docs/` means the root of the project you are currently working on, not the skill package installation directory.
 
-```text
-docs/2026_03_23_首页优化_v1/
-```
+## 7. Common triggers
 
-这里的 `docs/` 指的是你当前 IDE 里正在处理的那个项目根目录，不是这个 skill 包安装目录。
-如果同一个功能继续出第二版、第三版方案或实现文档，就把目录版本号递增到 `v2`、`v3`。
-
-如果 workflow 里包含代码修改，文档还应该额外写清楚：
-
-1. 修改的是哪个文件
-2. 大概位于哪些行
-3. 修改前的代码上下文
-4. 修改后的代码上下文
-
----
-
-## 6. 常见触发方式
-
-### 通用入口
+### Universal entry
 
 ```text
 @intake
 ```
 
-这是最推荐的入口。
+### Workflow aliases
 
-### 工作流别名
+- `@plan`: task planning
+- `@risk`: risk review
+- `@audit`: architecture / code audit
+- `@refactor`: progressive refactor
+- `@6A`: new feature development
+- `@6AYH`: progressive optimization
+- `@PPW`: project-process inventory
+- `@sdd`: spec-driven development
 
-如果你已经知道自己要走哪类流程，也可以使用这些别名：
-
-- `@plan`：任务规划
-- `@risk`：风险评估
-- `@audit`：架构 / 代码审计
-- `@refactor`：渐进式重构
-- `@6A`：新增功能开发
-- `@6AYH`：渐进式优化
-- `@PPW`：项目流程梳理
-- `@sdd`：规格驱动开发
-
-如果你想让它更稳定地跑 `SDD`，可以把规格文档按这个模板生成：
+If you want `SDD` to work more reliably, generate the spec file using:
 
 - [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)
 
-如果你不确定用哪个，直接用 `@intake` 就够了。
+If you are not sure which one to use, `@intake` is enough.
 
----
+## 8. Good first prompts
 
-## 7. 新手推荐的提问模板
-
-### 模板 1：让它帮你规划
+### Prompt 1: ask it to plan
 
 ```text
-@intake 我要做一个复杂功能，请帮我按多 Agent 模式拆解
+@intake I want to build something complex, please break it down in multi-agent mode
 ```
 
-### 模板 2：让它做角色分工
+### Prompt 2: ask it to split roles
 
 ```text
-@intake 帮我设计一个包含规划、审核、执行三层的协作流程
+@intake design a collaboration flow with planning, review, and execution layers
 ```
 
-### 模板 3：让它做治理型分析
+### Prompt 3: ask for governance analysis
 
 ```text
-@intake 帮我评估这个任务是否需要审议和风险闸门
+@intake help me judge whether this task needs a review gate and risk control
 ```
 
-### 模板 4：指定你关心的约束
+### Prompt 4: specify constraints
 
 ```text
-@intake 帮我规划这个需求，要求包含风险控制、执行顺序和交付标准
+@intake plan this requirement with risk control, execution order, and delivery criteria
 ```
 
----
+## 9. Why this feels slower
 
-## 8. 一个完整例子
+Because the skill is designed to make complex tasks more controllable, not to answer a one-line question as fast as possible.
 
-你输入：
+If the task is simple, do not force it through this flow.
 
-```text
-@intake 我要做一个跨前端、文档和部署的复杂需求，请按多 Agent 模式帮我规划
-```
+## 10. Why `@intake` is recommended
 
-通常会发生：
+Because the rules require:
 
-1. `intake` 先整理目标和约束
-2. `planner` 给出拆解方案和执行顺序
-3. 因为这是跨多个职责域的任务，所以可能经过 `review-gate`
-4. `orchestrator` 再根据标签把任务分配给不同执行角色
+- external requests enter only through `intake`
+- you may not jump directly to `planner`, `review-gate`, or a worker role
 
-对你来说，最直观的变化是：
+That avoids role overreach and flow confusion.
 
-- 输出会更结构化
-- 任务边界更清晰
-- 复杂任务不容易一上来就乱做
+## 11. When `review-gate` appears
 
----
+Usually when:
 
-## 9. 常见问题
+- risk is high
+- the task spans multiple responsibility domains
+- security, deployment, or permissions are involved
+- acceptance criteria are unclear
 
-### Q1：为什么我用了以后感觉“步骤变多了”？
+## 12. What to check if it does not work
 
-因为这个 skill 的目标不是“最快回答一句话”，而是让复杂任务更可控。
+1. the skill is installed at `~/.codex/skills/role-based-agent-governance`
+2. the root really contains `SKILL.md`
+3. Codex has been restarted
 
-如果任务本来就很简单，就不应该强行用它。
-
-### Q2：为什么推荐用 `@intake`，而不是直接叫别的角色？
-
-因为这个 skill 的规则就是：
-
-- 外部请求只能从 `intake` 进入
-- 不能跳过入口，直接点名 `planner`、`review-gate` 或执行角色
-
-这能避免角色越权和流程混乱。
-
-### Q3：什么时候会进入 `review-gate` 审议？
-
-一般是这些情况：
-
-- 风险高
-- 跨多个职责域
-- 涉及安全、部署、权限
-- 验收标准不清楚
-
-### Q4：安装了但没生效怎么办？
-
-先检查三件事：
-
-1. skill 是否放在 `~/.codex/skills/role-based-agent-governance`
-2. 根目录是否真的有 `SKILL.md`
-3. 是否已经重启 Codex
-
----
-
-## 10. 推荐阅读顺序
-
-如果你想进一步理解这个 skill，建议按这个顺序看：
+## 13. Suggested reading order
 
 1. [OVERVIEW.md](OVERVIEW.md)
-2. [SKILL.md](SKILL.md)
+2. [OVERVIEW.zh-CN.md](OVERVIEW.zh-CN.md)
 3. [references/role-permissions.md](references/role-permissions.md)
 4. [references/workflow-routing.json](references/workflow-routing.json)
 
----
+## 14. One-line summary
 
-## 11. 一句话总结
+If you are new, remember this:
 
-如果你是新手，记住这一条就够了：
-
-```text
-安装到 ~/.codex/skills/role-based-agent-governance，重启 Codex，然后用 @intake 开始。
-```
+> For complex tasks, start with `@intake`. For simple tasks, do not force multi-agent flow.
