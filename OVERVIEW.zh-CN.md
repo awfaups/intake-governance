@@ -156,7 +156,20 @@
 
 ```text
 .
+├── README.md
 ├── SKILL.md
+├── OVERVIEW.md
+├── OVERVIEW.zh-CN.md
+├── BEGINNER_GUIDE.md
+├── BEGINNER_GUIDE.zh-CN.md
+├── PUBLISHING.md
+├── LICENSE
+├── agents
+│   └── openai.yaml
+├── scripts
+│   ├── smoke_test_prompts.py
+│   ├── sync_installed_skill.py
+│   └── validate_governance_skill.py
 ├── skills
 │   ├── workflow-6a
 │   ├── workflow-6ayh
@@ -184,7 +197,9 @@
 
 ## 关键文件说明
 
+- [README.md](README.md)：GitHub 首页总览，包含英文与中文摘要、安装、校验与发布说明
 - [SKILL.md](SKILL.md)：主 skill 定义、启用条件、总流程、读取策略
+- [agents/openai.yaml](agents/openai.yaml)：应用侧展示名、短描述和默认提示入口
 - [references/agents.json](references/agents.json)：角色定义与可收发关系
 - [references/status-transitions.json](references/status-transitions.json)：合法状态迁移与角色权限
 - [references/handoff-record.schema.json](references/handoff-record.schema.json)：标准流转记录结构
@@ -196,6 +211,9 @@
 - [references/workflows/ppw.md](references/workflows/ppw.md)：项目流程梳理工作流
 - [references/workflows/sdd.md](references/workflows/sdd.md)：规格驱动开发工作流
 - [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)：SDD 的规格文档模板
+- [scripts/validate_governance_skill.py](scripts/validate_governance_skill.py)：仓库结构、schema、示例和 YAML 的一致性校验
+- [scripts/smoke_test_prompts.py](scripts/smoke_test_prompts.py)：入口别名和自动分类的 smoke test
+- [scripts/sync_installed_skill.py](scripts/sync_installed_skill.py)：把运行时相关文件同步到已安装 skill 副本
 - [skills/workflow-6a/SKILL.md](skills/workflow-6a/SKILL.md)：独立 6A workflow skill
 - [skills/workflow-6ayh/SKILL.md](skills/workflow-6ayh/SKILL.md)：独立 6AYH workflow skill
 - [skills/workflow-ppw/SKILL.md](skills/workflow-ppw/SKILL.md)：独立 PPW workflow skill
@@ -254,7 +272,8 @@
 
 建议按这个顺序看：
 
-1. [BEGINNER_GUIDE.zh-CN.md](BEGINNER_GUIDE.zh-CN.md)
-2. [OVERVIEW.md](OVERVIEW.md)
-3. [role-permissions.md](references/role-permissions.md)
-4. [workflow-routing.json](references/workflow-routing.json)
+1. [README.md](README.md)
+2. [BEGINNER_GUIDE.zh-CN.md](BEGINNER_GUIDE.zh-CN.md)
+3. [OVERVIEW.md](OVERVIEW.md)
+4. [role-permissions.md](references/role-permissions.md)
+5. [workflow-routing.json](references/workflow-routing.json)

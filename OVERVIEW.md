@@ -165,7 +165,20 @@ When `review-gate` rejects or returns a task, it must emit `rejection_reason` an
 
 ```text
 .
+├── README.md
 ├── SKILL.md
+├── OVERVIEW.md
+├── OVERVIEW.zh-CN.md
+├── BEGINNER_GUIDE.md
+├── BEGINNER_GUIDE.zh-CN.md
+├── PUBLISHING.md
+├── LICENSE
+├── agents
+│   └── openai.yaml
+├── scripts
+│   ├── smoke_test_prompts.py
+│   ├── sync_installed_skill.py
+│   └── validate_governance_skill.py
 ├── skills
 │   ├── workflow-6a
 │   ├── workflow-6ayh
@@ -218,7 +231,8 @@ Expected behavior:
 
 Recommended order:
 
-1. [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)
-2. [OVERVIEW.zh-CN.md](OVERVIEW.zh-CN.md)
-3. [references/role-permissions.md](references/role-permissions.md)
-4. [references/workflow-routing.json](references/workflow-routing.json)
+1. [README.md](README.md)
+2. [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)
+3. [OVERVIEW.zh-CN.md](OVERVIEW.zh-CN.md)
+4. [references/role-permissions.md](references/role-permissions.md)
+5. [references/workflow-routing.json](references/workflow-routing.json)

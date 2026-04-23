@@ -48,6 +48,7 @@ After installation, the structure should look like:
 
 ```text
 ~/.codex/skills/intake-governance/
+├── README.md
 ├── SKILL.md
 ├── OVERVIEW.md
 ├── OVERVIEW.zh-CN.md
@@ -55,7 +56,10 @@ After installation, the structure should look like:
 ├── BEGINNER_GUIDE.zh-CN.md
 ├── LICENSE
 ├── PUBLISHING.md
-└── references/
+├── agents/
+├── references/
+├── scripts/
+└── skills/
 ```
 
 ## 3. How to install
@@ -91,6 +95,7 @@ If you can see:
 
 - `SKILL.md`
 - `references/`
+- `skills/`
 
 the files are in the right place.
 

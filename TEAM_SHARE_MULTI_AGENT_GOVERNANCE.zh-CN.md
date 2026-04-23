@@ -2,13 +2,15 @@
 
 ## 1. 这是什么
 
-这套多 Agent 规则，本质上不是“多开几个模型”，而是给复杂任务加上一层治理流程，让任务按角色分工推进。
+`intake-governance` 不是“多开几个模型”的技巧，而是一套面向复杂任务的多 Agent 治理方法。
+
+它把复杂工作拆成明确的角色链路，让任务按职责推进，而不是让多个 Agent 无约束并行。
 
 仓库地址：
 
 - GitHub: [awfaups/intake-governance](https://github.com/awfaups/intake-governance)
 
-标准链路是：
+当前这套治理模型的标准链路是：
 
 ```text
 intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
@@ -17,7 +19,7 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
 中文对应：
 
 ```text
-接入中心 -> 规划中心 -> 评审中心? -> 调度中心 -> 执行角色(六部) -> 调度中心
+接入中心 -> 规划中心 -> 评审中心? -> 调度中心 -> 执行部门 -> 调度中心
 ```
 
 流程图：
@@ -30,221 +32,351 @@ flowchart TD
     R -->|是| G[review-gate<br/>评审中心]
     R -->|否| O[orchestrator<br/>调度中心]
     G --> O
-    O --> W1[worker 1<br/>执行角色]
-    O --> W2[worker 2<br/>执行角色]
-    O --> W3[worker n<br/>执行角色]
+    O --> W1[data-ops]
+    O --> W2[docs-spec]
+    O --> W3[engineering]
+    O --> W4[security]
+    O --> W5[platform]
+    O --> W6[governance]
     W1 --> O
     W2 --> O
     W3 --> O
+    W4 --> O
+    W5 --> O
+    W6 --> O
     O --> F[统一汇总输出]
 ```
 
-它解决的是 5 件事：
+它主要解决的是 5 件事：
 
 - 谁先接任务
 - 谁负责规划
-- 谁负责审核
+- 谁负责审议
 - 谁负责执行
-- 谁负责统一汇总
+- 谁负责最终统一收口
 
-## 2. 角色说明
+## 2. 现在这套 skill 包包含什么
 
-- `intake`：接入中心。负责接收请求、识别任务类型、生成任务卡。
-- `planner`：规划中心。负责拆解任务、设计方案、定义执行顺序和验收标准。
-- `review-gate`：评审中心。负责风险审查、质量把关、决定是否放行。
-- `orchestrator`：调度中心。负责派单、协调、跟踪进度、统一收口。
-- `worker(s)`：执行角色，也叫“六部”，负责具体落地执行。
+当前仓库不只是一个 `SKILL.md`，而是一个完整的 skill 包：
 
-六部通常是：
+- 根 skill：`SKILL.md`
+- 4 个独立 workflow skill：
+  - `workflow-6a`
+  - `workflow-6ayh`
+  - `workflow-ppw`
+  - `workflow-sdd`
+- `references/`：治理规则、schema、路由、示例
+- `scripts/`：校验与同步脚本
+- `agents/openai.yaml`：展示名、短描述和默认提示入口
 
-- `data-ops`：数据资源组，负责数据、成本、资源评估、报表。
-- `docs-spec`：文档规范组，负责文档、规范、报告、规格输出。
-- `engineering`：工程实施组，负责代码实现、功能开发、Bug 修复、测试支持。
-- `security`：安全合规组，负责安全、合规、审计、风险扫描。
-- `platform`：平台发布组，负责部署、CI/CD、工具链、自动化。
-- `governance`：Agent 治理组，负责 Agent 注册、权限、培训、治理维护。
+它不是应用程序，也不是 SDK，而是一套可挂载到 Agent Skills 环境里的治理规则包。
 
-角色与执行部门关系图：
+## 3. 核心角色说明
 
-```mermaid
-flowchart TD
-    O[orchestrator<br/>调度中心]
-    O --> D[data-ops<br/>数据资源组]
-    O --> S[docs-spec<br/>文档规范组]
-    O --> E[engineering<br/>工程实施组]
-    O --> C[security<br/>安全合规组]
-    O --> T[platform<br/>平台发布组]
-    O --> V[governance<br/>Agent 治理组]
-    D --> O
-    S --> O
-    E --> O
-    C --> O
-    T --> O
-    V --> O
-```
+- `intake`：接入中心。负责接收请求、归一化意图、识别工作流、生成首张任务卡。
+- `planner`：规划中心。负责拆解任务、比较方案、定义执行步骤和验收标准。
+- `review-gate`：评审中心。负责质量与风险审查，决定批准、驳回或退回修订。
+- `orchestrator`：调度中心。负责派发执行、跟踪回传、聚合结果、统一汇总。
+- `worker(s)`：执行部门，负责各自领域内的落地执行。
 
-## 3. 为什么要用多 Agent
+当前执行部门固定为六组：
 
-适合多 Agent 的任务通常具备这些特征：
+- `data-ops`：数据、成本、资源、报表
+- `docs-spec`：文档、规格、报告
+- `engineering`：代码实现、功能开发、缺陷修复
+- `security`：安全、合规、审计
+- `platform`：部署、CI/CD、工具链、自动化
+- `governance`：Agent 注册、权限、训练、治理维护
 
-- 任务复杂，不能一步做完
-- 任务能拆成多个子任务
-- 任务跨多个领域，比如代码、文档、测试、安全、部署
-- 任务风险高，需要复核
-- 任务适合并行推进
+注意点：
 
-它的价值不是“更多 agent”，而是：
+- worker 只能向 `orchestrator` 回传结果
+- 不允许 worker 横向派单
+- 不允许 worker 直接关闭任务
 
-- 分工清楚
+## 4. 入口规则为什么重要
+
+当前仓库的明确规则是：
+
+- `@intake` 是唯一允许的公开入口
+- 外部请求不能直接进入 `planner`、`review-gate`、`orchestrator` 或任何 worker
+- 别名只是 `intake` 拥有的快捷方式，不是绕过入口
+
+允许的外部触发形式包括：
+
+- `@intake`
+- `@init`
+- `@plan`
+- `@refactor`
+- `@risk`
+- `@decision`
+- `@audit`
+- `@ask`
+- `@ppw`
+- `@6A`
+- `@6AYH`
+- `@PPW`
+- `@sdd`
+
+这些别名仍然必须先归一化回 `intake`，再进入内部治理链路。
+
+这条规则的意义是：
+
+- 避免角色越权
+- 避免用户直接把任务跳给错误角色
+- 避免规划、审议、执行混成一层
+- 让 handoff 记录和责任边界可追踪
+
+## 5. 工作流模式是怎么分的
+
+`intake` 首先会把任务分类到以下内部模式之一：
+
+- `6A`：新功能开发
+- `6AYH`：渐进式优化 / 重构
+- `PPW`：项目盘点与流程梳理
+- `SDD`：规格驱动开发
+- `generic_governance`：通用治理任务
+
+如果 `intake` 自动识别到 `6A`、`6AYH`、`PPW` 或 `SDD`，它必须先输出该工作流要求的固定激活响应，再继续后续规划。
+
+这意味着 workflow skill 不是公开入口，而是“工作流细节层”。
+
+## 6. 为什么复杂任务适合多 Agent
+
+适合进入这套治理模型的任务通常有这些特征：
+
+- 任务复杂，不能一步完成
+- 任务可以拆成多个阶段或多个子问题
+- 任务跨多个领域，例如代码、文档、安全、部署
+- 任务风险较高，需要独立审议
+- 任务适合并行推进，但又需要统一收口
+
+它的价值不是“更多 Agent”，而是：
+
+- 分工明确
 - 风险可控
-- 可并行
-- 可追踪
-- 可回退
-- 减少返工
+- 责任清晰
+- 可并行推进
+- 可审计、可回退
+- 降低返工
 
-小任务通常不值得上多 Agent，比如改一句文案、修一个小 bug、简单翻译或小配置修改。
+小任务通常不值得强行走多 Agent，例如：
 
-适用场景判断图：
+- 修改一句文案
+- 一个非常小的低风险 bug
+- 简单翻译
+- 单点配置改动
 
-```mermaid
-flowchart TD
-    A[收到任务] --> B{是否一步可完成}
-    B -->|是| C[单 Agent 更合适]
-    B -->|否| D{是否跨多个领域}
-    D -->|是| E[使用多 Agent]
-    D -->|否| F{是否高风险或需要复核}
-    F -->|是| E
-    F -->|否| G{是否可以拆分并行}
-    G -->|是| E
-    G -->|否| H[视复杂度决定]
-```
+## 7. 单 Agent 与治理型多 Agent 的区别
 
-## 4. 单 Agent 与多 Agent 对比
+两者的核心差别，不只是数量，而是有没有明确的角色、边界、审核和统一调度。
 
-两者的差别，不只是“一个还是多个”，而是有没有明确的角色分工、审核链路和统一调度。
-
-| 维度 | 单 Agent | 多 Agent |
+| 维度 | 单 Agent | 治理型多 Agent |
 | --- | --- | --- |
-| 工作方式 | 一个 agent 从头处理到尾 | 多个角色按链路协作 |
-| 适合场景 | 简单、明确、低风险任务 | 复杂、跨域、高风险、可并行任务 |
-| 任务拆解 | 依赖单个 agent 自己梳理 | 由 `planner` 明确拆解 |
-| 风险控制 | 通常没有独立审核 | 可通过 `review-gate` 做风险把关 |
-| 并行能力 | 较弱 | 较强，可按子任务并行 |
-| 结果汇总 | agent 直接输出 | 由 `orchestrator` 统一收口 |
-| 管理成本 | 低 | 较高，但适合复杂任务 |
+| 工作方式 | 一个 agent 从头处理到尾 | 按角色链路协作 |
+| 适合场景 | 简单、明确、低风险 | 复杂、跨域、高风险、可并行 |
+| 任务拆解 | 依赖单个 agent 自己梳理 | 由 `planner` 负责拆解 |
+| 风险控制 | 通常没有独立审核 | 可经过 `review-gate` |
+| 并行能力 | 较弱 | 较强，但需统一调度 |
+| 结果收口 | agent 直接输出 | `orchestrator` 统一汇总 |
+| 管理成本 | 低 | 更高，但更适合复杂任务 |
 
-简单判断可以记成一句话：
+一句话可以概括为：
 
 - 小任务用单 Agent
-- 大任务、跨领域任务、高风险任务用多 Agent
+- 大任务、跨域任务、高风险任务用治理型多 Agent
 
-## 5. 多 Agent 是怎么“创建 Agent”的
+## 8. 文档门禁是这版仓库最重要的更新之一
 
-这里的“创建”更准确地说，是“先定义角色，再按任务动态派发”。
+当前仓库的关键门禁规则是：
 
-流程一般是：
+- `6A`、`6AYH`、`PPW`、`SDD` 都要求先输出 workflow 文档包
+- 文档必须写在当前项目根目录下的 `docs/YYYY_MM_DD_中文任务名_vN/`
+- 这些文档默认不能写回 skill 仓库，除非当前活动项目就是这个仓库
+- 涉及代码修改时，文档必须记录：
+  - 文件路径
+  - 行号范围
+  - 修改前上下文
+  - 修改后上下文
+- 在用户明确确认前，`user_confirmation.status` 必须保持为 `pending`
+- 没有确认前，不得派发 `engineering`
+- 没有确认前，不得生成或修改代码
+- `review-gate` 通过不等于用户确认
 
-1. `intake` 先接外部请求并分类
-2. `planner` 判断需要哪些角色参与
-3. `review-gate` 在高风险场景下决定是否放行
-4. `orchestrator` 根据任务标签把任务派给合适的 worker
-5. worker 执行后统一回传给 `orchestrator`
+这条规则的本质是：先把需求和改动边界文档化，再允许进入实现阶段。
 
-所以它不是每次临时凭空造出一个新 Agent，而是从一套已注册的角色体系里，按需调用对应角色参与任务。
+## 9. 任务卡为什么是必需的
 
-## 6. 为什么要做 Agent 注册
+当前 skill 要求用结构化任务卡，而不是自由文本式委派。
 
-`Agent 注册` 不是为了“发账号”，而是为了建立治理基础。
+至少需要这些字段：
 
-它的目的包括：
+- `task_id`
+- `title`
+- `from`
+- `to`
+- `goal`
+- `brief`
+- `tags`
+- `constraints`
+- `deliverables`
+- `review_required`
+- `workflow_mode`
+- `current_stage`
+- `required_documents`
+- `document_status`
+- `document_bundle_version`
+- `user_confirmation`
+- `code_change_targets`
+- `handoff_history`
+- `status`
 
-- 明确系统里有哪些角色
-- 明确每个角色能做什么、不能做什么
-- 明确任务能从谁流向谁
-- 让调度规则可执行
-- 让 handoff 和责任追踪有依据
+这样做的目的是：
 
-没有注册信息，就很难做权限控制、路由分发和统一治理。
+- 委派结构稳定
+- handoff 可验证
+- 状态迁移可审计
+- 角色责任边界清楚
 
-## 7. 不同角色能否用不同模型
+相关权威文件：
 
-可以，但要分两层看。
+- [references/task-card.schema.json](references/task-card.schema.json)
+- [references/handoff-record.schema.json](references/handoff-record.schema.json)
+- [references/status-transitions.json](references/status-transitions.json)
 
-- 这套治理规则本身不限制模型选择，它主要管角色、权限、路由和 handoff。
-- 真正是否支持“不同角色使用不同大模型”，取决于底层平台。
+## 10. 当前默认路由规则
 
-在 OpenAI / Codex 能力层面，这种做法是可行的。常见策略是：
+`orchestrator` 按标签把任务路由到对应部门：
 
-- `intake` / `planner` / `review-gate` / `orchestrator`：用更强模型
-- `docs-spec` / `data-ops` / 简单检索型 worker：用更快更便宜的小模型
-- `engineering` / `security` / 高风险决策：优先用更强模型
+- `code`、`bugfix`、`feature`、`algorithm`、`performance` -> `engineering`
+- `docs`、`api`、`report`、`spec` -> `docs-spec`
+- `data`、`cost`、`reporting`、`resource` -> `data-ops`
+- `security`、`compliance`、`audit` -> `security`
+- `deploy`、`cicd`、`tooling`、`automation` -> `platform`
+- `agent`、`permission`、`training`、`registry` -> `governance`
 
-结论是：治理层允许，平台层决定怎么配。
+如果没有匹配的部门，任务应返回 `planner` 重新规划，而不是硬派给某个 worker。
 
-## 8. 它和 IDE 里“开多个 Agent”有什么区别
+## 11. 什么情况下必须经过 review-gate
 
-两者不是一回事。
+以下情况应进入 `review-gate`：
 
-- 这里的多 Agent：是有角色、有边界、有流转规则的协作体系。
-- IDE 里手动开多个 Agent：通常只是多个独立实例并行工作。
+- 任务高风险
+- 任务跨多个执行部门
+- 验收标准不清
+- 涉及安全、合规、部署或权限
 
-最关键的区别是：
+`review-gate` 的输出不能只说“通过”或“不通过”，还应包含：
 
-- 这里强调统一入口、统一调度、统一汇总
-- IDE 并行 agent 更像多个独立助手，协调和审议通常靠人手动完成
+- `rejection_reason`
+- 必要时的 `required_fixes`
 
-一句话说：
+## 12. 这套规则能不能跨平台
 
-- 治理型多 Agent = 有组织的团队协作
-- IDE 多 Agent = 多个并行工作单元
+可以。它本质上是可移植的治理规则，而不是绑定某个 IDE 的功能。
 
-## 9. 这套规则能不能跨平台
-
-可以。它本质上是可移植的治理规则，不只限于 Codex。
-
-可移植的是这些内容：
+可移植的是：
 
 - 角色定义
-- 任务卡结构
-- handoff 规则
-- 审核规则
 - 路由原则
-- 状态流转
+- handoff 规则
+- 任务卡结构
+- 状态治理
+- 文档门禁
 
-但它不是“拷过去自动运行”的产品功能。要落地到别的平台，平台本身至少要支持：
+但它不是“复制过去就自动运行”的产品特性。目标平台至少要支持：
 
-- 多角色或多 agent
+- 多角色或多 Agent
 - 任务分发
 - 结果回传
 - 状态留痕
 - 最好有权限边界
 
-## 10. 在 Claude Code 中如何使用
+## 13. 在 Claude Code / 类似平台里怎么理解
 
-在 Claude Code 中可以使用这套治理规则，但要做适配。
+这套治理规则可以迁移到 Claude Code 或其他具备多 Agent 编排能力的平台，但需要平台适配。
 
-落地方式通常有两种：
-
-- 用 `subagents` 做轻量版本
-- 用 `agent teams` 做更接近完整治理链路的版本
-
-映射关系一般是：
+常见映射方式：
 
 - 主会话或 team lead 承担 `intake` / `orchestrator`
 - 专门 agent 承担 `planner` / `review-gate`
 - 各类 worker 做成独立 subagent 或 teammate
 
-限制也要明确：
+但要注意：
 
-- Claude Code 的 subagent 更适合主控派发后回传结果，不适合完整复刻复杂治理图
-- `agent teams` 更接近完整多 Agent 编排，但属于实验性能力，通常需要额外启用
+- 平台是否真的支持严格 handoff 约束，是另一回事
+- 并不是“开多个 agent”就等于有治理
+- 没有统一入口、统一调度、统一汇总，只能算多实例并行，不是治理型多 Agent
 
-结论是：可以迁移，但不是原样照搬。
+## 14. 当前仓库怎么维护最新状态
 
-## 11. 推荐对内结论
+仓库已经内置了 3 个维护脚本：
 
-建议把这套多 Agent 理解成一套“任务治理方法”，而不是某个 IDE 的专属功能。
+- [scripts/validate_governance_skill.py](scripts/validate_governance_skill.py)
+- [scripts/smoke_test_prompts.py](scripts/smoke_test_prompts.py)
+- [scripts/sync_installed_skill.py](scripts/sync_installed_skill.py)
 
-适合的对内表述可以直接用这段：
+常用维护动作：
 
-> 多 Agent 的核心不是多开几个模型，而是通过 `intake` 统一接入、`planner` 规划拆解、`review-gate` 风险审议、`orchestrator` 调度汇总，以及不同 worker 分工执行，来提升复杂任务的稳定性、并行能力和可治理性。它可以运行在 Codex 中，也可以迁移到其他支持多 Agent 编排的平台，但需要结合平台能力做适配。
+```bash
+python3 scripts/validate_governance_skill.py
+python3 scripts/validate_governance_skill.py --compare-installed
+python3 scripts/sync_installed_skill.py
+```
+
+它们分别用于：
+
+- 校验必需文件、JSON、YAML、示例结构和 smoke tests
+- 对比仓库和已安装副本是否一致
+- 把运行时相关文件同步到已安装 skill 副本
+
+## 15. 当前仓库目录结构
+
+```text
+.
+├── README.md
+├── SKILL.md
+├── OVERVIEW.md
+├── OVERVIEW.zh-CN.md
+├── BEGINNER_GUIDE.md
+├── BEGINNER_GUIDE.zh-CN.md
+├── PUBLISHING.md
+├── LICENSE
+├── agents
+│   └── openai.yaml
+├── scripts
+│   ├── smoke_test_prompts.py
+│   ├── sync_installed_skill.py
+│   └── validate_governance_skill.py
+├── skills
+│   ├── workflow-6a
+│   ├── workflow-6ayh
+│   ├── workflow-ppw
+│   └── workflow-sdd
+└── references
+    ├── agents.json
+    ├── engineering-governance.md
+    ├── handoff-record.schema.json
+    ├── intake-classification.md
+    ├── role-permissions.md
+    ├── role-prompts.json
+    ├── routing-rules.json
+    ├── status-transitions.json
+    ├── task-card.schema.json
+    ├── templates
+    │   └── 01_SPEC.template.md
+    ├── workflow-routing.json
+    └── workflows
+        ├── 6a.md
+        ├── 6ayh.md
+        ├── ppw.md
+        └── sdd.md
+```
+
+## 16. 对内分享时推荐的结论
+
+建议把这套多 Agent 模型定义为“任务治理方法”，而不是“多开几个模型”。
+
+对内可以直接用这段话：
+
+> 多 Agent 的核心不是多开几个模型，而是通过 `intake` 统一接入、`planner` 规划拆解、`review-gate` 风险审议、`orchestrator` 调度汇总，以及不同 worker 按职责执行，来提升复杂任务的稳定性、并行能力和可治理性。`intake-governance` 这版仓库还进一步加入了 workflow 文档门禁、结构化任务卡、schema 校验和独立 workflow skills，使这套规则更适合在真实工程环境里落地和维护。
