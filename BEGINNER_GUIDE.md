@@ -140,6 +140,12 @@ The latest gating rules are:
 
 `docs/` means the root of the project you are currently working on, not the skill package installation directory.
 
+For `SDD`, the current refined internal phase order is:
+
+`Init -> Explore -> Propose -> Spec -> Plan -> Design -> Atomize -> Approve -> Execute -> Verify -> Archive`
+
+You still do not enter those stages directly from the outside. They are internal detail phases that sit under the `@intake`-driven workflow.
+
 ## 7. Common triggers
 
 ### Universal entry
@@ -162,6 +168,13 @@ The latest gating rules are:
 If you want `SDD` to work more reliably, generate the spec file using:
 
 - [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)
+
+For non-trivial SDD work, it is also reasonable to create:
+
+- `00_INIT_CONTEXT_项目接入.md`
+- `00_EXPLORE_现状分析.md`
+- `00_PROPOSE_变更提案.md`
+- `09_ARCHIVE_归档记录.md`
 
 If you are not sure which one to use, `@intake` is enough.
 

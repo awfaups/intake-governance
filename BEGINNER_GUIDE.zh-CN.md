@@ -144,6 +144,12 @@ ls ~/.codex/skills/intake-governance
 
 这里的 `docs/` 指的是你当前 IDE 里正在处理的那个项目根目录，不是这个 skill 包安装目录。
 
+对于 `SDD`，当前细化后的内部阶段顺序是：
+
+`Init -> Explore -> Propose -> Spec -> Plan -> Design -> Atomize -> Approve -> Execute -> Verify -> Archive`
+
+但你仍然不需要从外部直接进入这些阶段。它们是 `@intake` 驱动的 SDD 工作流内部细节层。
+
 ## 8. 常见触发方式
 
 ### 通用入口
@@ -166,6 +172,13 @@ ls ~/.codex/skills/intake-governance
 如果你想让它更稳定地跑 `SDD`，可以把规格文档按这个模板生成：
 
 - [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)
+
+对于非简单的 SDD 任务，也可以补充这些支持文档：
+
+- `00_INIT_CONTEXT_项目接入.md`
+- `00_EXPLORE_现状分析.md`
+- `00_PROPOSE_变更提案.md`
+- `09_ARCHIVE_归档记录.md`
 
 如果你不确定用哪个，直接用 `@intake` 就够了。
 

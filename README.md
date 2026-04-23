@@ -77,6 +77,21 @@ If `intake` classifies the request into `6A`, `6AYH`, `PPW`, or `SDD`, it must e
 
 The standalone workflow skills are detail layers, not public entry points. They are meant to be used only after workflow selection is already known.
 
+## SDD refinement
+
+`workflow-sdd` now keeps the same public governance model while refining its internal stages into:
+
+`Init -> Explore -> Propose -> Spec -> Plan -> Design -> Atomize -> Approve -> Execute -> Verify -> Archive`
+
+This refinement does not change the public entry rule. External requests still begin at `@intake`, and code-changing work still stays blocked behind the approved bundle and explicit user confirmation.
+
+Recommended supporting documents for non-trivial SDD work:
+
+- `00_INIT_CONTEXT_项目接入.md`
+- `00_EXPLORE_现状分析.md`
+- `00_PROPOSE_变更提案.md`
+- `09_ARCHIVE_归档记录.md`
+
 ## Document gate
 
 For `6A`, `6AYH`, `PPW`, and `SDD`:
@@ -317,6 +332,21 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
 - `generic_governance`：不绑定特定 workflow 的通用治理路由
 
 这些独立 workflow skills 是细节层，不是公开入口。它们只应在 workflow 已经被确认后使用。
+
+## SDD 细化阶段
+
+`workflow-sdd` 现在在不改变公开治理入口的前提下，把内部阶段细化为：
+
+`Init -> Explore -> Propose -> Spec -> Plan -> Design -> Atomize -> Approve -> Execute -> Verify -> Archive`
+
+这不会改变公开入口规则。外部请求仍然必须从 `@intake` 开始，涉及代码修改的工作仍然必须等文档包批准并且用户显式确认后才能执行。
+
+对于非简单的 SDD 任务，推荐补充这些支持文档：
+
+- `00_INIT_CONTEXT_项目接入.md`
+- `00_EXPLORE_现状分析.md`
+- `00_PROPOSE_变更提案.md`
+- `09_ARCHIVE_归档记录.md`
 
 ## 文档门禁
 

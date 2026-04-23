@@ -75,6 +75,26 @@ The external entry still goes through `intake`, but aliases can route the reques
 - `@6AYH`: progressive optimization
 - `@sdd`: spec-driven development
 
+## SDD refinement
+
+The SDD workflow now uses a refined internal phase map while preserving the same public governance surface:
+
+`Init -> Explore -> Propose -> Spec -> Plan -> Design -> Atomize -> Approve -> Execute -> Verify -> Archive`
+
+This means:
+
+- `@intake` remains the only public entry
+- `workflow-sdd` remains an internal detail layer
+- SDD can use pre-spec discovery and proposal work before formal spec authoring
+- SDD can preserve post-verify closeout through archive records without reopening scope
+
+Recommended supporting docs for non-trivial SDD work:
+
+- `00_INIT_CONTEXT_项目接入.md`
+- `00_EXPLORE_现状分析.md`
+- `00_PROPOSE_变更提案.md`
+- `09_ARCHIVE_归档记录.md`
+
 ## Task-card requirements
 
 Use a structured task card instead of a free-form delegation message. The required fields are:

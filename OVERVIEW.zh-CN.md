@@ -78,6 +78,26 @@
 
 当请求内容匹配 `6A`、`6AYH`、`PPW` 或 `SDD` 的自动识别信号时，`intake` 也应先输出对应工作流规定的激活响应，再继续内部流转。
 
+## SDD 细化阶段
+
+当前仓库中的 `workflow-sdd` 在不改变公开治理面的前提下，把内部阶段细化为：
+
+`Init -> Explore -> Propose -> Spec -> Plan -> Design -> Atomize -> Approve -> Execute -> Verify -> Archive`
+
+这意味着：
+
+- `@intake` 仍然是唯一公开入口
+- `workflow-sdd` 仍然只是内部细节层
+- 在正式写 Spec 之前，可以先做项目接入、现状分析和变更提案
+- 在 Verify 之后，可以用 Archive 做归档收尾，而不是重新打开 scope
+
+对于非简单的 SDD 任务，推荐补充这些支持文档：
+
+- `00_INIT_CONTEXT_项目接入.md`
+- `00_EXPLORE_现状分析.md`
+- `00_PROPOSE_变更提案.md`
+- `09_ARCHIVE_归档记录.md`
+
 ## 标签到执行部门的默认路由
 
 - `code`、`bugfix`、`feature`、`algorithm`、`performance` -> `engineering`
