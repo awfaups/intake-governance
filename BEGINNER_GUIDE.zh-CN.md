@@ -14,6 +14,13 @@
 - `orchestrator`：负责派发、协调和汇总
 - 执行角色：按职责完成具体工作
 
+当前仓库除了主 skill，还拆出了 4 个独立 workflow skill：
+
+- `workflow-6a`
+- `workflow-6ayh`
+- `workflow-ppw`
+- `workflow-sdd`
+
 如果你第一次接触它，可以把它理解成：
 
 > 给 AI 一套“先理解、再规划、必要时审核、最后执行”的协作规则。
@@ -119,31 +126,18 @@ ls ~/.codex/skills/role-based-agent-governance
 2. 判断要走哪条内部流程
 3. 生成结构化任务卡
 4. 把 workflow 文档写到你当前打开项目根目录下的 `docs/` 目录
-5. 交给 `planner` 做方案和拆解
-6. 如果任务风险高，再交给 `review-gate`
-7. 先把文档包输出给你确认
-8. 你明确确认后，才由 `orchestrator` 协调代码生成或代码修改
+5. 先把文档包输出给你确认
+6. 你明确确认后，才由 `orchestrator` 协调代码生成或代码修改
 
-文档目录格式统一为：
+最新的门禁要求是：
 
-```text
-docs/YYYY_MM_DD_中文任务名_vN/
-```
-
-例如：
-
-```text
-docs/2026_03_23_首页优化_v1/
-```
+- `6A`、`6AYH`、`PPW`、`SDD` 都要先输出工作流文档包
+- 文档目录格式统一为 `docs/YYYY_MM_DD_中文任务名_vN/`
+- 涉及代码修改时，文档必须写清楚文件路径、行号范围、修改前代码片段和修改后代码片段
+- 用户确认前，`user_confirmation.status` 必须保持 `pending`
+- 没有确认前，不得派发 `engineering`，也不得生成或修改代码
 
 这里的 `docs/` 指的是你当前 IDE 里正在处理的那个项目根目录，不是这个 skill 包安装目录。
-
-如果 workflow 里包含代码修改，文档还应该额外写清楚：
-
-1. 修改的是哪个文件
-2. 大概位于哪些行
-3. 修改前的代码上下文
-4. 修改后的代码上下文
 
 ## 8. 常见触发方式
 
@@ -164,9 +158,13 @@ docs/2026_03_23_首页优化_v1/
 - `@PPW`：项目流程梳理
 - `@sdd`：规格驱动开发
 
+如果你想让它更稳定地跑 `SDD`，可以把规格文档按这个模板生成：
+
+- [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)
+
 如果你不确定用哪个，直接用 `@intake` 就够了。
 
-## 9. 新手推荐提问模板
+## 9. 新手推荐的提问模板
 
 ### 模板 1：让它帮你规划
 
@@ -239,6 +237,4 @@ docs/2026_03_23_首页优化_v1/
 
 如果你是新手，记住这一条就够了：
 
-```text
-安装到 ~/.codex/skills/role-based-agent-governance，重启 Codex，然后用 @intake 开始。
-```
+> 复杂任务先找 `@intake`，简单任务别强行走多 Agent。

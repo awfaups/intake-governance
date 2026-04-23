@@ -2,87 +2,82 @@
 
 Portable multi-agent governance skill for role-based planning, review, dispatch, and execution.
 
-一个可移植的多 Agent 治理 skill 包，用于基于 `intake`、`planner`、`review-gate`、`orchestrator` 与执行部门的角色化协作流程。
+This package is not an application or an SDK. It is a reusable set of governance rules, workflow references, and task-card constraints that can be mounted directly in an Agent Skills environment.
 
-这个仓库不是应用程序，也不是 SDK，而是一套可复用的治理规则、工作流参考和任务卡约束，适合在 Agent Skills 场景中直接挂载使用。
+The repository currently includes the root governance skill plus four standalone workflow skills:
 
-本 skill 的治理思路与朝廷式角色分工借鉴于 [Edict](https://github.com/cft0808/edict) 项目。当前仓库保留的是更轻量、可移植的 skill 包形态，聚焦治理规则、workflow 约束与任务卡 schema，不包含 Edict 的运行时、Dashboard 或 OpenClaw 集成。
+- `workflow-6a`
+- `workflow-6ayh`
+- `workflow-ppw`
+- `workflow-sdd`
 
-第一次接触这个 skill，建议先看 [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)。
+The core roles are:
 
-仓库现在同时包含：
+- `intake`: entry hub
+- `planner`: planning office
+- `review-gate`: review gate
+- `orchestrator`: dispatch hub
+- worker departments: `data-ops`, `docs-spec`, `engineering`, `security`, `platform`, `governance`
 
-- 根目录的主治理 skill：`role-based-agent-governance`
-- 拆分后的独立 workflow skills：`workflow-6a`、`workflow-6ayh`、`workflow-ppw`、`workflow-sdd`
+The governance model is inspired by the Edict project, but this repository keeps the lighter, portable skill-package form that focuses on rules, workflow constraints, and task-card schema.
 
-## 适用场景
+## Current usage model
 
-在以下场景启用这套模型：
+- `intake` is the only public entry point
+- external requests may not bypass directly to `planner`, `review-gate`, `orchestrator`, or any worker department
+- `@intake` normalizes the request and classifies it into `6A`, `6AYH`, `PPW`, `SDD`, or `generic_governance`
+- if `intake` auto-classifies the task as `6A`, `6AYH`, `PPW`, or `SDD`, it must emit that workflow's activation response exactly before any further planning text
+- `scheduler` is internal-only and is not an external entry point
 
-- 多 Agent 设计或编排
-- 基于角色的任务委派
-- 规划 / 审议 / 调度 / 执行分层协作
-- 工程治理型流程，如规划、审计、风险评估、重构治理
-- 用户显式输入 `@intake`
+For substantial tasks, use the default path:
 
-对于简单的一步式请求，不应强行套用这套多 Agent 流程。
+`intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator`
 
-## 核心原则
+## When to use this skill
 
-- `intake` 是唯一允许的外部入口
-- 外部请求不能直接进入 `planner`、`review-gate`、`orchestrator` 或执行部门
-- 标准流转链路为 `intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator`
-- 执行部门只能向 `orchestrator` 回传结果，禁止横向派单
-- 高风险、跨部门、目标不清或涉及安全 / 部署 / 权限的任务必须经过 `review-gate`
+- the user wants multi-agent design or orchestration
+- the user wants role-based delegation rules
+- the user wants a planner / reviewer / dispatcher / worker split
+- the user wants layered role collaboration or worker-group coordination
+- the user input contains `@intake`
 
-## 角色分工
+Do not force this skill onto trivial single-step tasks.
 
-| 角色 | 中文名注释 | 职责 |
-| --- | --- | --- |
-| `intake` | 接入中心 | 入口接收、需求归一、标题标准化、工作流识别 |
-| `planner` | 规划中心 | 规划、拆解、方案设计、验收标准定义 |
-| `review-gate` | 评审中心 | 风险审议、质量把关、批准或驳回 |
-| `orchestrator` | 调度中心 | 派发、协调、汇总、状态跟踪 |
-| `data-ops` | 数据资源组 | 数据、资源、核算、报表 |
-| `docs-spec` | 文档规范组 | 文档、规范、报告 |
-| `engineering` | 工程实施组 | 代码、功能开发、Bug 修复、巡检 |
-| `security` | 安全合规组 | 安全、合规、审计 |
-| `platform` | 平台发布组 | 部署、CI/CD、工具、自动化 |
-| `governance` | Agent治理组 | Agent 注册、权限、培训、治理维护 |
-| `scheduler` | 定时调度器 | 内部定时触发、晨报聚合，不作为外部入口 |
+## Role table
 
-## 支持的工作流别名
+| Role | Chinese label | Notes | Responsibility |
+| --- | --- | --- | --- |
+| `intake` | 接入中心 | public entry | ingest request, normalize intent, classify workflow, standardize title |
+| `planner` | 规划中心 | planning office | plan, decompose, design the approach, define acceptance criteria |
+| `review-gate` | 评审中心 | quality gate | assess risk, review quality, approve or reject |
+| `orchestrator` | 调度中心 | dispatch hub | dispatch, coordinate, aggregate, track state |
+| `data-ops` | 数据资源组 | worker department | data, cost, resource, reporting |
+| `docs-spec` | 文档规范组 | worker department | docs, specs, reports |
+| `engineering` | 工程实施组 | worker department | code, feature work, bug fixes, inspections |
+| `security` | 安全合规组 | worker department | security, compliance, audits |
+| `platform` | 平台发布组 | worker department | deployment, CI/CD, tools, automation |
+| `governance` | Agent 治理组 | worker department | agent registry, permissions, training, governance maintenance |
+| `scheduler` | 定时调度器 | internal-only | internal timed triggers and morning aggregation, never an external entry |
 
-入口仍然由 `intake` 统一接管，但可根据别名路由到不同治理模式：
+## Workflow aliases
 
-- `@init`：项目初始化分析
-- `@plan`：任务规划
-- `@refactor`：渐进式重构
-- `@risk`：风险评估
-- `@decision`：技术决策
-- `@audit`：架构 / 代码审计
-- `@ask`：快速问题拆解
-- `@ppw` / `@PPW`：项目流程梳理
-- `@6A`：新增功能开发
-- `@6AYH`：渐进式优化
-- `@sdd`：规格驱动开发
+The external entry still goes through `intake`, but aliases can route the request into different governance modes:
 
-当请求内容匹配 `6A`、`6AYH`、`PPW` 或 `SDD` 的自动识别信号时，`intake` 也应先输出对应工作流规定的激活响应，再继续内部流转。
+- `@init`: project initialization analysis
+- `@plan`: task planning
+- `@refactor`: progressive refactor
+- `@risk`: risk review
+- `@decision`: technical decision
+- `@audit`: architecture / code audit
+- `@ask`: quick decomposition
+- `@ppw` / `@PPW`: project-process inventory
+- `@6A`: new feature development
+- `@6AYH`: progressive optimization
+- `@sdd`: spec-driven development
 
-## 标签到执行部门的默认路由
+## Task-card requirements
 
-- `code`、`bugfix`、`feature`、`algorithm`、`performance` -> `engineering`
-- `docs`、`api`、`report`、`spec` -> `docs-spec`
-- `data`、`cost`、`reporting`、`resource` -> `data-ops`
-- `security`、`compliance`、`audit` -> `security`
-- `deploy`、`cicd`、`tooling`、`automation` -> `platform`
-- `agent`、`permission`、`training`、`registry` -> `governance`
-
-如果没有合适的执行部门，任务应回退到 `planner` 重新规划。
-
-## 任务卡要求
-
-推荐使用结构化任务卡，而不是自由文本委派。至少包含以下字段：
+Use a structured task card instead of a free-form delegation message. The required fields are:
 
 - `task_id`
 - `title`
@@ -96,34 +91,77 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 - `review_required`
 - `workflow_mode`
 - `current_stage`
+- `document_bundle_version`
 - `required_documents`
 - `document_status`
+- `user_confirmation`
+- `code_change_targets`
 - `handoff_history`
 - `status`
 
-完整 schema 见 [references/task-card.schema.json](references/task-card.schema.json)。
+See [references/task-card.schema.json](references/task-card.schema.json) for the full schema.
 
-## 状态治理
+## Document gate
 
-推荐的硬状态流转为：
+For `6A`, `6AYH`, `PPW`, and `SDD`:
 
-`submitted -> triaged -> planned -> under_review -> approved -> dispatched -> executing -> aggregated -> completed`
+- workflow documents are mandatory deliverables
+- workflow docs must live under the active project's root `docs/YYYY_MM_DD_中文任务名_vN/` directory
+- do not write generated workflow docs into the skill repository unless the skill repository is the active project being changed
+- if code changes are involved, record file path, line range, before context, and after context
+- present the document bundle summary to the user and wait for explicit confirmation before any code generation or implementation
+- keep `user_confirmation.status=pending` until the user confirms the documents
+- do not dispatch `engineering`, generate code, or edit code until `user_confirmation.status=confirmed`
 
-返工与异常状态包括：
+## Source of truth
 
-- `needs_revision`
-- `blocked`
-- `rejected`
-- `cancelled`
+Read these references when precise behavior matters:
 
-每次状态变化都应附带 handoff 记录，详见：
+- `references/agents.json`
+- `references/status-transitions.json`
+- `references/handoff-record.schema.json`
+- `references/role-permissions.md`
+- `references/routing-rules.json`
+- `references/task-card.schema.json`
+- `references/role-prompts.json`
+- `references/workflow-routing.json`
+- `references/engineering-governance.md`
+- `references/intake-classification.md`
 
-- [references/status-transitions.json](references/status-transitions.json)
-- [references/handoff-record.schema.json](references/handoff-record.schema.json)
+Read these workflow references when the selected mode needs them:
 
-每条 handoff 记录都应该显式带上 `responsibility_notice`，用于提示职责如何从上一个角色转移到下一个角色。
+- `references/workflows/6a.md`
+- `references/workflows/6ayh.md`
+- `references/workflows/ppw.md`
+- `references/workflows/sdd.md`
 
-## 目录结构
+Treat each workflow file's `Required documents` section as an execution contract.
+
+## Routing policy
+
+Route from `orchestrator` by tags:
+
+- `code`, `bugfix`, `feature`, `algorithm`, `performance` -> `engineering`
+- `docs`, `api`, `report`, `spec` -> `docs-spec`
+- `data`, `cost`, `reporting`, `resource` -> `data-ops`
+- `security`, `compliance`, `audit` -> `security`
+- `deploy`, `cicd`, `tooling`, `automation` -> `platform`
+- `agent`, `permission`, `training`, `registry` -> `governance`
+
+If no worker matches, return to `planner` for replanning.
+
+## Review policy
+
+Send the task through `review-gate` when any of the following is true:
+
+- the task is high risk
+- the task spans multiple worker departments
+- the acceptance criteria are unclear
+- the task touches security, compliance, deployment, or permissions
+
+When `review-gate` rejects or returns a task, it must emit `rejection_reason` and, when applicable, `required_fixes`.
+
+## Directory structure
 
 ```text
 .
@@ -137,11 +175,11 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
     ├── agents.json
     ├── engineering-governance.md
     ├── handoff-record.schema.json
+    ├── intake-classification.md
     ├── role-permissions.md
     ├── role-prompts.json
     ├── routing-rules.json
     ├── status-transitions.json
-    ├── intake-classification.md
     ├── task-card.schema.json
     ├── templates
     │   └── 01_SPEC.template.md
@@ -153,84 +191,34 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
         └── sdd.md
 ```
 
-## 关键文件说明
+## Minimal example
 
-- [SKILL.md](SKILL.md)：主 skill 定义、启用条件、总流程、读取策略
-- [references/agents.json](references/agents.json)：角色定义与可收发关系
-- [references/status-transitions.json](references/status-transitions.json)：合法状态迁移与角色权限
-- [references/handoff-record.schema.json](references/handoff-record.schema.json)：标准流转记录结构
-- [references/role-permissions.md](references/role-permissions.md)：越权边界与强制职责链
-- [references/workflow-routing.json](references/workflow-routing.json)：别名、自动分类信号、激活响应
-- [references/task-card.schema.json](references/task-card.schema.json)：任务卡 JSON Schema
-- [references/workflows/6a.md](references/workflows/6a.md)：新增功能开发工作流
-- [references/workflows/6ayh.md](references/workflows/6ayh.md)：渐进式优化工作流
-- [references/workflows/ppw.md](references/workflows/ppw.md)：项目流程梳理工作流
-- [references/workflows/sdd.md](references/workflows/sdd.md)：规格驱动开发工作流
-- [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)：SDD 的规格文档模板
-- [skills/workflow-6a/SKILL.md](skills/workflow-6a/SKILL.md)：独立 6A workflow skill
-- [skills/workflow-6ayh/SKILL.md](skills/workflow-6ayh/SKILL.md)：独立 6AYH workflow skill
-- [skills/workflow-ppw/SKILL.md](skills/workflow-ppw/SKILL.md)：独立 PPW workflow skill
-- [skills/workflow-sdd/SKILL.md](skills/workflow-sdd/SKILL.md)：独立 SDD workflow skill
-
-## 最小使用示例
-
-用户输入：
+User input:
 
 ```text
-@intake 帮我规划一个跨前端、文档和部署的功能开发流程
+@intake Help me plan a feature that spans frontend, documentation, and deployment
 ```
 
-期望行为：
+Expected behavior:
 
-1. `intake` 识别请求并归一化标题、目标、约束
-2. `planner` 拆解方案、划分执行阶段、定义验收标准
-3. `review-gate` 在跨部门或高风险场景下进行审议
-4. `orchestrator` 根据标签派发到相应执行部门
-5. 执行部门仅在各自职责范围内产出，并统一回传给 `orchestrator`
+1. `intake` classifies the request and normalizes the goal, title, and constraints
+2. `planner` decomposes the plan, stages the work, and defines acceptance criteria
+3. `review-gate` reviews the task when it spans multiple domains or carries risk
+4. `orchestrator` dispatches to the appropriate worker departments
+5. Workers return only to `orchestrator`
 
-## 工作流文档目录命名
+## Design goals
 
-`6A`、`6AYH`、`PPW`、`SDD` 生成的文档目录，统一使用：
+- portable: no dependency on platform-specific global configuration
+- governable: explicit handoff graph prevents role confusion and overreach
+- extensible: workflow, routing, and task-card schema live in reference files
+- reusable: suitable as a standalone skill package for publication or integration
 
-`docs/YYYY_MM_DD_中文任务名_vN/`
+## Further reading
 
-这个 `docs/` 必须位于**当前 IDE / 当前打开项目的根目录**下，而不是 skill 包自己的目录里。
+Recommended order:
 
-例如：
-
-`docs/2026_03_23_首页优化_v1/`
-
-如果是同一个功能的第二版、第三版文档，就递增为：
-
-- `docs/2026_03_23_首页优化_v2/`
-- `docs/2026_03_23_首页优化_v3/`
-
-如果工作流涉及代码修改，文档里还必须记录：
-
-- 要修改的文件路径
-- 具体行号范围
-- 修改前代码片段
-- 修改后代码片段
-
-代码生成或代码修改必须在文档包输出后等待用户显式确认。用户确认前，任务卡中的 `user_confirmation.status` 应保持为 `pending`，不得派发 `engineering`，也不得生成或修改代码。
-
-## 设计目标
-
-- 可移植：不依赖特定平台的全局配置文件
-- 可治理：通过显式 handoff 图防止越权和角色混乱
-- 可扩展：通过引用文件维护工作流、路由规则和任务卡 schema
-- 可复用：适合作为独立 skill 包对外发布或集成到其他 Agent 体系
-
-## 发布到 SkillsMP
-
-如果你希望把这个 skill 公开分发给其他人，可以参考 [PUBLISHING.md](PUBLISHING.md)。
-
-最低要求如下：
-
-- 将仓库发布到公开 GitHub 仓库
-- 保留根目录下的 `SKILL.md`
-- 为 GitHub 仓库添加 topic：`claude-skills`
-- 可选再添加 topic：`claude-code-skill`
-- 等待 SkillsMP 周期性同步收录
-
-当前仓库已附带 `MIT` 许可证，便于别人明确复用范围。
+1. [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)
+2. [OVERVIEW.zh-CN.md](OVERVIEW.zh-CN.md)
+3. [references/role-permissions.md](references/role-permissions.md)
+4. [references/workflow-routing.json](references/workflow-routing.json)

@@ -16,6 +16,13 @@
 - `orchestrator`：调度中心
 - 执行部门：`data-ops`、`docs-spec`、`engineering`、`security`、`platform`、`governance`
 
+当前仓库除了主治理 skill，还拆出了 4 个独立 workflow skill：
+
+- `workflow-6a`
+- `workflow-6ayh`
+- `workflow-ppw`
+- `workflow-sdd`
+
 ## 适用场景
 
 在以下场景启用这套模型：
@@ -28,29 +35,30 @@
 
 对于简单的一步式请求，不应强行套用这套多 Agent 流程。
 
-## 核心原则
+## 最新入口规则
 
 - `intake` 是唯一允许的外部入口
 - 外部请求不能直接进入 `planner`、`review-gate`、`orchestrator` 或执行部门
 - 标准流转链路为 `intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator`
 - 执行部门只能向 `orchestrator` 回传结果，禁止横向派单
 - 高风险、跨部门、目标不清或涉及安全 / 部署 / 权限的任务必须经过 `review-gate`
+- `scheduler` 只用于内部定时触发，不是外部入口
 
 ## 角色分工
 
-| 角色 | 中文名 | 职责 |
-| --- | --- | --- |
-| `intake` | 接入中心 | 入口接收、需求归一、标题标准化、工作流识别 |
-| `planner` | 规划中心 | 规划、拆解、方案设计、验收标准定义 |
-| `review-gate` | 评审中心 | 风险审议、质量把关、批准或驳回 |
-| `orchestrator` | 调度中心 | 派发、协调、汇总、状态跟踪 |
-| `data-ops` | 数据资源组 | 数据、资源、核算、报表 |
-| `docs-spec` | 文档规范组 | 文档、规范、报告 |
-| `engineering` | 工程实施组 | 代码、功能开发、Bug 修复、巡检 |
-| `security` | 安全合规组 | 安全、合规、审计 |
-| `platform` | 平台发布组 | 部署、CI/CD、工具、自动化 |
-| `governance` | Agent治理组 | Agent 注册、权限、培训、治理维护 |
-| `scheduler` | 定时调度器 | 内部定时触发、晨报聚合，不作为外部入口 |
+| 角色 | 中文名 | 中文含义 | 职责 |
+| --- | --- | --- | --- |
+| `intake` | 接入中心 | 接收入口、初步分流 | 入口接收、需求归一、标题标准化、工作流识别 |
+| `planner` | 规划中心 | 任务规划、拆解设计 | 规划、拆解、方案设计、验收标准定义 |
+| `review-gate` | 评审中心 | 风险审查、质量把关 | 风险审议、质量把关、批准或驳回 |
+| `orchestrator` | 调度中心 | 调度协调、结果汇总 | 派发、协调、汇总、状态跟踪 |
+| `data-ops` | 数据资源组 | 数据与资源处理 | 数据、资源、核算、报表 |
+| `docs-spec` | 文档规范组 | 文档与规格输出 | 文档、规范、报告 |
+| `engineering` | 工程实施组 | 代码与功能实现 | 代码、功能开发、Bug 修复、巡检 |
+| `security` | 安全合规组 | 安全与合规审查 | 安全、合规、审计 |
+| `platform` | 平台发布组 | 部署与工具链支持 | 部署、CI/CD、工具、自动化 |
+| `governance` | Agent 治理组 | Agent 管理与规则维护 | Agent 注册、权限、培训、治理维护 |
+| `scheduler` | 定时调度器 | 内部定时触发器 | 内部定时触发、晨报聚合，不作为外部入口 |
 
 ## 支持的工作流别名
 
@@ -97,12 +105,15 @@
 - `review_required`
 - `workflow_mode`
 - `current_stage`
+- `document_bundle_version`
 - `required_documents`
 - `document_status`
+- `user_confirmation`
+- `code_change_targets`
 - `handoff_history`
 - `status`
 
-完整 schema 见 [task-card.schema.json](references/task-card.schema.json)。
+完整 schema 见 [references/task-card.schema.json](references/task-card.schema.json)。
 
 ## 状态治理
 
@@ -119,33 +130,109 @@
 
 每次状态变化都应附带 handoff 记录，详见：
 
-- [status-transitions.json](references/status-transitions.json)
-- [handoff-record.schema.json](references/handoff-record.schema.json)
+- [references/status-transitions.json](references/status-transitions.json)
+- [references/handoff-record.schema.json](references/handoff-record.schema.json)
 
 每条 handoff 记录都应该显式带上 `responsibility_notice`，用于提示职责如何从上一个角色转移到下一个角色。
 
-## 关键文件
-
-- [SKILL.md](SKILL.md)：主 skill 定义，给模型读
-- [OVERVIEW.md](OVERVIEW.md)：仓库说明
-- [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)：新手说明
-- [BEGINNER_GUIDE.zh-CN.md](BEGINNER_GUIDE.zh-CN.md)：独立中文新手说明
-- [agents.json](references/agents.json)：角色定义与可收发关系
-- [workflow-routing.json](references/workflow-routing.json)：别名、自动分类信号、激活响应
-- [role-permissions.md](references/role-permissions.md)：越权边界与强制职责链
-
-## 工作流文档目录命名
+## 文档门禁
 
 `6A`、`6AYH`、`PPW`、`SDD` 的文档目录统一使用：
 
 `docs/YYYY_MM_DD_中文任务名_vN/`
 
+这个 `docs/` 必须位于当前 IDE / 当前打开项目的根目录下，而不是 skill 包自己的目录里。
+
+如果工作流涉及代码修改，文档里还必须记录：
+
+- 要修改的文件路径
+- 具体行号范围
+- 修改前代码片段
+- 修改后代码片段
+
+代码生成或代码修改必须在文档包输出后等待用户显式确认。用户确认前，任务卡中的 `user_confirmation.status` 应保持为 `pending`，不得派发 `engineering`，也不得生成或修改代码。
+
+## 目录结构
+
+```text
+.
+├── SKILL.md
+├── skills
+│   ├── workflow-6a
+│   ├── workflow-6ayh
+│   ├── workflow-ppw
+│   └── workflow-sdd
+└── references
+    ├── agents.json
+    ├── engineering-governance.md
+    ├── handoff-record.schema.json
+    ├── intake-classification.md
+    ├── role-permissions.md
+    ├── role-prompts.json
+    ├── routing-rules.json
+    ├── status-transitions.json
+    ├── task-card.schema.json
+    ├── templates
+    │   └── 01_SPEC.template.md
+    ├── workflow-routing.json
+    └── workflows
+        ├── 6a.md
+        ├── 6ayh.md
+        ├── ppw.md
+        └── sdd.md
+```
+
+## 关键文件说明
+
+- [SKILL.md](SKILL.md)：主 skill 定义、启用条件、总流程、读取策略
+- [references/agents.json](references/agents.json)：角色定义与可收发关系
+- [references/status-transitions.json](references/status-transitions.json)：合法状态迁移与角色权限
+- [references/handoff-record.schema.json](references/handoff-record.schema.json)：标准流转记录结构
+- [references/role-permissions.md](references/role-permissions.md)：越权边界与强制职责链
+- [references/workflow-routing.json](references/workflow-routing.json)：别名、自动分类信号、激活响应
+- [references/task-card.schema.json](references/task-card.schema.json)：任务卡 JSON Schema
+- [references/workflows/6a.md](references/workflows/6a.md)：新增功能开发工作流
+- [references/workflows/6ayh.md](references/workflows/6ayh.md)：渐进式优化工作流
+- [references/workflows/ppw.md](references/workflows/ppw.md)：项目流程梳理工作流
+- [references/workflows/sdd.md](references/workflows/sdd.md)：规格驱动开发工作流
+- [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)：SDD 的规格文档模板
+- [skills/workflow-6a/SKILL.md](skills/workflow-6a/SKILL.md)：独立 6A workflow skill
+- [skills/workflow-6ayh/SKILL.md](skills/workflow-6ayh/SKILL.md)：独立 6AYH workflow skill
+- [skills/workflow-ppw/SKILL.md](skills/workflow-ppw/SKILL.md)：独立 PPW workflow skill
+- [skills/workflow-sdd/SKILL.md](skills/workflow-sdd/SKILL.md)：独立 SDD workflow skill
+
+## 最小使用示例
+
+用户输入：
+
+```text
+@intake 帮我规划一个跨前端、文档和部署的功能开发流程
+```
+
+期望行为：
+
+1. `intake` 识别请求并归一化标题、目标、约束
+2. `planner` 拆解方案、划分执行阶段、定义验收标准
+3. `review-gate` 在跨部门或高风险场景下进行审议
+4. `orchestrator` 根据标签派发到相应执行部门
+5. 执行部门仅在各自职责范围内产出，并统一回传给 `orchestrator`
+
+## 工作流文档目录命名
+
+`6A`、`6AYH`、`PPW`、`SDD` 生成的文档目录，统一使用：
+
+`docs/YYYY_MM_DD_中文任务名_vN/`
+
+这个 `docs/` 必须位于**当前 IDE / 当前打开项目的根目录**下，而不是 skill 包自己的目录里。
+
 例如：
 
-- `docs/2026_03_23_首页优化_v1/`
-- `docs/2026_03_23_首页优化_v2/`
+`docs/2026_03_23_首页优化_v1/`
 
-这个 `docs/` 必须位于当前 IDE / 当前打开项目的根目录下，而不是 skill 包自己的目录里。
+如果是同一个功能的第二版、第三版文档，就递增为：
+
+- `docs/2026_03_23_首页优化_v2/`
+- `docs/2026_03_23_首页优化_v3/`
 
 如果工作流涉及代码修改，文档里还必须记录：
 
@@ -163,7 +250,7 @@
 - 可扩展：通过引用文件维护工作流、路由规则和任务卡 schema
 - 可复用：适合作为独立 skill 包对外发布或集成到其他 Agent 体系
 
-## 进一步阅读
+## 推荐阅读顺序
 
 建议按这个顺序看：
 
