@@ -1,6 +1,6 @@
 # Beginner Guide
 
-`role-based-agent-governance` is a skill package for multi-agent collaboration.
+`intake-governance` is a skill package for multi-agent collaboration.
 
 Its job is not to write business code for you. It gives agents a clear governance flow so that complex work can move forward by role:
 
@@ -47,7 +47,7 @@ In Codex, skills are usually installed under:
 After installation, the structure should look like:
 
 ```text
-~/.codex/skills/role-based-agent-governance/
+~/.codex/skills/intake-governance/
 ├── SKILL.md
 ├── OVERVIEW.md
 ├── OVERVIEW.zh-CN.md
@@ -64,17 +64,17 @@ After installation, the structure should look like:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R /path/to/role-based-agent-governance ~/.codex/skills/role-based-agent-governance
+cp -R /path/to/intake-governance ~/.codex/skills/intake-governance
 ```
 
-Replace `/path/to/role-based-agent-governance` with your actual local path.
+Replace `/path/to/intake-governance` with your actual local path.
 
 ### Option 2: clone from GitHub
 
 ```bash
-git clone https://github.com/awfaups/role-based-agent-governance.git
+git clone https://github.com/awfaups/intake-governance.git
 mkdir -p ~/.codex/skills
-cp -R role-based-agent-governance ~/.codex/skills/role-based-agent-governance
+cp -R intake-governance ~/.codex/skills/intake-governance
 ```
 
 You must restart Codex after installation, otherwise the new skill may not be picked up immediately.
@@ -84,7 +84,7 @@ You must restart Codex after installation, otherwise the new skill may not be pi
 Run:
 
 ```bash
-ls ~/.codex/skills/role-based-agent-governance
+ls ~/.codex/skills/intake-governance
 ```
 
 If you can see:
@@ -212,7 +212,7 @@ Usually when:
 
 ## 12. What to check if it does not work
 
-1. the skill is installed at `~/.codex/skills/role-based-agent-governance`
+1. the skill is installed at `~/.codex/skills/intake-governance`
 2. the root really contains `SKILL.md`
 3. Codex has been restarted
 

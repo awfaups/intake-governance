@@ -1,6 +1,6 @@
 # Maintainer Upgrade Guide
 
-Use this guide when the task is to evolve `role-based-agent-governance` itself rather than to run it on a user task.
+Use this guide when the task is to evolve `intake-governance` itself rather than to run it on a user task.
 
 ## Design stance
 

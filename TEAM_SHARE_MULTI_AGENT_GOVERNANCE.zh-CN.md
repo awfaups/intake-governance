@@ -6,7 +6,7 @@
 
 仓库地址：
 
-- GitHub: [awfaups/role-based-agent-governance](https://github.com/awfaups/role-based-agent-governance)
+- GitHub: [awfaups/intake-governance](https://github.com/awfaups/intake-governance)
 
 标准链路是：
 

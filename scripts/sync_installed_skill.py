@@ -42,7 +42,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--installed-root",
-        default="/Users/caiyanning/.codex/skills/role-based-agent-governance",
+        default="/Users/caiyanning/.codex/skills/intake-governance",
         help="Installed skill root to update.",
     )
     return parser.parse_args()

@@ -4,7 +4,7 @@
 
 ## 1. 这个 skill 是做什么的
 
-`role-based-agent-governance` 是一个面向多 Agent 协作场景的 skill 包。
+`intake-governance` 是一个面向多 Agent 协作场景的 skill 包。
 
 它的作用不是“替你写业务代码”，而是给 Agent 提供一套明确的治理流程，让复杂任务按角色分工推进：
 
@@ -51,7 +51,7 @@
 安装完成后，目录结构应类似：
 
 ```text
-~/.codex/skills/role-based-agent-governance/
+~/.codex/skills/intake-governance/
 ├── SKILL.md
 ├── OVERVIEW.md
 ├── OVERVIEW.zh-CN.md
@@ -68,17 +68,17 @@
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R /path/to/role-based-agent-governance ~/.codex/skills/role-based-agent-governance
+cp -R /path/to/intake-governance ~/.codex/skills/intake-governance
 ```
 
-把 `/path/to/role-based-agent-governance` 换成你本地实际路径。
+把 `/path/to/intake-governance` 换成你本地实际路径。
 
 ### 方法二：从 GitHub 下载后安装
 
 ```bash
-git clone https://github.com/awfaups/role-based-agent-governance.git
+git clone https://github.com/awfaups/intake-governance.git
 mkdir -p ~/.codex/skills
-cp -R role-based-agent-governance ~/.codex/skills/role-based-agent-governance
+cp -R intake-governance ~/.codex/skills/intake-governance
 ```
 
 安装后必须重启 Codex，不然新安装的 skill 往往不会立刻生效。
@@ -88,7 +88,7 @@ cp -R role-based-agent-governance ~/.codex/skills/role-based-agent-governance
 执行：
 
 ```bash
-ls ~/.codex/skills/role-based-agent-governance
+ls ~/.codex/skills/intake-governance
 ```
 
 如果能看到：
@@ -220,7 +220,7 @@ ls ~/.codex/skills/role-based-agent-governance
 
 先检查三件事：
 
-1. skill 是否放在 `~/.codex/skills/role-based-agent-governance`
+1. skill 是否放在 `~/.codex/skills/intake-governance`
 2. 根目录是否真的有 `SKILL.md`
 3. 是否已经重启 Codex
 
