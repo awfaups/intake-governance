@@ -1,4 +1,4 @@
-# Engineering Governance For Role-Based Agent Governance
+# Engineering Governance For Intake Governance
 
 This reference adapts engineering-governance discipline into the layered role model used by this skill.
 

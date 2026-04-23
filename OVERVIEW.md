@@ -1,4 +1,4 @@
-# Role-Based Agent Governance
+# Intake Governance
 
 Portable multi-agent governance skill for role-based planning, review, dispatch, and execution.
 

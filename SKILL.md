@@ -1,11 +1,11 @@
 ---
-name: role-based-agent-governance
-description: Portable role-based multi-agent governance with intake-only entry, workflow classification, review gates, orchestrator dispatch, and worker handoff rules. Use when the user wants multi-agent orchestration, delegation architecture, workflow routing, role permissions, or invokes @intake and governance aliases such as @plan, @risk, @6A, @6AYH, @PPW, or @sdd.
+name: intake-governance
+description: Portable intake-first multi-agent governance with workflow classification, review gates, orchestrator dispatch, and worker handoff rules. Use when the user wants multi-agent orchestration, delegation architecture, workflow routing, role permissions, or invokes @intake and governance aliases such as @plan, @risk, @6A, @6AYH, @PPW, or @sdd.
 metadata:
   short-description: Portable role-based agent governance workflow
 ---
 
-# Role-Based Agent Governance
+# Intake Governance
 
 This skill defines a portable multi-agent operating model built around `intake`, `planner`, `review-gate`, `orchestrator`, and worker departments.
 

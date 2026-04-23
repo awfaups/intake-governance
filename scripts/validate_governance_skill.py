@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lightweight validator for the role-based-agent-governance skill package."""
+"""Lightweight validator for the intake-governance skill package."""
 
 from __future__ import annotations
 
@@ -122,7 +122,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--installed-root",
-        default="/Users/caiyanning/.codex/skills/role-based-agent-governance",
+        default="/Users/caiyanning/.codex/skills/intake-governance",
         help="Installed skill root to compare when --compare-installed is set.",
     )
     return parser.parse_args()
@@ -141,7 +141,7 @@ def main() -> int:
     if args.compare_installed:
         validate_installed_copy(root, Path(args.installed_root))
 
-    print("role-based-agent-governance validation: ok")
+    print("intake-governance validation: ok")
     return 0
 
 

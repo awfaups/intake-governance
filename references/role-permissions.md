@@ -1,4 +1,4 @@
-# Role-Based Agent Governance 角色权限手册
+# Intake Governance 角色权限手册
 
 这份手册的目的只有一个：
 

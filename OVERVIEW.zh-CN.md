@@ -1,10 +1,10 @@
-# Role-Based Agent Governance 中文说明
+# Intake Governance 中文说明
 
 > 这份文档给人看，不作为模型入口说明。
 
 ## 这是什么
 
-`role-based-agent-governance` 是一个可移植的多 Agent 治理 skill 包。
+`intake-governance` 是一个可移植的多 Agent 治理 skill 包。
 
 它不是应用程序，也不是 SDK，而是一套可复用的治理规则、工作流参考和任务卡约束，适合在 Agent Skills 场景中直接挂载使用。
 

@@ -11,7 +11,7 @@ Treat this skill as a detail layer, not a public governance entry.
 
 - If the request still needs intake, routing, or cross-role governance, enter through `@intake` first.
 - Use this skill after workflow selection is settled.
-- Keep global handoff policy in `role-based-agent-governance`; keep SDD stage rules here and in `references/sdd.md`.
+- Keep global handoff policy in `intake-governance`; keep SDD stage rules here and in `references/sdd.md`.
 
 ## Activation response
 

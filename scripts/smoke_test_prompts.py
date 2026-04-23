@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prompt smoke tests for role-based-agent-governance routing behavior."""
+"""Prompt smoke tests for intake-governance routing behavior."""
 
 from __future__ import annotations
 
