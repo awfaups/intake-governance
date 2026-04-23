@@ -1,0 +1,69 @@
+{
+  "task_id": "TASK-2026-04-23-001",
+  "title": "Build refunds detail page with intake-governed workflow",
+  "from": "intake",
+  "to": "planner",
+  "goal": "Route a new feature request through the correct governance workflow and initialize the document bundle before implementation.",
+  "brief": "The user wants a new refunds detail page and explicitly expects workflow-first execution.",
+  "tags": ["feature", "docs", "agent"],
+  "constraints": [
+    "intake is the only public entry",
+    "documents must be created under docs/YYYY_MM_DD_中文任务名_vN/",
+    "engineering cannot start before explicit user confirmation"
+  ],
+  "deliverables": [
+    "structured task card",
+    "6A document bundle plan",
+    "planner handoff"
+  ],
+  "review_required": true,
+  "workflow_mode": "6a",
+  "current_stage": "Align",
+  "document_bundle_version": "v1",
+  "required_documents": [
+    {
+      "path": "docs/2026_04_23_退款详情页_v1/01_ALIGN.md",
+      "purpose": "Capture goals, scope, constraints, and acceptance direction.",
+      "status": "planned",
+      "owner": "docs-spec"
+    }
+  ],
+  "document_status": "pending",
+  "user_confirmation": {
+    "status": "pending",
+    "document_bundle_summary": "6A bundle needs initialization before code generation."
+  },
+  "execution_plan": [
+    {
+      "step": "Classify workflow and initialize document bundle plan",
+      "owner": "planner"
+    }
+  ],
+  "code_change_targets": [
+    {
+      "path": "src/pages/refunds/detail.tsx",
+      "change_summary": "Planned new feature file for refund detail page."
+    }
+  ],
+  "handoff_history": [
+    {
+      "handoff_id": "HO-2026-04-23-001",
+      "from": "intake",
+      "to": "planner",
+      "status_before": "submitted",
+      "status_after": "triaged",
+      "reason": "The request is a greenfield feature and must be decomposed by planner under 6A.",
+      "responsibility_notice": "Intake stops at request normalization and workflow selection. Planner now owns decomposition and document-bootstrap planning. No execution or worker dispatch is allowed at this stage.",
+      "decision_summary": "Selected 6A because the request describes a new page and requires workflow-first delivery."
+    }
+  ],
+  "artifacts": [
+    {
+      "producer": "intake",
+      "kind": "classification",
+      "summary": "Classified as 6A with review required."
+    }
+  ],
+  "status_reason": "Request normalized and ready for planning.",
+  "status": "triaged"
+}

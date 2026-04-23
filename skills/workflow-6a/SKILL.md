@@ -1,18 +1,24 @@
 ---
 name: workflow-6a
-description: Standalone 6A workflow skill for new feature development. Use when the task is already confirmed as 6A, the user explicitly requests @6A, or the request is clearly about greenfield feature, page, or module development. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
+description: 6A workflow detail layer for new feature development after workflow selection is known. Use when the task is already confirmed as 6A, the user explicitly requests @6A, or intake has classified the task as greenfield feature, page, or module development. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
 ---
 
 # Workflow 6A
 
-Use this skill when the workflow type is already known to be `6A`.
+Use this skill only when the workflow type is already known to be `6A`.
 
-If the request still needs global intake, routing, or cross-role governance, enter through `@intake` first and use this skill as the workflow detail layer.
+Treat this skill as a detail layer, not a public governance entry.
 
-Activation response:
+- If the request still needs intake, routing, or cross-role governance, enter through `@intake` first.
+- Use this skill after workflow selection is settled.
+- Keep global handoff policy in `role-based-agent-governance`; keep 6A stage rules here and in `references/6a.md`.
+
+## Activation response
 
 > 6A工作流已激活
 > 当前阶段：Align（需求对齐）
+
+## Execution contract
 
 This skill enforces:
 
@@ -27,4 +33,6 @@ This skill enforces:
 - code-change records with file path, line range, before context, and after context
 - no implementation before workflow docs exist and the user has confirmed them
 
-Read next: `references/6a.md`
+## Read next
+
+- `references/6a.md`

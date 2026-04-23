@@ -1,18 +1,24 @@
 ---
 name: workflow-sdd
-description: Standalone SDD workflow skill for spec-driven development. Use when the task is already confirmed as SDD, the user explicitly requests @sdd, or the request is clearly about spec-first delivery where implementation, tests, and acceptance must derive from an approved spec bundle. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
+description: SDD workflow detail layer for spec-driven development after workflow selection is known. Use when the task is already confirmed as SDD, the user explicitly requests @sdd, or intake has classified the task as spec-first delivery where implementation, tests, and acceptance derive from an approved spec bundle. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
 ---
 
 # Workflow SDD
 
-Use this skill when the workflow type is already known to be `SDD`.
+Use this skill only when the workflow type is already known to be `SDD`.
 
-If the request still needs global intake, routing, or cross-role governance, enter through `@intake` first and use this skill as the workflow detail layer.
+Treat this skill as a detail layer, not a public governance entry.
 
-Activation response:
+- If the request still needs intake, routing, or cross-role governance, enter through `@intake` first.
+- Use this skill after workflow selection is settled.
+- Keep global handoff policy in `role-based-agent-governance`; keep SDD stage rules here and in `references/sdd.md`.
+
+## Activation response
 
 > ✅ Spec-Driven Development 工作流（SDD）已激活
 > 当前阶段：Spec（规格定义）
+
+## Execution contract
 
 This skill enforces:
 
@@ -27,4 +33,6 @@ This skill enforces:
 - test-first implementation when the project test setup supports it
 - no execution before the required spec bundle exists and the user has confirmed it
 
-Read next: `references/sdd.md`
+## Read next
+
+- `references/sdd.md`

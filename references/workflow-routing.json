@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "entry_agent": "intake",
   "external_entry_rule": "all_external_multi_agent_requests_must_enter_via_intake",
   "aliases": {
@@ -85,14 +85,22 @@
       "match_any_signals": [
         "新增功能",
         "新功能",
+        "新增能力",
         "开发一个",
         "开发页面",
         "开发模块",
         "新增页面",
         "新增模块",
         "从0到1",
+        "从零开始",
+        "新页面",
+        "新模块",
+        "greenfield",
         "feature",
-        "new feature"
+        "new feature",
+        "new page",
+        "new module",
+        "build from scratch"
       ],
       "emit_activation_response": true
     },
@@ -105,8 +113,15 @@
         "维护成本高",
         "卡顿",
         "状态混乱",
+        "技术债",
+        "可维护性",
+        "行为保持",
         "refactor",
-        "optimize"
+        "optimize",
+        "cleanup",
+        "tech debt",
+        "maintainability",
+        "behavior preserving"
       ],
       "emit_activation_response": true
     },
@@ -118,8 +133,16 @@
         "流程梳理",
         "全面盘点",
         "项目资产盘点",
+        "现状梳理",
+        "资产映射",
+        "摸清楚",
+        "资产和流程",
+        "流程摸清楚",
         "inventory",
-        "roadmap"
+        "roadmap",
+        "process discovery",
+        "asset mapping",
+        "current state"
       ],
       "emit_activation_response": true
     },
@@ -132,8 +155,12 @@
         "规格驱动开发",
         "先写规格",
         "先写 spec",
+        "需求规格",
+        "验收标准",
         "spec first",
-        "spec as source"
+        "spec as source",
+        "specification",
+        "acceptance criteria"
       ],
       "emit_activation_response": true
     },

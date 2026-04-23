@@ -1,0 +1,7 @@
+interface:
+  display_name: "Role-Based Agent Governance"
+  short_description: "Route complex multi-agent work through intake-first governance"
+  default_prompt: "Use $role-based-agent-governance to triage this request through intake, classify the workflow, and produce the correct governance handoff."
+
+policy:
+  allow_implicit_invocation: true

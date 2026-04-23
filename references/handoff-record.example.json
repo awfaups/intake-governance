@@ -1,0 +1,28 @@
+{
+  "handoff_id": "HO-2026-04-23-001",
+  "task_id": "TASK-2026-04-23-001",
+  "from": "planner",
+  "to": "review-gate",
+  "status_before": "planned",
+  "status_after": "under_review",
+  "reason": "The task spans documentation and engineering and requires a quality gate before dispatch.",
+  "responsibility_notice": "Planner stops at solution design and execution decomposition. Review-gate now owns risk and approval judgment. Review-gate must not dispatch workers or rewrite the plan as if it were planner.",
+  "decision_summary": "Prepared a 6A execution plan with document bootstrap, but review is required because the task is cross-functional.",
+  "inputs": [
+    "planned task card",
+    "document bootstrap plan",
+    "initial code change target list"
+  ],
+  "outputs": [
+    "approval decision",
+    "risk notes",
+    "required fixes if rejected"
+  ],
+  "risks": [
+    "scope may grow before alignment is confirmed",
+    "engineering must remain blocked until user confirms the document bundle"
+  ],
+  "next_action": "Review the plan for risk, document completeness, and workflow fit.",
+  "approved_by": "",
+  "timestamp": "2026-04-23T10:00:00+08:00"
+}

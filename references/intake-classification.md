@@ -2,27 +2,28 @@
 
 `intake` is the only external entry role.
 
-When the user input contains `@intake`, do these steps in order:
+When the user input contains `@intake` or an intake-owned governance alias, do these steps in order:
 
 1. Normalize the request and extract the main goal.
-2. Classify the task as one of:
+2. If the user used an alias such as `@plan`, `@risk`, `@decision`, `@6A`, `@6AYH`, `@PPW`, or `@sdd`, convert that input into an `intake` request first. The alias influences classification and likely routing, but it does not bypass `intake`.
+3. Classify the task as one of:
 - `6A`
 - `6AYH`
 - `PPW`
 - `SDD`
 - `generic_governance`
-3. Build the first structured task card with:
+4. Build the first structured task card with:
    - `workflow_mode`
    - `current_stage`
    - `document_bundle_version`
    - `code_change_targets`
    - `status=triaged`
    - the first `handoff_history` entry
-4. If the result is `6A`, `6AYH`, `PPW`, or `SDD`, output the workflow activation response exactly.
-5. Attach the workflow's required-document list to the task card and resolve it against the active project's root `docs/` directory.
-6. Default the document bundle version to `v1`. If the same topic already has an existing bundle, increment to `v2`, `v3`, and so on.
-7. If required workflow files are missing, mark document bootstrap as required and set `document_status=pending`.
-8. Hand off only to `planner`.
+5. If the result is `6A`, `6AYH`, `PPW`, or `SDD`, output the workflow activation response exactly.
+6. Attach the workflow's required-document list to the task card and resolve it against the active project's root `docs/` directory.
+7. Default the document bundle version to `v1`. If the same topic already has an existing bundle, increment to `v2`, `v3`, and so on.
+8. If required workflow files are missing, mark document bootstrap as required and set `document_status=pending`.
+9. Hand off only to `planner`.
 
 Classification heuristics:
 
@@ -37,7 +38,15 @@ Activation-output rule:
 - For `6A`, `6AYH`, `PPW`, and `SDD`, `intake` must output the workflow activation response before any additional planning text.
 - The first handoff record must explain why the selected workflow was chosen and why the task was handed to `planner`.
 
+Alias rule:
+
+- Treat engineering-governance aliases as classification hints owned by `intake`.
+- Do not let alias names become external entry points for `planner`, `review-gate`, `orchestrator`, or any worker.
+- When both an alias and strong natural-language intent exist, prefer the more specific workflow that still respects the alias intent.
+
 Non-bypass rule:
 
 - Even if the content strongly resembles planning, risk review, audit, or a known workflow, the external request must still start at `intake`.
 - No other role may be the first external recipient.
+ 
+Read `references/workflow-routing.json` when alias semantics or activation responses need to be resolved exactly.
