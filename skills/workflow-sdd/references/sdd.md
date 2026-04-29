@@ -6,9 +6,9 @@ Use when the task is clearly about spec-driven development, spec-first delivery,
 
 ## Activation
 
-When the user input contains `@sdd`, or clearly requests spec-driven development, output exactly:
+When the user input contains `@SDD`, legacy alias `@sdd`, or clearly requests specification-driven development, output exactly:
 
-> ✅ Spec-Driven Development 工作流（SDD）已激活
+> ✅ Specification-Driven Development 工作流（SDD）已激活
 > 当前阶段：Spec（规格定义）
 
 ## Core principle

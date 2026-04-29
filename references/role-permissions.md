@@ -101,7 +101,7 @@
 
 - 接收用户请求
 - 判断是否进入多 Agent 模式
-- 识别是否属于 `6A` / `6AYH` / `PPW` / `SDD` / 通用流程
+- 识别是否属于 `6A` / `6AO` / `PMW` / `SDD` / `GGW`
 - 提炼目标、约束、标题
 - 生成结构化任务卡
 - 交给 `planner`
@@ -279,7 +279,7 @@
 - 派单必须符合权限矩阵
 - 每次派单、收件、汇总都必须附带 handoff 原因
 - 状态推进必须符合 `references/status-transitions.json`
-- 对于 `6A`、`6AYH`、`PPW`、`SDD`，未完成文档初始化前不得推进到 `executing`
+- 对于 `6A`、`6AO`、`PMW`、`SDD`、`GGW`，未完成文档初始化前不得推进到 `executing`
 - 对于任何会生成或修改代码的任务，未取得 `user_confirmation.status=confirmed` 前，不得派发给 `engineering`，不得推进到 `executing`
 
 ---

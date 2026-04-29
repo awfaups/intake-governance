@@ -1,10 +1,10 @@
-# PPW Workflow
+# PMW Workflow
 
 ### Activation
 
-When the user input contains `@PPW` or clearly requests project-process inventory, output exactly:
+When the user input contains `@PMW`, legacy alias `@PPW`, or clearly requests project-process inventory, output exactly:
 
-> ✅ 项目流程梳理工作流（PPW）已激活
+> ✅ Project Mapping Workflow（PMW · 项目流程梳理工作流）已激活
 > 当前阶段：A1 – 项目资产盘点（Inventory）
 
 Then begin A1. Do not jump to roadmap or recommendations before the fact base exists.
@@ -12,6 +12,8 @@ Then begin A1. Do not jump to roadmap or recommendations before the fact base ex
 ### Identity
 
 Act as a project inventory and process-clarification analyst. Prefer verified facts, traceable evidence, and explicit uncertainty over speculative conclusions.
+
+`PMW` means `Project Mapping Workflow`: a project process mapping workflow for inventory, flows, contracts, risks, and roadmap.
 
 The workflow goal is to map the current project state, assets, flows, contracts, risks, gaps, and decisions so later planning or execution starts from a reliable fact base.
 
@@ -139,14 +141,14 @@ Required actions:
 - Create `06_ROADMAP_路线图.md`.
 - Prioritize gaps, cleanup work, documentation work, decision needs, access needs, and candidate follow-up workflows.
 - Separate must-fix blockers from optional improvements.
-- Recommend `6A`, `6AYH`, `SDD`, or `generic_governance` only when the evidence supports it.
+- Recommend `6A`, `6AO`, `SDD`, or `GGW` only when the evidence supports it.
 
 Quality gate:
 
 - Roadmap items map back to inventory, flows, contracts, or risks.
 - Blockers are clearly separated from improvements.
 - Recommendations are evidence-based.
-- No implementation is started inside PPW.
+- No implementation is started inside PMW.
 
 ### Stage A7: Sign-off
 
@@ -201,7 +203,7 @@ Quality gate:
 
 - Do not skip stages.
 - Do not invent facts, owners, contracts, or roadmap items.
-- Do not start code implementation inside PPW.
-- If PPW recommends a later code-changing workflow, that workflow must output its documents and wait for explicit user confirmation before code generation.
+- Do not start code implementation inside PMW.
+- If PMW recommends a later code-changing workflow, that workflow must output its documents and wait for explicit user confirmation before code generation.
 - Keep facts traceable to files, commands, docs, or user-provided context.
 - Stop before deeper planning if critical repositories, configs, credentials, or provenance are missing.

@@ -16,12 +16,13 @@
 - `orchestrator`：调度中心
 - 执行部门：`data-ops`、`docs-spec`、`engineering`、`security`、`platform`、`governance`
 
-当前仓库除了主治理 skill，还拆出了 4 个独立 workflow skill：
+当前仓库除了主治理 skill，还拆出了 5 个独立 workflow skill：
 
-- `workflow-6a`
-- `workflow-6ayh`
-- `workflow-ppw`
-- `workflow-sdd`
+- `workflow-6a`：对应 `6A`
+- `workflow-6ayh`：对应 `6AO`，目录名保留兼容标识
+- `workflow-ppw`：对应 `PMW`，目录名保留兼容标识
+- `workflow-sdd`：对应 `SDD`
+- `workflow-generic-governance`：对应 `GGW`
 
 ## 适用场景
 
@@ -64,6 +65,11 @@
 
 入口仍然由 `intake` 统一接管，但可根据别名路由到不同治理模式：
 
+- `@6A`：新增功能开发
+- `@6AO`：渐进式优化
+- `@PMW`：项目流程梳理
+- `@SDD`：规格驱动开发
+- `@GGW`：通用治理
 - `@init`：项目初始化分析
 - `@plan`：任务规划
 - `@refactor`：渐进式重构
@@ -71,12 +77,23 @@
 - `@decision`：技术决策
 - `@audit`：架构 / 代码审计
 - `@ask`：快速问题拆解
-- `@ppw` / `@PPW`：项目流程梳理
-- `@6A`：新增功能开发
-- `@6AYH`：渐进式优化
-- `@sdd`：规格驱动开发
+- `@ppw` / `@PPW`：`PMW` 的兼容旧别名
+- `@6AYH`：`6AO` 的兼容旧别名
+- `@sdd`：`SDD` 的兼容旧别名
 
-当请求内容匹配 `6A`、`6AYH`、`PPW` 或 `SDD` 的自动识别信号时，`intake` 也应先输出对应工作流规定的激活响应，再继续内部流转。
+## 工作流命名
+
+| 规范名称 | 含义 | 内部 `workflow_mode` | 兼容旧别名 |
+| --- | --- | --- | --- |
+| `6A` | Align、Architect、Atomize、Approve、Automate、Assess | `6a` | 无 |
+| `6AO` | 6A Optimization，基于 6A 延伸出的优化型工作流 | `6ayh` | `@6AYH` |
+| `PMW` | Project Mapping Workflow，项目流程梳理型工作流 | `ppw` | `@ppw`、`@PPW` |
+| `SDD` | Specification-Driven Development，规范驱动开发 | `sdd` | `@sdd` |
+| `GGW` | Generic Governance Workflow，通用治理工作流 | `generic_governance` | 无 |
+
+命名权威来源是 [references/workflow-naming.md](references/workflow-naming.md)。
+
+当请求内容匹配 `6A`、`6AO`、`PMW`、`SDD` 或 `GGW` 的自动识别信号时，`intake` 也应先输出对应工作流规定的激活响应，再继续内部流转。
 
 ## SDD 细化阶段
 
@@ -157,7 +174,7 @@
 
 ## 文档门禁
 
-`6A`、`6AYH`、`PPW`、`SDD` 的文档目录统一使用：
+`6A`、`6AO`、`PMW`、`SDD`、`GGW` 的文档目录统一使用：
 
 `docs/YYYY_MM_DD_中文任务名_vN/`
 
@@ -193,6 +210,7 @@
 ├── skills
 │   ├── workflow-6a
 │   ├── workflow-6ayh
+│   ├── workflow-generic-governance
 │   ├── workflow-ppw
 │   └── workflow-sdd
 └── references
@@ -207,10 +225,12 @@
     ├── task-card.schema.json
     ├── templates
     │   └── 01_SPEC.template.md
+    ├── workflow-naming.md
     ├── workflow-routing.json
     └── workflows
         ├── 6a.md
         ├── 6ayh.md
+        ├── generic-governance.md
         ├── ppw.md
         └── sdd.md
 ```
@@ -225,9 +245,11 @@
 - [references/handoff-record.schema.json](references/handoff-record.schema.json)：标准流转记录结构
 - [references/role-permissions.md](references/role-permissions.md)：越权边界与强制职责链
 - [references/workflow-routing.json](references/workflow-routing.json)：别名、自动分类信号、激活响应
+- [references/workflow-naming.md](references/workflow-naming.md)：工作流规范命名、缩写和兼容旧别名
 - [references/task-card.schema.json](references/task-card.schema.json)：任务卡 JSON Schema
 - [references/workflows/6a.md](references/workflows/6a.md)：新增功能开发工作流
 - [references/workflows/6ayh.md](references/workflows/6ayh.md)：渐进式优化工作流
+- [references/workflows/generic-governance.md](references/workflows/generic-governance.md)：通用治理工作流
 - [references/workflows/ppw.md](references/workflows/ppw.md)：项目流程梳理工作流
 - [references/workflows/sdd.md](references/workflows/sdd.md)：规格驱动开发工作流
 - [references/templates/01_SPEC.template.md](references/templates/01_SPEC.template.md)：SDD 的规格文档模板
@@ -235,8 +257,9 @@
 - [scripts/smoke_test_prompts.py](scripts/smoke_test_prompts.py)：入口别名和自动分类的 smoke test
 - [scripts/sync_installed_skill.py](scripts/sync_installed_skill.py)：把运行时相关文件同步到已安装 skill 副本
 - [skills/workflow-6a/SKILL.md](skills/workflow-6a/SKILL.md)：独立 6A workflow skill
-- [skills/workflow-6ayh/SKILL.md](skills/workflow-6ayh/SKILL.md)：独立 6AYH workflow skill
-- [skills/workflow-ppw/SKILL.md](skills/workflow-ppw/SKILL.md)：独立 PPW workflow skill
+- [skills/workflow-6ayh/SKILL.md](skills/workflow-6ayh/SKILL.md)：独立 6AO workflow skill，路径保留 `6ayh` 作为兼容标识
+- [skills/workflow-generic-governance/SKILL.md](skills/workflow-generic-governance/SKILL.md)：独立通用治理 workflow skill
+- [skills/workflow-ppw/SKILL.md](skills/workflow-ppw/SKILL.md)：独立 PMW workflow skill，路径保留 `ppw` 作为兼容标识
 - [skills/workflow-sdd/SKILL.md](skills/workflow-sdd/SKILL.md)：独立 SDD workflow skill
 
 ## 最小使用示例
@@ -257,7 +280,7 @@
 
 ## 工作流文档目录命名
 
-`6A`、`6AYH`、`PPW`、`SDD` 生成的文档目录，统一使用：
+`6A`、`6AO`、`PMW`、`SDD`、`GGW` 生成的文档目录，统一使用：
 
 `docs/YYYY_MM_DD_中文任务名_vN/`
 

@@ -9,6 +9,7 @@ Start with `SKILL.md`. Load additional files only when the current turn needs th
 - Need to classify an external request or normalize an alias:
   - `references/intake-classification.md`
   - `references/workflow-routing.json`
+  - `references/workflow-naming.md`
 
 - Need to validate who can send to whom:
   - `references/agents.json`
@@ -34,12 +35,14 @@ Start with `SKILL.md`. Load additional files only when the current turn needs th
 - Need department routing or dispatch rules:
   - `references/routing-rules.json`
   - `references/workflow-routing.json`
+  - `references/workflow-naming.md`
 
 - Need workflow-specific execution contracts:
   - `references/workflows/6a.md`
   - `references/workflows/6ayh.md`
   - `references/workflows/ppw.md`
   - `references/workflows/sdd.md`
+  - `references/workflows/generic-governance.md`
 
 - Need role phrasing or response style:
   - `references/role-prompts.json`

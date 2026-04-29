@@ -1,4 +1,4 @@
-# PPW Workflow
+# PMW Workflow
 
 ## When to use
 
@@ -6,9 +6,9 @@ Use when the task is clearly about project inventory, current-state clarificatio
 
 ## Activation
 
-When the user input contains `@PPW` or clearly requests project-process inventory, output exactly:
+When the user input contains `@PMW`, legacy alias `@PPW`, or clearly requests project-process inventory, output exactly:
 
-> ✅ 项目流程梳理工作流（PPW）已激活
+> ✅ Project Mapping Workflow（PMW · 项目流程梳理工作流）已激活
 > 当前阶段：A1 – 项目资产盘点（Inventory）
 
 ## Required documents
@@ -41,7 +41,7 @@ Create or update these files under `docs/YYYY_MM_DD_中文任务名_vN/` in the 
 - keep output factual, traceable, and evidence-based
 - separate verified facts, inferred facts, and unknowns
 - do not invent facts, owners, contracts, or roadmap items
-- do not start code implementation inside PPW
-- if PPW recommends a later code-changing workflow, that workflow must output its documents and wait for explicit user confirmation before code generation
-- recommend `6A`, `6AYH`, `SDD`, or `generic_governance` only when evidence supports it
+- do not start code implementation inside PMW
+- if PMW recommends a later code-changing workflow, that workflow must output its documents and wait for explicit user confirmation before code generation
+- recommend `6A`, `6AO`, `SDD`, or `GGW` only when evidence supports it
 - stop before deeper planning if critical repositories, configs, credentials, or provenance are missing

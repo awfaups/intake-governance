@@ -13,7 +13,7 @@
         "目标是否明确",
         "约束是否明确",
         "是否存在隐含依赖",
-        "是否触发 @intake / @init / @plan / @risk / @decision / @audit / @ask / @ppw / @6A / @6AYH / @PPW / @sdd",
+        "是否触发 @intake / @init / @plan / @risk / @decision / @audit / @ask / @ppw / @6A / @6AO / @6AYH / @PMW / @PPW / @SDD / @sdd / @GGW",
         "首个状态流转是否为 submitted->triaged"
       ],
       "outputs": [

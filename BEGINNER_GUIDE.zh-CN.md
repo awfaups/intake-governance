@@ -14,12 +14,13 @@
 - `orchestrator`：负责派发、协调和汇总
 - 执行角色：按职责完成具体工作
 
-当前仓库除了主 skill，还拆出了 4 个独立 workflow skill：
+当前仓库除了主 skill，还拆出了 5 个独立 workflow skill：
 
-- `workflow-6a`
-- `workflow-6ayh`
-- `workflow-ppw`
-- `workflow-sdd`
+- `workflow-6a`：对应 `6A`
+- `workflow-6ayh`：对应 `6AO`
+- `workflow-ppw`：对应 `PMW`
+- `workflow-sdd`：对应 `SDD`
+- `workflow-generic-governance`：对应 `GGW`
 
 如果你第一次接触它，可以把它理解成：
 
@@ -136,7 +137,7 @@ ls ~/.codex/skills/intake-governance
 
 最新的门禁要求是：
 
-- `6A`、`6AYH`、`PPW`、`SDD` 都要先输出工作流文档包
+- `6A`、`6AO`、`PMW`、`SDD`、`GGW` 都要先输出工作流文档包
 - 文档目录格式统一为 `docs/YYYY_MM_DD_中文任务名_vN/`
 - 涉及代码修改时，文档必须写清楚文件路径、行号范围、修改前代码片段和修改后代码片段
 - 用户确认前，`user_confirmation.status` 必须保持 `pending`
@@ -165,9 +166,22 @@ ls ~/.codex/skills/intake-governance
 - `@audit`：架构 / 代码审计
 - `@refactor`：渐进式重构
 - `@6A`：新增功能开发
-- `@6AYH`：渐进式优化
-- `@PPW`：项目流程梳理
-- `@sdd`：规格驱动开发
+- `@6AO`：渐进式优化
+- `@PMW`：项目流程梳理
+- `@6AYH` 和 `@PPW`：分别是 `6AO` 与 `PMW` 的兼容旧别名
+- `@SDD`：规格驱动开发
+- `@sdd`：`SDD` 的兼容旧别名
+- `@GGW`：通用治理
+
+当前规范工作流命名：
+
+| 名称 | 含义 |
+| --- | --- |
+| `6A` | Align、Architect、Atomize、Approve、Automate、Assess |
+| `6AO` | 6A Optimization，基于 6A 延伸出的优化型工作流 |
+| `PMW` | Project Mapping Workflow，项目流程梳理型工作流 |
+| `SDD` | Specification-Driven Development，规范驱动开发 |
+| `GGW` | Generic Governance Workflow，通用治理工作流 |
 
 如果你想让它更稳定地跑 `SDD`，可以把规格文档按这个模板生成：
 

@@ -3,7 +3,8 @@
     "id": "intake_generic_01",
     "prompt": "@intake 帮我把这个跨前后端发布流程拆成规划、评审和执行角色",
     "expected_entry_agent": "intake",
-    "allowed_modes": ["generic_governance"]
+    "allowed_modes": ["generic_governance"],
+    "expected_activation_contains": "通用治理工作流（GGW · Generic Governance Workflow）已激活"
   },
   {
     "id": "alias_plan_01",
@@ -27,25 +28,54 @@
     "allowed_modes": ["6a"]
   },
   {
-    "id": "workflow_6ayh_01",
+    "id": "workflow_6ao_01",
+    "prompt": "@6AO 逐步优化这个首页组件，要求保留行为并控制回滚风险",
+    "expected_alias": "@6AO",
+    "expected_entry_agent": "intake",
+    "allowed_modes": ["6ayh"]
+  },
+  {
+    "id": "workflow_pmw_01",
+    "prompt": "@PMW 先盘点这个项目的仓库、环境、流程和交接点",
+    "expected_alias": "@PMW",
+    "expected_entry_agent": "intake",
+    "allowed_modes": ["ppw"]
+  },
+  {
+    "id": "workflow_sdd_01",
+    "prompt": "@SDD 这次需求先走 spec-first，把规格、任务和验收链路定清楚",
+    "expected_alias": "@SDD",
+    "expected_entry_agent": "intake",
+    "allowed_modes": ["sdd"]
+  },
+  {
+    "id": "legacy_sdd_01",
+    "prompt": "@sdd 这次需求先走 spec-first，把规格、任务和验收链路定清楚",
+    "expected_alias": "@sdd",
+    "expected_entry_agent": "intake",
+    "allowed_modes": ["sdd"]
+  },
+  {
+    "id": "workflow_ggw_01",
+    "prompt": "@GGW 帮我把这个跨团队治理任务拆成规划、评审、派发和闭环",
+    "expected_alias": "@GGW",
+    "expected_entry_agent": "intake",
+    "allowed_modes": ["generic_governance"],
+    "expected_activation_contains": "通用治理工作流（GGW · Generic Governance Workflow）已激活"
+  },
+  {
+    "id": "legacy_6ayh_01",
     "prompt": "@6AYH 逐步优化这个首页组件，要求保留行为并控制回滚风险",
     "expected_alias": "@6AYH",
     "expected_entry_agent": "intake",
     "allowed_modes": ["6ayh"]
   },
   {
-    "id": "workflow_ppw_01",
+    "id": "legacy_ppw_01",
     "prompt": "@PPW 先盘点这个项目的仓库、环境、流程和交接点",
     "expected_alias": "@PPW",
     "expected_entry_agent": "intake",
     "allowed_modes": ["ppw"]
-  },
-  {
-    "id": "workflow_sdd_01",
-    "prompt": "@sdd 这次需求先走 spec-first，把规格、任务和验收链路定清楚",
-    "expected_alias": "@sdd",
-    "expected_entry_agent": "intake",
-    "allowed_modes": ["sdd"]
   },
   {
     "id": "natural_6a_01",

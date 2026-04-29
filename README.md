@@ -15,11 +15,12 @@ Chinese documentation is also included:
 The repository currently includes:
 
 - one root governance skill: `SKILL.md`
-- four standalone workflow detail skills:
-  - `workflow-6a`
-  - `workflow-6ayh`
-  - `workflow-ppw`
-  - `workflow-sdd`
+- five standalone workflow detail skills:
+  - `workflow-6a` for `6A`
+  - `workflow-6ayh` for `6AO` (`6ayh` is a compatibility path)
+  - `workflow-ppw` for `PMW` (`ppw` is a compatibility path)
+  - `workflow-sdd` for `SDD`
+  - `workflow-generic-governance` for `GGW`
 - governance references, schemas, examples, and routing rules under `references/`
 - validation and sync scripts under `scripts/`
 - a lightweight app-facing surface in `agents/openai.yaml`
@@ -49,7 +50,13 @@ External requests must not bypass directly to `planner`, `review-gate`, `orchest
 Accepted entry patterns:
 
 - `@intake`
-- governance aliases that must still normalize back to `intake` first:
+- canonical workflow aliases that must still normalize back to `intake` first:
+  - `@6A`
+  - `@6AO`
+  - `@PMW`
+  - `@SDD`
+  - `@GGW`
+- governance utility aliases that also normalize back to `intake` first:
   - `@init`
   - `@plan`
   - `@refactor`
@@ -57,25 +64,28 @@ Accepted entry patterns:
   - `@decision`
   - `@audit`
   - `@ask`
+- legacy aliases kept for compatibility:
   - `@ppw`
-  - `@6A`
   - `@6AYH`
   - `@PPW`
   - `@sdd`
 
-If `intake` classifies the request into `6A`, `6AYH`, `PPW`, or `SDD`, it must emit that workflow's fixed activation response before any additional planning text.
+If `intake` classifies the request into `6A`, `6AO`, `PMW`, `SDD`, or `GGW`, it must emit that workflow's fixed activation response before any additional planning text.
 
 ## Workflow modes
 
-`intake` first classifies work into one of these modes:
+`intake` first classifies work into one of these canonical workflow families:
 
-- `6A`: new feature development
-- `6AYH`: progressive optimization and refactor
-- `PPW`: project inventory and process clarification
-- `SDD`: spec-driven development
-- `generic_governance`: governance routing without a workflow-specific contract
+| Canonical name | Meaning | Internal `workflow_mode` | Compatibility aliases |
+| --- | --- | --- | --- |
+| `6A` | Align, Architect, Atomize, Approve, Automate, Assess | `6a` | none |
+| `6AO` | 6A Optimization, extended optimization and refactor workflow based on 6A | `6ayh` | `@6AYH` |
+| `PMW` | Project Mapping Workflow, project process mapping and clarification | `ppw` | `@ppw`, `@PPW` |
+| `SDD` | Specification-Driven Development | `sdd` | `@sdd` |
+| `GGW` | Generic Governance Workflow, general role-based governance with its own stages, required documents, review rules, and closeout contract | `generic_governance` | none |
 
 The standalone workflow skills are detail layers, not public entry points. They are meant to be used only after workflow selection is already known.
+See [references/workflow-naming.md](references/workflow-naming.md) for the naming source of truth.
 
 ## SDD refinement
 
@@ -94,7 +104,7 @@ Recommended supporting documents for non-trivial SDD work:
 
 ## Document gate
 
-For `6A`, `6AYH`, `PPW`, and `SDD`:
+For `6A`, `6AO`, `PMW`, `SDD`, and `GGW`:
 
 - required workflow docs are mandatory deliverables
 - docs must live under the active project's root `docs/YYYY_MM_DD_中文任务名_vN/`
@@ -135,6 +145,7 @@ Source of truth:
 - [references/task-card.schema.json](references/task-card.schema.json)
 - [references/handoff-record.schema.json](references/handoff-record.schema.json)
 - [references/status-transitions.json](references/status-transitions.json)
+- [references/workflow-naming.md](references/workflow-naming.md)
 
 ## Repository layout
 
@@ -166,10 +177,12 @@ Source of truth:
 │   ├── task-card.schema.json
 │   ├── templates/
 │   │   └── 01_SPEC.template.md
+│   ├── workflow-naming.md
 │   ├── workflow-routing.json
 │   └── workflows/
 │       ├── 6a.md
 │       ├── 6ayh.md
+│       ├── generic-governance.md
 │       ├── ppw.md
 │       └── sdd.md
 ├── scripts/
@@ -179,6 +192,7 @@ Source of truth:
 └── skills/
     ├── workflow-6a/
     ├── workflow-6ayh/
+    ├── workflow-generic-governance/
     ├── workflow-ppw/
     └── workflow-sdd/
 ```
@@ -271,11 +285,12 @@ If this repository is being published as a shareable public skill, keep `SKILL.m
 当前仓库包括：
 
 - 一个根治理 skill：`SKILL.md`
-- 四个独立的 workflow 细分 skill：
-  - `workflow-6a`
-  - `workflow-6ayh`
-  - `workflow-ppw`
-  - `workflow-sdd`
+- 五个独立的 workflow 细分 skill：
+  - `workflow-6a`：对应 `6A`
+  - `workflow-6ayh`：对应 `6AO`，目录名保留兼容标识
+  - `workflow-ppw`：对应 `PMW`，目录名保留兼容标识
+  - `workflow-sdd`：对应 `SDD`
+  - `workflow-generic-governance`：对应 `GGW`
 - 位于 `references/` 下的治理规则、schema、示例和路由配置
 - 位于 `scripts/` 下的校验与同步脚本
 - 位于 `agents/openai.yaml` 中的轻量应用侧配置入口
@@ -305,7 +320,13 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
 允许的外部触发形式：
 
 - `@intake`
-- 仍然必须先归一化回 `intake` 的治理别名：
+- 仍然必须先归一化回 `intake` 的规范工作流别名：
+  - `@6A`
+  - `@6AO`
+  - `@PMW`
+  - `@SDD`
+  - `@GGW`
+- 同样先归一化回 `intake` 的治理工具别名：
   - `@init`
   - `@plan`
   - `@refactor`
@@ -313,25 +334,28 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
   - `@decision`
   - `@audit`
   - `@ask`
+- 为兼容旧提示词保留的旧别名：
   - `@ppw`
-  - `@6A`
   - `@6AYH`
   - `@PPW`
   - `@sdd`
 
-如果 `intake` 将请求识别为 `6A`、`6AYH`、`PPW` 或 `SDD`，它必须先输出对应工作流要求的固定激活响应，再进入后续规划文本。
+如果 `intake` 将请求识别为 `6A`、`6AO`、`PMW`、`SDD` 或 `GGW`，它必须先输出对应工作流要求的固定激活响应，再进入后续规划文本。
 
 ## 工作流模式
 
-`intake` 会先把任务归类到以下模式之一：
+`intake` 会先把任务归类到以下规范工作流族之一：
 
-- `6A`：新功能开发
-- `6AYH`：渐进式优化与重构
-- `PPW`：项目盘点与流程梳理
-- `SDD`：规格驱动开发
-- `generic_governance`：不绑定特定 workflow 的通用治理路由
+| 规范名称 | 含义 | 内部 `workflow_mode` | 兼容旧别名 |
+| --- | --- | --- | --- |
+| `6A` | Align、Architect、Atomize、Approve、Automate、Assess | `6a` | 无 |
+| `6AO` | 6A Optimization，基于 6A 延伸出的优化型工作流 | `6ayh` | `@6AYH` |
+| `PMW` | Project Mapping Workflow，项目流程梳理型工作流 | `ppw` | `@ppw`、`@PPW` |
+| `SDD` | Specification-Driven Development，规范驱动开发 | `sdd` | `@sdd` |
+| `GGW` | Generic Governance Workflow，通用治理工作流 | `generic_governance` | 无 |
 
 这些独立 workflow skills 是细节层，不是公开入口。它们只应在 workflow 已经被确认后使用。
+命名权威来源见 [references/workflow-naming.md](references/workflow-naming.md)。
 
 ## SDD 细化阶段
 
@@ -350,7 +374,7 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
 
 ## 文档门禁
 
-对于 `6A`、`6AYH`、`PPW` 和 `SDD`：
+对于 `6A`、`6AO`、`PMW`、`SDD` 和 `GGW`：
 
 - workflow 文档是强制交付物
 - 文档必须位于当前项目根目录下的 `docs/YYYY_MM_DD_中文任务名_vN/`
@@ -422,10 +446,12 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
 │   ├── task-card.schema.json
 │   ├── templates/
 │   │   └── 01_SPEC.template.md
+│   ├── workflow-naming.md
 │   ├── workflow-routing.json
 │   └── workflows/
 │       ├── 6a.md
 │       ├── 6ayh.md
+│       ├── generic-governance.md
 │       ├── ppw.md
 │       └── sdd.md
 ├── scripts/
@@ -435,6 +461,7 @@ intake -> planner -> review-gate? -> orchestrator -> worker(s) -> orchestrator
 └── skills/
     ├── workflow-6a/
     ├── workflow-6ayh/
+    ├── workflow-generic-governance/
     ├── workflow-ppw/
     └── workflow-sdd/
 ```

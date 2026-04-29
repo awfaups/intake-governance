@@ -5,21 +5,22 @@
 When the user input contains `@intake` or an intake-owned governance alias, do these steps in order:
 
 1. Normalize the request and extract the main goal.
-2. If the user used an alias such as `@plan`, `@risk`, `@decision`, `@6A`, `@6AYH`, `@PPW`, or `@sdd`, convert that input into an `intake` request first. The alias influences classification and likely routing, but it does not bypass `intake`.
-3. Classify the task as one of:
-- `6A`
-- `6AYH`
-- `PPW`
-- `SDD`
-- `generic_governance`
+2. If the user used an alias such as `@plan`, `@risk`, `@decision`, `@6A`, `@6AO`, `@PMW`, `@SDD`, or `@GGW`, convert that input into an `intake` request first. The alias influences classification and likely routing, but it does not bypass `intake`. Keep legacy aliases such as `@6AYH`, `@PPW`, and `@sdd` compatible.
+3. Classify the task into one canonical workflow family:
+- `6A` (task-card `workflow_mode=6a`)
+- `6AO` (task-card `workflow_mode=6ayh`)
+- `PMW` (task-card `workflow_mode=ppw`)
+- `SDD` (task-card `workflow_mode=sdd`)
+- `GGW` (task-card `workflow_mode=generic_governance`)
 4. Build the first structured task card with:
    - `workflow_mode`
+   - canonical workflow abbreviation in notes or deliverables when the internal mode differs from the display abbreviation
    - `current_stage`
    - `document_bundle_version`
    - `code_change_targets`
    - `status=triaged`
    - the first `handoff_history` entry
-5. If the result is `6A`, `6AYH`, `PPW`, or `SDD`, output the workflow activation response exactly.
+5. If the result is `6A`, `6AO`, `PMW`, `SDD`, or `GGW`, output the workflow activation response exactly.
 6. Attach the workflow's required-document list to the task card and resolve it against the active project's root `docs/` directory.
 7. Default the document bundle version to `v1`. If the same topic already has an existing bundle, increment to `v2`, `v3`, and so on.
 8. If required workflow files are missing, mark document bootstrap as required and set `document_status=pending`.
@@ -28,14 +29,14 @@ When the user input contains `@intake` or an intake-owned governance alias, do t
 Classification heuristics:
 
 - Choose `6A` for new pages, modules, features, or greenfield systems.
-- Choose `6AYH` for refactor, optimization, performance cleanup, or maintenance-cost reduction.
-- Choose `PPW` for inventory, current-state clarification, asset mapping, or process discovery.
-- Choose `SDD` for spec-driven development, spec-first delivery, or spec-plan-implement loops.
-- Choose `generic_governance` when none of the above clearly match but the task still needs planning, review, and dispatch.
+- Choose `6AO` for refactor, optimization, performance cleanup, or maintenance-cost reduction.
+- Choose `PMW` for inventory, current-state clarification, asset mapping, or process discovery.
+- Choose `SDD` for specification-driven development, spec-first delivery, or spec-plan-implement loops.
+- Choose `GGW` when none of the above clearly match but the task still needs planning, review, and dispatch.
 
 Activation-output rule:
 
-- For `6A`, `6AYH`, `PPW`, and `SDD`, `intake` must output the workflow activation response before any additional planning text.
+- For `6A`, `6AO`, `PMW`, `SDD`, and `GGW`, `intake` must output the workflow activation response before any additional planning text.
 - The first handoff record must explain why the selected workflow was chosen and why the task was handed to `planner`.
 
 Alias rule:

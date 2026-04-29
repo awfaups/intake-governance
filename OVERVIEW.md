@@ -4,12 +4,13 @@ Portable multi-agent governance skill for role-based planning, review, dispatch,
 
 This package is not an application or an SDK. It is a reusable set of governance rules, workflow references, and task-card constraints that can be mounted directly in an Agent Skills environment.
 
-The repository currently includes the root governance skill plus four standalone workflow skills:
+The repository currently includes the root governance skill plus five standalone workflow skills:
 
-- `workflow-6a`
-- `workflow-6ayh`
-- `workflow-ppw`
-- `workflow-sdd`
+- `workflow-6a` for `6A`
+- `workflow-6ayh` for `6AO` (`6ayh` is a compatibility path)
+- `workflow-ppw` for `PMW` (`ppw` is a compatibility path)
+- `workflow-sdd` for `SDD`
+- `workflow-generic-governance` for `GGW`
 
 The core roles are:
 
@@ -25,8 +26,8 @@ The governance model is inspired by the Edict project, but this repository keeps
 
 - `intake` is the only public entry point
 - external requests may not bypass directly to `planner`, `review-gate`, `orchestrator`, or any worker department
-- `@intake` normalizes the request and classifies it into `6A`, `6AYH`, `PPW`, `SDD`, or `generic_governance`
-- if `intake` auto-classifies the task as `6A`, `6AYH`, `PPW`, or `SDD`, it must emit that workflow's activation response exactly before any further planning text
+- `@intake` normalizes the request and classifies it into `6A`, `6AO`, `PMW`, `SDD`, or `GGW`
+- if `intake` auto-classifies the task as `6A`, `6AO`, `PMW`, `SDD`, or `GGW`, it must emit that workflow's activation response exactly before any further planning text
 - `scheduler` is internal-only and is not an external entry point
 
 For substantial tasks, use the default path:
@@ -63,6 +64,11 @@ Do not force this skill onto trivial single-step tasks.
 
 The external entry still goes through `intake`, but aliases can route the request into different governance modes:
 
+- `@6A`: new feature development
+- `@6AO`: progressive optimization
+- `@PMW`: project-process mapping
+- `@SDD`: specification-driven development
+- `@GGW`: generic governance
 - `@init`: project initialization analysis
 - `@plan`: task planning
 - `@refactor`: progressive refactor
@@ -70,10 +76,21 @@ The external entry still goes through `intake`, but aliases can route the reques
 - `@decision`: technical decision
 - `@audit`: architecture / code audit
 - `@ask`: quick decomposition
-- `@ppw` / `@PPW`: project-process inventory
-- `@6A`: new feature development
-- `@6AYH`: progressive optimization
-- `@sdd`: spec-driven development
+- `@ppw` / `@PPW`: legacy aliases for `PMW`
+- `@6AYH`: legacy alias for `6AO`
+- `@sdd`: legacy alias for `SDD`
+
+## Workflow names
+
+| Canonical name | Meaning | Internal `workflow_mode` | Compatibility aliases |
+| --- | --- | --- | --- |
+| `6A` | Align, Architect, Atomize, Approve, Automate, Assess | `6a` | none |
+| `6AO` | 6A Optimization | `6ayh` | `@6AYH` |
+| `PMW` | Project Mapping Workflow | `ppw` | `@ppw`, `@PPW` |
+| `SDD` | Specification-Driven Development | `sdd` | `@sdd` |
+| `GGW` | Generic Governance Workflow | `generic_governance` | none |
+
+Use [references/workflow-naming.md](references/workflow-naming.md) as the naming source of truth.
 
 ## SDD refinement
 
@@ -123,7 +140,7 @@ See [references/task-card.schema.json](references/task-card.schema.json) for the
 
 ## Document gate
 
-For `6A`, `6AYH`, `PPW`, and `SDD`:
+For `6A`, `6AO`, `PMW`, `SDD`, and `GGW`:
 
 - workflow documents are mandatory deliverables
 - workflow docs must live under the active project's root `docs/YYYY_MM_DD_中文任务名_vN/` directory
@@ -145,6 +162,7 @@ Read these references when precise behavior matters:
 - `references/task-card.schema.json`
 - `references/role-prompts.json`
 - `references/workflow-routing.json`
+- `references/workflow-naming.md`
 - `references/engineering-governance.md`
 - `references/intake-classification.md`
 
@@ -152,6 +170,7 @@ Read these workflow references when the selected mode needs them:
 
 - `references/workflows/6a.md`
 - `references/workflows/6ayh.md`
+- `references/workflows/generic-governance.md`
 - `references/workflows/ppw.md`
 - `references/workflows/sdd.md`
 
@@ -202,6 +221,7 @@ When `review-gate` rejects or returns a task, it must emit `rejection_reason` an
 ├── skills
 │   ├── workflow-6a
 │   ├── workflow-6ayh
+│   ├── workflow-generic-governance
 │   ├── workflow-ppw
 │   └── workflow-sdd
 └── references
@@ -216,10 +236,12 @@ When `review-gate` rejects or returns a task, it must emit `rejection_reason` an
     ├── task-card.schema.json
     ├── templates
     │   └── 01_SPEC.template.md
+    ├── workflow-naming.md
     ├── workflow-routing.json
     └── workflows
         ├── 6a.md
         ├── 6ayh.md
+        ├── generic-governance.md
         ├── ppw.md
         └── sdd.md
 ```

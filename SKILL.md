@@ -1,6 +1,6 @@
 ---
 name: intake-governance
-description: Portable intake-first multi-agent governance with workflow classification, review gates, orchestrator dispatch, and worker handoff rules. Use when the user wants multi-agent orchestration, delegation architecture, workflow routing, role permissions, or invokes @intake and governance aliases such as @plan, @risk, @6A, @6AYH, @PPW, or @sdd.
+description: Portable intake-first multi-agent governance with workflow classification, review gates, orchestrator dispatch, and worker handoff rules. Use when the user wants multi-agent orchestration, delegation architecture, workflow routing, role permissions, or invokes @intake and governance aliases such as @plan, @risk, @6A, @6AO, @PMW, @SDD, or @GGW.
 metadata:
   short-description: Portable role-based agent governance workflow
 ---
@@ -16,7 +16,7 @@ Use this skill when:
 - the user wants a planner, reviewer, dispatcher, and worker split
 - the user refers to layered role collaboration or worker-group coordination
 - the user input contains `@intake`
-- the user input contains governance aliases such as `@plan`, `@risk`, `@decision`, `@6A`, `@6AYH`, `@PPW`, or `@sdd`
+- the user input contains governance aliases such as `@plan`, `@risk`, `@decision`, `@6A`, `@6AO`, `@PMW`, `@SDD`, or `@GGW`
 
 Do not force this skill onto trivial single-step tasks.
 
@@ -47,9 +47,13 @@ Accepted external activation patterns:
   - `@ask`
   - `@ppw`
   - `@6A`
+  - `@6AO`
   - `@6AYH`
+  - `@PMW`
   - `@PPW`
+  - `@SDD`
   - `@sdd`
+  - `@GGW`
 
 ## Entry rule
 
@@ -65,16 +69,16 @@ Accepted external activation patterns:
 `intake` must first classify the request into one of these internal modes:
 
 - `6A`
-- `6AYH`
-- `PPW`
+- `6AO` (internal mode `6ayh`, legacy alias `6AYH`)
+- `PMW` (internal mode `ppw`, legacy alias `PPW`)
 - `SDD`
-- `generic_governance`
+- `GGW` (internal mode `generic_governance`)
 
-If `intake` auto-classifies the request as `6A`, `6AYH`, `PPW`, or `SDD`, output that workflow's activation response exactly before any additional planning text.
+If `intake` auto-classifies the request as `6A`, `6AO`, `PMW`, `SDD`, or `GGW`, output that workflow's activation response exactly before any additional planning text.
 
 ## Workflow document gate
 
-For `6A`, `6AYH`, `PPW`, and `SDD`:
+For `6A`, `6AO`, `PMW`, `SDD`, and `GGW`:
 
 - required documents are mandatory deliverables
 - workflow docs must live under the active project's root `docs/` directory
@@ -127,7 +131,7 @@ Required task-card fields:
 ## Role guidance
 
 - `intake`: normalize the request, extract intent, assign title and tags
-- `intake`: include workflow mode and required-document manifest in the first task card for `6A`, `6AYH`, `PPW`, and `SDD`
+- `intake`: include workflow mode and required-document manifest in the first task card for `6A`, `6AO`, `PMW`, `SDD`, and `GGW`
 - `planner`: decompose the task, define execution steps, and assign likely worker departments
 - `planner`: turn required documents into a document-bootstrap plan
 - `review-gate`: approve, reject, or return for revision based on quality, risk, and policy fit
@@ -143,6 +147,7 @@ Start with this `SKILL.md`. Then load only the references needed for the current
 - classification or alias normalization:
   - `references/intake-classification.md`
   - `references/workflow-routing.json`
+  - `references/workflow-naming.md`
 - role boundaries and who may hand off to whom:
   - `references/agents.json`
   - `references/role-permissions.md`
@@ -150,6 +155,7 @@ Start with this `SKILL.md`. Then load only the references needed for the current
 - routing and dispatch policy:
   - `references/routing-rules.json`
   - `references/workflow-routing.json`
+  - `references/workflow-naming.md`
 - task-card, handoff, or status validation:
   - `references/task-card.schema.json`
   - `references/handoff-record.schema.json`
@@ -171,6 +177,7 @@ Start with this `SKILL.md`. Then load only the references needed for the current
   - `references/workflows/6ayh.md`
   - `references/workflows/ppw.md`
   - `references/workflows/sdd.md`
+  - `references/workflows/generic-governance.md`
 - package maintenance or future upgrades:
   - `references/reference-loading.md`
   - `references/maintainer-upgrade-guide.md`

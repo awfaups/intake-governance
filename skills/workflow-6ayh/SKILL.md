@@ -1,21 +1,21 @@
 ---
 name: workflow-6ayh
-description: 6AYH workflow detail layer for progressive optimization and refactor work after workflow selection is known. Use when the task is already confirmed as 6AYH, the user explicitly requests @6AYH, or intake has classified the task as gradual optimization, refactoring, maintenance-cost reduction, or performance cleanup. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
+description: 6AO workflow detail layer for progressive optimization and refactor work after workflow selection is known. Use when the task is already confirmed as 6AO, the user explicitly requests @6AO or legacy alias @6AYH, or intake has classified the task as gradual optimization, refactoring, maintenance-cost reduction, or performance cleanup. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
 ---
 
-# Workflow 6AYH
+# Workflow 6AO
 
-Use this skill only when the workflow type is already known to be `6AYH`.
+Use this skill only when the workflow type is already known to be `6AO`.
 
 Treat this skill as a detail layer, not a public governance entry.
 
 - If the request still needs intake, routing, or cross-role governance, enter through `@intake` first.
 - Use this skill after workflow selection is settled.
-- Keep global handoff policy in `intake-governance`; keep 6AYH stage rules here and in `references/6ayh.md`.
+- Keep global handoff policy in `intake-governance`; keep 6AO stage rules here and in `references/6ayh.md`.
 
 ## Activation response
 
-> ✅ 6A 优化工作流（6AYH · 前端渐进式优化模式）已激活
+> ✅ 6A Optimization 工作流（6AO）已激活
 > 当前阶段：Align（目标与风险对齐）
 
 ## Execution contract

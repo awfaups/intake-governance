@@ -1,4 +1,4 @@
-# 6AYH Workflow
+# 6AO Workflow
 
 ## When to use
 
@@ -6,9 +6,9 @@ Use when the task is clearly about gradual optimization, refactoring, performanc
 
 ## Activation
 
-When the user input contains `@6AYH`, output exactly:
+When the user input contains `@6AO`, or legacy alias `@6AYH`, output exactly:
 
-> ✅ 6A 优化工作流（6AYH · 前端渐进式优化模式）已激活
+> ✅ 6A Optimization 工作流（6AO）已激活
 > 当前阶段：Align（目标与风险对齐）
 
 ## Required documents

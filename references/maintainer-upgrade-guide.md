@@ -49,6 +49,7 @@ When changing the package, verify these files together:
 - `SKILL.md`
 - `references/intake-classification.md`
 - `references/workflow-routing.json`
+- `references/workflow-naming.md`
 - `references/task-card.schema.json`
 - `references/task-card.example.json`
 - `references/handoff-record.example.json`
@@ -61,6 +62,7 @@ When changing the package, verify these files together:
 - `scripts/sync_installed_skill.py`
 - `skills/workflow-6a/SKILL.md`
 - `skills/workflow-6ayh/SKILL.md`
+- `skills/workflow-generic-governance/SKILL.md`
 - `skills/workflow-ppw/SKILL.md`
 - `skills/workflow-sdd/SKILL.md`
 - `agents/openai.yaml`
@@ -69,6 +71,7 @@ When changing the package, verify these files together:
 
 - Preserve `intake` as the only public entry.
 - Preserve exact activation responses for workflow modes that require fixed wording.
+- Preserve `references/workflow-naming.md` as the source of truth for workflow abbreviations, display names, internal modes, and legacy aliases.
 - Prefer extending schemas and references before expanding root prose.
 - Keep examples short, valid, and aligned with current schemas.
 - If a new workflow family is introduced, add its routing rule, activation response, workflow reference, and standalone workflow skill together.

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "default_status_flow": [
     "submitted",
     "triaged",
@@ -144,7 +144,7 @@
   ],
   "global_requirements": {
     "require_handoff_record_for_every_transition": true,
-    "require_document_status_visibility_for_workflow_modes": ["6a", "6ayh", "ppw", "sdd"],
+    "require_document_status_visibility_for_workflow_modes": ["6a", "6ayh", "ppw", "sdd", "generic_governance"],
     "forbid_worker_direct_status_completion": true
   }
 }

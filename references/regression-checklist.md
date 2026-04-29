@@ -38,8 +38,9 @@ python3 scripts/sync_installed_skill.py
 After the script passes, still review these behavior-level checks:
 
 1. Alias normalization still routes through `intake`.
-2. `@6A`, `@6AYH`, `@PPW`, and `@sdd` still keep exact activation responses.
-3. Workflow-free governance prompts still classify into `generic_governance` when appropriate.
+2. `@6A`, `@6AO`, `@PMW`, `@SDD`, and `@GGW` still keep exact activation responses.
+3. Legacy aliases such as `@6AYH`, `@PPW`, and `@sdd` still route to the canonical `6AO`, `PMW`, and `SDD` workflows.
+4. Generic governance prompts still classify into `GGW` when no specific workflow is a better match.
 4. Root `SKILL.md` still reads like an entry console, not a duplicated policy dump.
 5. Workflow subskills still read like detail layers, not public entry points.
 6. Example JSON files still look like realistic outputs, not schema-only placeholders.

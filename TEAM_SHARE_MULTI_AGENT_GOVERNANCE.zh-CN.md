@@ -60,11 +60,12 @@ flowchart TD
 当前仓库不只是一个 `SKILL.md`，而是一个完整的 skill 包：
 
 - 根 skill：`SKILL.md`
-- 4 个独立 workflow skill：
-  - `workflow-6a`
-  - `workflow-6ayh`
-  - `workflow-ppw`
-  - `workflow-sdd`
+- 5 个独立 workflow skill：
+- `workflow-6a`：对应 `6A`
+- `workflow-6ayh`：对应 `6AO`，目录名保留兼容标识
+- `workflow-ppw`：对应 `PMW`，目录名保留兼容标识
+- `workflow-sdd`：对应 `SDD`
+- `workflow-generic-governance`：对应 `GGW`
 - `references/`：治理规则、schema、路由、示例
 - `scripts/`：校验与同步脚本
 - `agents/openai.yaml`：展示名、短描述和默认提示入口
@@ -105,6 +106,11 @@ flowchart TD
 允许的外部触发形式包括：
 
 - `@intake`
+- `@6A`
+- `@6AO`
+- `@PMW`
+- `@SDD`
+- `@GGW`
 - `@init`
 - `@plan`
 - `@refactor`
@@ -113,10 +119,11 @@ flowchart TD
 - `@audit`
 - `@ask`
 - `@ppw`
-- `@6A`
 - `@6AYH`
 - `@PPW`
 - `@sdd`
+
+其中 `@6AYH`、`@PPW`、`@sdd` 是兼容旧别名；新文档和新提示词应优先使用 `@6AO`、`@PMW`、`@SDD`。
 
 这些别名仍然必须先归一化回 `intake`，再进入内部治理链路。
 
@@ -129,15 +136,17 @@ flowchart TD
 
 ## 5. 工作流模式是怎么分的
 
-`intake` 首先会把任务分类到以下内部模式之一：
+`intake` 首先会把任务分类到以下规范工作流族之一：
 
-- `6A`：新功能开发
-- `6AYH`：渐进式优化 / 重构
-- `PPW`：项目盘点与流程梳理
-- `SDD`：规格驱动开发
-- `generic_governance`：通用治理任务
+| 规范名称 | 含义 | 内部 `workflow_mode` | 兼容旧别名 |
+| --- | --- | --- | --- |
+| `6A` | Align、Architect、Atomize、Approve、Automate、Assess | `6a` | 无 |
+| `6AO` | 6A Optimization，基于 6A 延伸出的优化型工作流 | `6ayh` | `@6AYH` |
+| `PMW` | Project Mapping Workflow，项目流程梳理型工作流 | `ppw` | `@ppw`、`@PPW` |
+| `SDD` | Specification-Driven Development，规范驱动开发 | `sdd` | `@sdd` |
+| `GGW` | Generic Governance Workflow，通用治理工作流 | `generic_governance` | 无 |
 
-如果 `intake` 自动识别到 `6A`、`6AYH`、`PPW` 或 `SDD`，它必须先输出该工作流要求的固定激活响应，再继续后续规划。
+如果 `intake` 自动识别到 `6A`、`6AO`、`PMW`、`SDD` 或 `GGW`，它必须先输出该工作流要求的固定激活响应，再继续后续规划。
 
 这意味着 workflow skill 不是公开入口，而是“工作流细节层”。
 
@@ -190,7 +199,7 @@ flowchart TD
 
 当前仓库的关键门禁规则是：
 
-- `6A`、`6AYH`、`PPW`、`SDD` 都要求先输出 workflow 文档包
+- `6A`、`6AO`、`PMW`、`SDD`、`GGW` 都要求先输出 workflow 文档包
 - 文档必须写在当前项目根目录下的 `docs/YYYY_MM_DD_中文任务名_vN/`
 - 这些文档默认不能写回 skill 仓库，除非当前活动项目就是这个仓库
 - 涉及代码修改时，文档必须记录：
@@ -351,6 +360,7 @@ python3 scripts/sync_installed_skill.py
 ├── skills
 │   ├── workflow-6a
 │   ├── workflow-6ayh
+│   ├── workflow-generic-governance
 │   ├── workflow-ppw
 │   └── workflow-sdd
 └── references
@@ -365,10 +375,12 @@ python3 scripts/sync_installed_skill.py
     ├── task-card.schema.json
     ├── templates
     │   └── 01_SPEC.template.md
+    ├── workflow-naming.md
     ├── workflow-routing.json
     └── workflows
         ├── 6a.md
         ├── 6ayh.md
+        ├── generic-governance.md
         ├── ppw.md
         └── sdd.md
 ```

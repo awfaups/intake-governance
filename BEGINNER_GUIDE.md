@@ -10,12 +10,13 @@ Its job is not to write business code for you. It gives agents a clear governanc
 - `orchestrator`: dispatch, coordinate, and aggregate
 - worker departments: carry out the actual work
 
-This repository now includes the root skill plus four standalone workflow skills:
+This repository now includes the root skill plus five standalone workflow skills:
 
-- `workflow-6a`
-- `workflow-6ayh`
-- `workflow-ppw`
-- `workflow-sdd`
+- `workflow-6a` for `6A`
+- `workflow-6ayh` for `6AO`
+- `workflow-ppw` for `PMW`
+- `workflow-sdd` for `SDD`
+- `workflow-generic-governance` for `GGW`
 
 If you are new to it, think of it as:
 
@@ -132,7 +133,7 @@ After `@intake`, the system usually follows this order:
 
 The latest gating rules are:
 
-- `6A`, `6AYH`, `PPW`, and `SDD` all require a workflow document bundle first
+- `6A`, `6AO`, `PMW`, `SDD`, and `GGW` all require a workflow document bundle first
 - the document directory format is `docs/YYYY_MM_DD_中文任务名_vN/`
 - if code changes are involved, the docs must record file paths, line ranges, before context, and after context
 - before confirmation, `user_confirmation.status` must stay `pending`
@@ -161,9 +162,22 @@ You still do not enter those stages directly from the outside. They are internal
 - `@audit`: architecture / code audit
 - `@refactor`: progressive refactor
 - `@6A`: new feature development
-- `@6AYH`: progressive optimization
-- `@PPW`: project-process inventory
-- `@sdd`: spec-driven development
+- `@6AO`: progressive optimization
+- `@PMW`: project-process mapping
+- `@6AYH` and `@PPW`: legacy aliases for `6AO` and `PMW`
+- `@SDD`: specification-driven development
+- `@sdd`: legacy alias for `SDD`
+- `@GGW`: generic governance
+
+Current workflow names:
+
+| Name | Meaning |
+| --- | --- |
+| `6A` | Align, Architect, Atomize, Approve, Automate, Assess |
+| `6AO` | 6A Optimization |
+| `PMW` | Project Mapping Workflow |
+| `SDD` | Specification-Driven Development |
+| `GGW` | Generic Governance Workflow |
 
 If you want `SDD` to work more reliably, generate the spec file using:
 

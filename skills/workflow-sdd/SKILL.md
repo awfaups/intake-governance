@@ -1,6 +1,6 @@
 ---
 name: workflow-sdd
-description: SDD workflow detail layer for spec-driven development after workflow selection is known. Use when the task is already confirmed as SDD, the user explicitly requests @sdd, or intake has classified the task as spec-first delivery where implementation, tests, and acceptance derive from an approved spec bundle. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
+description: SDD workflow detail layer for specification-driven development after workflow selection is known. Use when the task is already confirmed as SDD, the user explicitly requests @SDD or legacy alias @sdd, or intake has classified the task as spec-first delivery where implementation, tests, and acceptance derive from an approved spec bundle. Produces dated and versioned workflow docs under the active project's root docs/YYYY_MM_DD_中文任务名_vN/ directory.
 ---
 
 # Workflow SDD
@@ -15,7 +15,7 @@ Treat this skill as a detail layer, not a public governance entry.
 
 ## Activation response
 
-> ✅ Spec-Driven Development 工作流（SDD）已激活
+> ✅ Specification-Driven Development 工作流（SDD）已激活
 > 当前阶段：Spec（规格定义）
 
 ## Execution contract
