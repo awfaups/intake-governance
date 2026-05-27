@@ -1,4 +1,51 @@
 {
+  "dispatch_control": {
+    "parallel_rate_limit_policy": {
+      "gateway_rate_limit_classification": "recoverable_scheduling_event",
+      "owner": "orchestrator",
+      "on_gateway_rate_limit": "queue_to_max_gateway_capacity",
+      "queue_scope": "not_yet_admitted_worker_calls",
+      "running_calls": "continue_until_return_or_independent_failure",
+      "max_queue_depth_source": [
+        "gateway_reported_queue_capacity",
+        "runtime_reported_queue_capacity",
+        "configured_dispatch_limit"
+      ],
+      "retry_timing_source": [
+        "gateway_retry_after",
+        "runtime_backoff_policy",
+        "configured_dispatch_backoff"
+      ],
+      "preserve_assignment_fields": [
+        "worker",
+        "inputs",
+        "constraints",
+        "dependencies",
+        "expected_output",
+        "return_path"
+      ],
+      "do_not_block_when": [
+        "gateway_rate_limit_reached",
+        "queue_accepts_deferred_work"
+      ],
+      "block_when": [
+        "queue_capacity_exhausted",
+        "retry_policy_exhausted",
+        "gateway_rejects_queued_continuation",
+        "human_decision_required"
+      ],
+      "required_event_fields": [
+        "event",
+        "owner",
+        "affected_workers",
+        "admitted_count",
+        "queued_count",
+        "max_queue_depth",
+        "retry_after",
+        "status_effect"
+      ]
+    }
+  },
   "rules": [
     {
       "department": "engineering",

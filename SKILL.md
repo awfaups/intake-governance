@@ -138,7 +138,23 @@ Required task-card fields:
 - `orchestrator`: dispatch to workers, track returns, and aggregate outputs
 - `orchestrator`: block code generation and `engineering` dispatch until document review has explicit user confirmation
 - `orchestrator`: dispatch `docs-spec` before code execution or final reporting when docs must be created or updated
+- `orchestrator`: when concurrent worker execution hits a gateway-level rate limit, keep the task in execution and convert pending worker calls into a bounded queue using the maximum queue depth accepted by the active gateway or runtime
 - workers: execute only within their domain and return only to `orchestrator`
+
+## Concurrent execution rate-limit policy
+
+Gateway-level rate limits during parallel multi-agent execution are recoverable scheduling events, not worker failures.
+
+When a gateway returns a rate-limit response while `orchestrator` is dispatching or executing multiple worker calls:
+
+- keep already-running worker calls active until they return or fail independently
+- enqueue not-yet-admitted worker calls up to the maximum queue depth accepted by the gateway or runtime
+- preserve the original worker routing, inputs, constraints, dependencies, and return path
+- drain the queue as capacity becomes available, using gateway-provided retry timing when available
+- record the queue event, admitted count, deferred count, retry timing, and affected worker assignments in the task card or handoff artifacts
+- do not mark the task `blocked` solely because a gateway-level rate limit was reached
+- mark the task `blocked` only when the queue cannot accept additional work, retry policy is exhausted, the gateway rejects queued continuation, or a human decision is required
+- do not let workers self-retry outside `orchestrator`; all retry and queue decisions remain owned by `orchestrator`
 
 ## Progressive disclosure
 

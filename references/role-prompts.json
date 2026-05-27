@@ -91,6 +91,8 @@
         "是否输出风险与降级",
         "工作流必需文档是否已初始化或更新",
         "涉及代码生成或代码修改时，user_confirmation.status 是否为 confirmed",
+        "并发执行触发网关限流时，是否已按网关或运行时最大可入队容量排队续跑",
+        "限流排队事件是否记录 admitted_count、queued_count、max_queue_depth、retry_after 和受影响 worker",
         "状态迁移是否符合 status-transitions.json"
       ],
       "outputs": [
@@ -98,6 +100,7 @@
         "汇总报告",
         "最终结果摘要",
         "文档状态汇总",
+        "限流排队与续跑记录",
         "阶段状态变更记录",
         "执行职责转移提示"
       ]

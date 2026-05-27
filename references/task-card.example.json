@@ -57,6 +57,18 @@
       "decision_summary": "Selected 6A because the request describes a new page and requires workflow-first delivery."
     }
   ],
+  "dispatch_queue_event": {
+    "event": "gateway_rate_limit_queue",
+    "owner": "orchestrator",
+    "affected_workers": ["engineering", "docs-spec"],
+    "admitted_count": 2,
+    "queued_count": 3,
+    "max_queue_depth": 3,
+    "retry_after": "gateway-provided retry timing",
+    "queue_policy": "queue_to_max_gateway_capacity",
+    "status_effect": "remain_executing",
+    "notes": "Example event for concurrent dispatch; a triaged task would omit this until execution."
+  },
   "artifacts": [
     {
       "producer": "intake",
