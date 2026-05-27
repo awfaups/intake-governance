@@ -97,10 +97,19 @@
     },
     {
       "from": "executing",
+      "to": "executing",
+      "allowed_roles": ["orchestrator"],
+      "requires_reason": true,
+      "conditions": ["gateway_rate_limit_reached=true", "queue_accepts_deferred_work=true"],
+      "required_fields": ["dispatch_queue_event"],
+      "notes": "并发执行触发网关层限流，但未准入 worker 调用已按最大可入队容量排队，任务保持执行态并继续续跑。"
+    },
+    {
+      "from": "executing",
       "to": "blocked",
       "allowed_roles": ["orchestrator", "review-gate"],
       "requires_reason": true,
-      "notes": "遇到依赖、风险或文档未完成阻塞。"
+      "notes": "遇到依赖、风险、文档未完成，或限流队列不可接收且无法自动续跑。"
     },
     {
       "from": "blocked",
@@ -145,6 +154,17 @@
   "global_requirements": {
     "require_handoff_record_for_every_transition": true,
     "require_document_status_visibility_for_workflow_modes": ["6a", "6ayh", "ppw", "sdd", "generic_governance"],
-    "forbid_worker_direct_status_completion": true
+    "forbid_worker_direct_status_completion": true,
+    "gateway_rate_limit_policy": {
+      "classification": "recoverable_scheduling_event",
+      "owner": "orchestrator",
+      "default_status_effect": "remain_executing_when_queue_accepts_deferred_work",
+      "blocked_only_when": [
+        "queue_capacity_exhausted",
+        "retry_policy_exhausted",
+        "gateway_rejects_queued_continuation",
+        "human_decision_required"
+      ]
+    }
   }
 }

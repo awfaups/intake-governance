@@ -51,7 +51,11 @@ REQUIRED_FILES = [
 ]
 
 JSON_FILES = [
+    "references/agents.json",
     "references/workflow-routing.json",
+    "references/routing-rules.json",
+    "references/role-prompts.json",
+    "references/status-transitions.json",
     "references/activation-examples.json",
     "references/task-card.schema.json",
     "references/task-card.example.json",

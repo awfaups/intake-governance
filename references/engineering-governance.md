@@ -101,6 +101,9 @@ If the plan fails review:
 - require every worker to return evidence, not final closure
 - aggregate all results before completion
 - keep workflow-document status visible for governed workflows
+- treat gateway-level rate limits during concurrent dispatch as recoverable scheduling events
+- queue deferred worker calls up to the maximum queue depth accepted by the gateway or runtime and continue execution as capacity opens
+- record rate-limit queue events with admitted count, queued count, max queue depth, retry timing, affected workers, and status effect
 
 When code changes are involved:
 

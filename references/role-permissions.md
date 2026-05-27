@@ -252,6 +252,7 @@
 - 根据标签和计划分配执行部门
 - 收集各部门结果
 - 做阶段状态管理
+- 在并发执行触发网关层限流时，按网关或运行时允许的最大可入队容量将未准入 worker 调用转入队列继续执行
 - 输出最终汇总结果
 
 ### 5.3 `orchestrator` 不能做什么
@@ -278,6 +279,8 @@
 - `orchestrator` 才能对外做统一汇总
 - 派单必须符合权限矩阵
 - 每次派单、收件、汇总都必须附带 handoff 原因
+- 网关层限流属于可恢复调度事件；只要队列可接收，不得仅因限流把任务标记为 `blocked`
+- 限流排队必须保留原 worker、输入、约束、依赖、预期输出和回传路径，并记录准入数、排队数、最大队列深度、重试时间和受影响 worker
 - 状态推进必须符合 `references/status-transitions.json`
 - 对于 `6A`、`6AO`、`PMW`、`SDD`、`GGW`，未完成文档初始化前不得推进到 `executing`
 - 对于任何会生成或修改代码的任务，未取得 `user_confirmation.status=confirmed` 前，不得派发给 `engineering`，不得推进到 `executing`

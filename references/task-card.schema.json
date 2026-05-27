@@ -282,6 +282,70 @@
       },
       "default": []
     },
+    "dispatch_queue_event": {
+      "type": "object",
+      "required": [
+        "event",
+        "owner",
+        "affected_workers",
+        "admitted_count",
+        "queued_count",
+        "max_queue_depth",
+        "status_effect"
+      ],
+      "properties": {
+        "event": {
+          "type": "string",
+          "enum": [
+            "gateway_rate_limit_queue"
+          ]
+        },
+        "owner": {
+          "type": "string",
+          "enum": [
+            "orchestrator"
+          ]
+        },
+        "affected_workers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "admitted_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "queued_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_queue_depth": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "retry_after": {
+          "type": "string"
+        },
+        "queue_policy": {
+          "type": "string",
+          "enum": [
+            "queue_to_max_gateway_capacity"
+          ]
+        },
+        "status_effect": {
+          "type": "string",
+          "enum": [
+            "remain_executing",
+            "blocked"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "artifacts": {
       "type": "array",
       "items": {
